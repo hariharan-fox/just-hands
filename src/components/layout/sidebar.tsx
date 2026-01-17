@@ -2,11 +2,10 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, Home, Calendar, Building, MessagesSquare } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Home, Calendar, Building, MessagesSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Logo } from '../shared/logo';
+import { Button } from '@/components/ui/button';
 
 const navLinks = [
   { href: '/', label: 'Dashboard', icon: Home },
@@ -15,19 +14,11 @@ const navLinks = [
   { href: '/forum', label: 'Forum', icon: MessagesSquare },
 ];
 
-export default function Header() {
-  const pathname = usePathname();
-
-  return (
-    <header className="flex h-16 items-center justify-between gap-4 border-b bg-card px-4 sticky top-0 z-30 md:hidden">
-        <Sheet>
-            <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="shrink-0">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle navigation menu</span>
-            </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="flex flex-col p-0">
+export default function Sidebar() {
+    const pathname = usePathname();
+    return (
+        <aside className="hidden border-r bg-card md:block">
+            <div className="flex h-full max-h-screen flex-col gap-2">
                 <div className="flex h-16 items-center border-b px-6">
                     <Logo />
                 </div>
@@ -51,7 +42,7 @@ export default function Header() {
                         })}
                     </nav>
                 </div>
-                 <div className="mt-auto p-4 border-t">
+                <div className="mt-auto p-4 border-t">
                     <div className="grid gap-2">
                         <Button variant="outline" asChild>
                             <Link href="/login">Login</Link>
@@ -61,15 +52,7 @@ export default function Header() {
                         </Button>
                     </div>
                 </div>
-            </SheetContent>
-        </Sheet>
-        
-        <div className="md:hidden">
-            <Logo />
-        </div>
-        
-        <div className="w-10 h-10 md:hidden" />
-
-    </header>
-  );
+            </div>
+        </aside>
+    );
 }
