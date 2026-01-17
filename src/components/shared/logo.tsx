@@ -6,6 +6,7 @@ export function Logo({ className }: { className?: string }) {
     <Link
       href="/"
       className={cn("text-xl font-bold font-headline text-primary", className)}
+      suppressHydrationWarning
     >
       <span>ConnectSphere</span>
     </Link>
