@@ -1,3 +1,5 @@
+'use client';
+
 import EventCard from "@/components/shared/event-card";
 import { allEvents } from "@/lib/placeholder-data";
 import { Input } from "@/components/ui/input";
