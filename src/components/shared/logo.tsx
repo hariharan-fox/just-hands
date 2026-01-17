@@ -6,9 +6,8 @@ export function Logo({ className }: { className?: string }) {
     <Link
       href="/"
       className={cn("text-xl font-bold font-headline text-primary", className)}
-      suppressHydrationWarning
     >
-      <h6>ConnectSphere</h6>
+      <span>ConnectSphere</span>
     </Link>
   );
 }
