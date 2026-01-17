@@ -35,7 +35,7 @@ export default function NgoDetailPage({ params }: { params: { id: string } }) {
                     </div>
                 )}
                 <div className="flex-1">
-                    <h1 className="text-4xl font-bold">{ngo.name}</h1>
+                    <h1 className="text-3xl font-bold">{ngo.name}</h1>
                     <div className="flex items-center gap-4 mt-2 text-muted-foreground">
                         <div className="flex items-center gap-2">
                             <Building className="h-4 w-4" />
@@ -66,7 +66,7 @@ export default function NgoDetailPage({ params }: { params: { id: string } }) {
                         <CardTitle className="flex items-center gap-2"><Target className="h-6 w-6 text-primary" /> Our Mission</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-lg text-foreground/80">{ngo.mission}</p>
+                        <p className="text-base text-foreground/80">{ngo.mission}</p>
                     </CardContent>
                 </Card>
                  <Card>
@@ -74,7 +74,7 @@ export default function NgoDetailPage({ params }: { params: { id: string } }) {
                         <CardTitle className="flex items-center gap-2"><Users className="h-6 w-6 text-primary" /> Our Impact</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-lg text-foreground/80">{ngo.impact}</p>
+                        <p className="text-base text-foreground/80">{ngo.impact}</p>
                     </CardContent>
                 </Card>
             </div>
@@ -93,7 +93,7 @@ export default function NgoDetailPage({ params }: { params: { id: string } }) {
         </div>
 
         <div className="mt-16">
-            <h2 className="text-3xl font-bold mb-8 text-center">Upcoming Events by {ngo.name}</h2>
+            <h2 className="text-2xl font-bold mb-8 text-center">Upcoming Events by {ngo.name}</h2>
             {ngoEvents.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {ngoEvents.map(event => (

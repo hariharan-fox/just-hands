@@ -67,7 +67,7 @@ export default function RecommendationsForm() {
 
       {state.events && state.events.length > 0 && (
         <div className="space-y-4 pt-4">
-            <h3 className="text-lg font-semibold">Here are some events you might like:</h3>
+            <h3 className="text-base font-semibold">Here are some events you might like:</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {state.events.map(event => (
                     <EventCard key={event.id} event={event} />

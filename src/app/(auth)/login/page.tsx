@@ -11,7 +11,7 @@ export default function LoginPage() {
       <Card className="mx-auto max-w-sm w-full">
         <CardHeader className="text-center">
           <Logo className="justify-center mb-2" />
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-xl">Login</CardTitle>
           <CardDescription>Enter your email below to login to your account</CardDescription>
         </CardHeader>
         <CardContent>

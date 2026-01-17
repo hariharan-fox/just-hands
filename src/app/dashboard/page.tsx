@@ -21,7 +21,7 @@ export default function DashboardPage() {
             </Avatar>
         )}
         <div>
-          <h1 className="text-3xl font-bold">Welcome back, {volunteer.name}!</h1>
+          <h1 className="text-2xl font-bold">Welcome back, {volunteer.name}!</h1>
           <div className="flex flex-wrap gap-2 mt-2">
             {volunteer.skills.map(skill => (
               <Badge key={skill} variant="secondary">{skill}</Badge>
@@ -37,7 +37,7 @@ export default function DashboardPage() {
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">42</div>
+            <div className="text-xl font-bold">42</div>
             <p className="text-xs text-muted-foreground">in the last 3 months</p>
           </CardContent>
         </Card>
@@ -47,7 +47,7 @@ export default function DashboardPage() {
             <CheckCircle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">5</div>
+            <div className="text-xl font-bold">5</div>
             <p className="text-xs text-muted-foreground">+2 since last month</p>
           </CardContent>
         </Card>
@@ -57,7 +57,7 @@ export default function DashboardPage() {
             <Award className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">2</div>
+            <div className="text-xl font-bold">2</div>
             <p className="text-xs text-muted-foreground">Community Leader</p>
           </CardContent>
         </Card>
@@ -67,7 +67,7 @@ export default function DashboardPage() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">3</div>
+            <div className="text-xl font-bold">3</div>
             <p className="text-xs text-muted-foreground">Education, Environment</p>
           </CardContent>
         </Card>

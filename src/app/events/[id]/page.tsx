@@ -34,7 +34,7 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
               />
             )}
           </div>
-          <h1 className="text-4xl font-bold mb-2">{event.title}</h1>
+          <h1 className="text-3xl font-bold mb-2">{event.title}</h1>
           <div className="flex items-center gap-4 mb-6 text-muted-foreground">
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
@@ -49,13 +49,13 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
               <span>{event.location}</span>
             </div>
           </div>
-          <div className="prose prose-lg max-w-none text-foreground/90">
+          <div className="prose max-w-none text-foreground/90">
             <p>{event.description}</p>
           </div>
         </div>
         <div className="md:col-span-2 space-y-6">
           <div className="flex justify-center">
-            <Button size="lg" className="w-full text-lg">
+            <Button size="lg" className="w-full text-base">
               <UserPlus className="mr-2 h-5 w-5" />
               Sign Up for this Event
             </Button>
@@ -71,7 +71,7 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
                    )}
                    <div>
                        <p className="text-sm text-muted-foreground">Hosted by</p>
-                       <Link href={`/ngos/${ngo.id}`} className="text-xl font-bold hover:underline">{ngo.name}</Link>
+                       <Link href={`/ngos/${ngo.id}`} className="text-lg font-bold hover:underline">{ngo.name}</Link>
                    </div>
                 </div>
             )}

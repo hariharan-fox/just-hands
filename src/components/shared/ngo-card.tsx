@@ -24,7 +24,7 @@ export default function NgoCard({ ngo }: NgoCardProps) {
           </Avatar>
         )}
         <div className="flex-1">
-          <CardTitle className="text-xl">
+          <CardTitle className="text-lg">
             <Link href={`/ngos/${ngo.id}`} className="hover:text-primary transition-colors">
               {ngo.name}
             </Link>
