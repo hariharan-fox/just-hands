@@ -1,8 +1,8 @@
 'use server';
 
 import { z } from 'zod';
-import { allEvents } from './lib/placeholder-data';
-import type { Event } from './lib/types';
+import { allEvents } from '@/lib/placeholder-data';
+import type { Event } from '@/lib/types';
 
 
 const skillSchema = z.object({

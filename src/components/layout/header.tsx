@@ -12,7 +12,6 @@ const navLinks = [
   { href: '/events', label: 'Events' },
   { href: '/ngos', label: 'NGOs' },
   { href: '/forum', label: 'Forum' },
-  { href: '/dashboard', label: 'Dashboard' },
 ];
 
 export default function Header() {
