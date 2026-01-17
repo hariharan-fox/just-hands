@@ -1,8 +1,8 @@
 
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
-import { useEffect } from 'react';
+import { useFormStatus } from 'react-dom';
+import { useActionState, useEffect } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -32,7 +32,7 @@ function SubmitButton() {
 
 export default function RecommendationsForm() {
   const initialState = { message: null, events: [], error: null };
-  const [state, dispatch] = useFormState(getRecommendedEvents, initialState);
+  const [state, dispatch] = useActionState(getRecommendedEvents, initialState);
   const { toast } = useToast();
 
   useEffect(() => {
