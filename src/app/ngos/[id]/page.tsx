@@ -49,14 +49,15 @@ export default function NgoDetailPage({ params }: { params: { id: string } }) {
           </div>
           
           {/* Mission & Impact */}
-          <div className="prose max-w-none text-foreground/90">
-            <h2 className="text-lg font-semibold mb-2 flex items-center gap-2"><Target className="h-5 w-5 text-primary"/> Our Mission</h2>
-            <p className="text-sm">{ngo.mission}</p>
-          </div>
-          
-          <div className="prose max-w-none text-foreground/90">
-            <h2 className="text-lg font-semibold mb-2 flex items-center gap-2"><Users className="h-5 w-5 text-primary"/> Our Impact</h2>
-            <p className="text-sm">{ngo.impact}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="prose max-w-none text-foreground/90">
+                <h2 className="text-lg font-semibold mb-2 flex items-center gap-2"><Target className="h-5 w-5 text-primary"/> Our Mission</h2>
+                <p className="text-sm">{ngo.mission}</p>
+            </div>
+            <div className="prose max-w-none text-foreground/90">
+                <h2 className="text-lg font-semibold mb-2 flex items-center gap-2"><Users className="h-5 w-5 text-primary"/> Our Impact</h2>
+                <p className="text-sm">{ngo.impact}</p>
+            </div>
           </div>
 
           {/* Upcoming Events */}
