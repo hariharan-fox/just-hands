@@ -4,6 +4,21 @@ import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/header';
 import Sidebar from '@/components/layout/sidebar';
+import { Montserrat, Roboto } from 'next/font/google';
+
+const headlineFont = Montserrat({
+  subsets: ['latin'],
+  weight: '700',
+  display: 'swap',
+  variable: '--font-headline',
+});
+
+const bodyFont = Roboto({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-body',
+});
 
 export const metadata: Metadata = {
   title: 'ConnectSphere',
@@ -16,14 +31,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet" />
-      </head>
+    <html lang="en" className={cn(headlineFont.variable, bodyFont.variable)} suppressHydrationWarning>
       <body className={cn('min-h-screen bg-background font-body text-foreground/90 antialiased')}>
-        <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]" suppressHydrationWarning>
+        <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
           <Sidebar />
           <div className="flex flex-col">
             <Header />
