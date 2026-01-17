@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Calendar, Building, MessagesSquare } from 'lucide-react';
+import { Home, Calendar, Building, MessagesSquare, Settings, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Logo } from '../shared/logo';
 import { Button } from '@/components/ui/button';
@@ -44,11 +44,15 @@ export default function Sidebar() {
                 </div>
                 <div className="mt-auto p-4 border-t">
                     <div className="grid gap-2">
-                        <Button variant="outline" asChild>
-                            <Link href="/login">Login</Link>
+                        <Button variant="ghost" className="w-full justify-start" asChild>
+                            <Link href="#">
+                                <Settings className="mr-2 h-4 w-4" />
+                                Settings
+                            </Link>
                         </Button>
-                        <Button asChild>
-                            <Link href="/signup">Sign Up</Link>
+                        <Button variant="ghost" className="w-full justify-start">
+                           <LogOut className="mr-2 h-4 w-4" />
+                           Logout
                         </Button>
                     </div>
                 </div>
