@@ -1,9 +1,6 @@
-
 'use server';
 
-import { recommendEventsBasedOnSkills as recommendEventsBasedOnSkillsFlow } from '@/ai/flows/recommend-events-based-on-skills';
 import { z } from 'zod';
-import { PlaceHolderImages } from './lib/placeholder-images';
 import { allEvents } from './lib/placeholder-data';
 import type { Event } from './lib/types';
 
@@ -33,18 +30,14 @@ export async function getRecommendedEvents(
     };
   }
 
-  try {
-    const result = await recommendEventsBasedOnSkillsFlow({
-      volunteerSkills: validatedFields.data.skills,
-    });
+  // Simulate API call and return mock data
+  await new Promise(resolve => setTimeout(resolve, 1000));
     
-    // In a real app, this would be a sophisticated search.
-    // For now, we'll return a few mock events that seem related.
-    const recommendedEvents = allEvents.slice(0, 2);
+  // In a real app, this would be a sophisticated search.
+  // For now, we'll return a few mock events that seem related.
+  const recommendedEvents = allEvents.slice(0, 2);
 
-    return { message: result.recommendedEvents, events: recommendedEvents };
-  } catch (error) {
-    console.error(error);
-    return { error: 'An error occurred while getting recommendations. Please try again.' };
-  }
+  const mockMessage = `Based on your skills in '${validatedFields.data.skills}', we've found a couple of events where you could make a real difference. Check them out!`;
+
+  return { message: mockMessage, events: recommendedEvents };
 }
