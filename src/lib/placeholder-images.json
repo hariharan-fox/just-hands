@@ -1,3 +1,88 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-volunteers",
+      "description": "A group of diverse volunteers working together happily outdoors.",
+      "imageUrl": "https://images.unsplash.com/photo-1758599668178-d9716bbda9d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx2b2x1bnRlZXJzJTIwY29tbXVuaXR5fGVufDB8fHx8MTc2ODU2MzQ3OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "volunteers community"
+    },
+    {
+      "id": "event-beach-cleanup",
+      "description": "Volunteers cleaning up a sandy beach.",
+      "imageUrl": "https://images.unsplash.com/photo-1617953141905-b27fb1f17d88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxiZWFjaCUyMGNsZWFudXB8ZW58MHx8fHwxNzY4NjExNzA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "beach cleanup"
+    },
+    {
+      "id": "event-food-drive",
+      "description": "Canned goods and food donations being sorted by volunteers.",
+      "imageUrl": "https://images.unsplash.com/photo-1593113616828-6f22bca04804?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxmb29kJTIwZG9uYXRpb258ZW58MHx8fHwxNzY4NjA0ODg2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "food donation"
+    },
+    {
+      "id": "event-tree-planting",
+      "description": "A person planting a small tree sapling in a field.",
+      "imageUrl": "https://images.unsplash.com/photo-1591255199673-4e2b706645a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx0cmVlJTIwcGxhbnRpbmd8ZW58MHx8fHwxNzY4NjI1NjYwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tree planting"
+    },
+    {
+      "id": "event-animal-shelter",
+      "description": "A volunteer petting a dog in an animal shelter.",
+      "imageUrl": "https://images.unsplash.com/photo-1594004844563-536a03a6e532?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhbmltYWwlMjBzaGVsdGVyfGVufDB8fHx8MTc2ODU2OTc2N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "animal shelter"
+    },
+    {
+      "id": "event-coding-workshop",
+      "description": "People learning to code on laptops in a classroom setting.",
+      "imageUrl": "https://images.unsplash.com/photo-1580982338369-650de7dfdc07?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjb2RpbmclMjB3b3Jrc2hvcHxlbnwwfHx8fDE3Njg2MTE3MDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "coding workshop"
+    },
+    {
+      "id": "event-mentorship-session",
+      "description": "An older person mentoring a younger person at a desk.",
+      "imageUrl": "https://images.unsplash.com/photo-1758525863537-9d2ec17cb587?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtZW50b3JzaGlwJTIwc2Vzc2lvbnxlbnwwfHx8fDE3Njg2MjU2NjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mentorship session"
+    },
+    {
+      "id": "avatar-jane-doe",
+      "description": "Avatar for Jane Doe.",
+      "imageUrl": "https://images.unsplash.com/photo-1580489944761-15a19d654956?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2ODU1NDczMnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "avatar-john-smith",
+      "description": "Avatar for John Smith.",
+      "imageUrl": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njg1NzI1MTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "avatar-priya-sharma",
+      "description": "Avatar for Priya Sharma.",
+      "imageUrl": "https://images.unsplash.com/photo-1579503841516-e0bd7fca5faa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3b21hbiUyMGZhY2V8ZW58MHx8fHwxNzY4NTY1NjQyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman face"
+    },
+    {
+      "id": "ngo-green-earth",
+      "description": "Logo for Green Earth Foundation.",
+      "imageUrl": "https://images.unsplash.com/photo-1662027044921-6febc57a0c53?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxuYXR1cmUlMjBsb2dvfGVufDB8fHx8MTc2ODU2NTY0N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "nature logo"
+    },
+    {
+      "id": "ngo-hope-helpers",
+      "description": "Logo for Hope Helpers.",
+      "imageUrl": "https://images.unsplash.com/photo-1653499676737-becf2c9562c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjaGFyaXR5JTIwbG9nb3xlbnwwfHx8fDE3Njg1NjUxODN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "charity logo"
+    },
+    {
+      "id": "ngo-tech-forward",
+      "description": "Logo for Tech Forward.",
+      "imageUrl": "https://images.unsplash.com/photo-1662057168152-d5dc088deb25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx0ZWNoJTIwbG9nb3xlbnwwfHx8fDE3Njg1MjY5MjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tech logo"
+    },
+    {
+      "id": "ngo-animal-allies",
+      "description": "Logo for Animal Allies.",
+      "imageUrl": "https://images.unsplash.com/photo-1654362595375-2e775cb111df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwYXclMjBsb2dvfGVufDB8fHx8MTc2ODYyNTY2Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "paw logo"
+    }
+  ]
 }
