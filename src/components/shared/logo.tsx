@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils';
 
 export function Logo({ className }: { className?: string }) {
   return (
-    <Link href="/" className={cn("flex items-center gap-2 text-lg font-bold font-headline text-primary", className)}>
-      <HandHeart className="h-5 w-5" />
+    <Link href="/" className={cn("flex items-center gap-1.5 text-base font-bold font-headline text-primary", className)}>
+      <HandHeart className="h-4 w-4" />
       <span>ConnectSphere</span>
     </Link>
   );
