@@ -3,6 +3,7 @@ import type { Volunteer, Event, NGO, ForumPost, Testimonial } from './types';
 export const volunteer: Volunteer = {
   id: 'vol-1',
   name: 'Priya Sharma',
+  email: 'priya.sharma@example.com',
   avatarUrl: 'avatar-priya-sharma',
   skills: ['Web Development', 'Graphic Design', 'Social Media'],
   interests: ['Education', 'Technology', 'Community Building'],

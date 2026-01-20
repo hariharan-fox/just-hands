@@ -1,6 +1,7 @@
 export type Volunteer = {
   id: string;
   name: string;
+  email: string;
   avatarUrl: string;
   skills: string[];
   interests: string[];
@@ -35,7 +36,7 @@ export type ForumPost = {
   id: string;
   title: string;
   authorId: string;
-  authorName: string;
+  authorName:string;
   createdAt: string;
   replies: number;
   lastReply: {
