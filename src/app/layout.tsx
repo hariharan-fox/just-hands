@@ -4,16 +4,16 @@ import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/header';
 import Sidebar from '@/components/layout/sidebar';
-import { Montserrat, Roboto } from 'next/font/google';
+import { Playfair_Display, Lato } from 'next/font/google';
 
-const headlineFont = Montserrat({
+const headlineFont = Playfair_Display({
   subsets: ['latin'],
   weight: '700',
   display: 'swap',
   variable: '--font-headline',
 });
 
-const bodyFont = Roboto({
+const bodyFont = Lato({
   subsets: ['latin'],
   weight: '400',
   display: 'swap',
@@ -21,7 +21,7 @@ const bodyFont = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: 'ConnectSphere',
+  title: 'Just Hands',
   description: 'Connecting volunteers with NGOs for a better world.',
 };
 
