@@ -3,7 +3,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { List, CheckCircle, Clock, Award, Users } from "lucide-react";
 import Link from "next/link";
-import RecommendationsForm from "./recommendations-form";
 import { volunteer, upcomingCommitments } from "@/lib/placeholder-data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import type { Event } from "@/lib/types";
@@ -73,19 +72,7 @@ export default function DashboardPage() {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>AI-Powered Recommendations</CardTitle>
-            <CardDescription>
-              Enter your skills to find events that are a perfect match for you.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <RecommendationsForm />
-          </CardContent>
-        </Card>
-        
+      <div className="grid grid-cols-1 gap-8">
         <Card>
           <CardHeader>
             <CardTitle>Upcoming Commitments</CardTitle>
