@@ -1,4 +1,5 @@
-import type { Volunteer, Event, NGO, ForumPost, Testimonial } from './types';
+import type { Volunteer, Event, NGO, ForumPost, Testimonial, LearningSegment } from './types';
+import { Heart, Brain, Users, Baby, HeartHandshake, DollarSign, Landmark, Library, Sprout, Network, ShieldAlert, Sparkles, Wind } from 'lucide-react';
 
 export const volunteer: Volunteer = {
   id: 'vol-1',
@@ -47,6 +48,8 @@ export const allNgos: NGO[] = [
     impact: 'Rescued over 500 animals and facilitated 300+ adoptions in the past two years.',
   },
 ];
+
+export const featuredNgos = allNgos.slice(0, 2);
 
 export const allEvents: Event[] = [
   {
@@ -135,7 +138,7 @@ export const allEvents: Event[] = [
   },
 ];
 
-export const featuredEvents = allEvents.slice(0, 3);
+export const featuredEvents = allEvents.slice(0, 2);
 export const upcomingCommitments = allEvents.slice(3, 5);
 
 export const forumPosts: ForumPost[] = [
@@ -214,4 +217,20 @@ export const testimonials: Testimonial[] = [
         role: 'Volunteer',
         avatarId: 'avatar-priya-sharma'
     }
+];
+
+export const learningSegments: LearningSegment[] = [
+    { id: 1, title: 'Self-Care', icon: Heart, summary: 'Nurturing your body and mind is the foundation of wellbeing. This segment explores practical ways to integrate self-care into your daily life.', actionPoints: ['Dedicate 15 minutes daily to a relaxing activity.', 'Ensure you get 7-8 hours of sleep per night.', 'Practice mindful eating without distractions.', 'Engage in a physical activity you enjoy for 30 minutes.', 'Set boundaries to protect your energy and time.', 'Journal your thoughts and feelings regularly.', 'Connect with a friend or loved one.', 'Spend time in nature, even if it\'s just a short walk.', 'Learn to say "no" to commitments that drain you.', 'Celebrate your small wins and achievements.'], reflectionQuestions: ['What does self-care mean to you?', 'What are your biggest barriers to practicing self-care?'], progress: 75, isLocked: false },
+    { id: 2, title: 'Psychology & Self-Understanding', icon: Brain, summary: 'Gain insights into your own mind. Understand your emotions, thoughts, and behaviors to foster self-awareness and personal growth.', actionPoints: ['...'], reflectionQuestions: ['...'], progress: 40, isLocked: false },
+    { id: 3, title: 'Influences', icon: Users, summary: 'Become aware of the external factors that shape you, from social circles to media, and learn to navigate them consciously.', actionPoints: ['...'], reflectionQuestions: ['...'], progress: 0, isLocked: true },
+    { id: 4, title: 'Family & Parenting', icon: Baby, summary: 'Explore the dynamics of family life and develop skills for conscious parenting and building strong, supportive family bonds.', actionPoints: ['...'], reflectionQuestions: ['...'], progress: 0, isLocked: true },
+    { id: 5, title: 'Relationship Management', icon: HeartHandshake, summary: 'Learn to cultivate healthy, meaningful relationships with partners, friends, and colleagues through effective communication and empathy.', actionPoints: ['...'], reflectionQuestions: ['...'], progress: 0, isLocked: true },
+    { id: 6, title: 'Finance & Money', icon: DollarSign, summary: 'Achieve financial wellbeing by understanding money management, budgeting, and conscious spending.', actionPoints: ['...'], reflectionQuestions: ['...'], progress: 0, isLocked: true },
+    { id: 7, title: 'Human Rights & Law', icon: Landmark, summary: 'Understand your rights and the legal frameworks that protect them, empowering you to be an informed and active citizen.', actionPoints: ['...'], reflectionQuestions: ['...'], progress: 0, isLocked: true },
+    { id: 8, title: 'Government Schemes & Social Support', icon: Library, summary: 'Learn about the social support systems and government schemes available to you and your community.', actionPoints: ['...'], reflectionQuestions: ['...'], progress: 0, isLocked: true },
+    { id: 9, title: 'Environmental & Animal Care', icon: Sprout, summary: 'Discover how your actions impact the planet and learn to live more sustainably and compassionately towards all beings.', actionPoints: ['...'], reflectionQuestions: ['...'], progress: 0, isLocked: true },
+    { id: 10, title: 'Systems & Patterns', icon: Network, summary: 'Recognize the larger systems and patterns at play in society and learn how to contribute to positive systemic change.', actionPoints: ['...'], reflectionQuestions: ['...'], progress: 0, isLocked: true },
+    { id: 11, title: 'Disaster Management', icon: ShieldAlert, summary: 'Prepare yourself and your community for unexpected events with practical knowledge in disaster preparedness and response.', actionPoints: ['...'], reflectionQuestions: ['...'], progress: 0, isLocked: true },
+    { id: 12, title: 'Spirituality', icon: Sparkles, summary: 'Explore your inner world and connect with your sense of purpose and meaning, regardless of your beliefs.', actionPoints: ['...'], reflectionQuestions: ['...'], progress: 0, isLocked: true },
+    { id: 13, title: 'Being Conscious/Mindfulness', icon: Wind, summary: 'Cultivate a state of present-moment awareness to reduce stress, improve focus, and live more intentionally.', actionPoints: ['...'], reflectionQuestions: ['...'], progress: 0, isLocked: true },
 ];
