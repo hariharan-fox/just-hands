@@ -5,7 +5,7 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, MapPin, Target, UserPlus, Building } from "lucide-react";
+import { Calendar, MapPin, Target, UserPlus, Building, Heart, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -51,6 +51,22 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
             <h2 className="text-xl font-semibold mb-2">About this Event</h2>
             <p>{event.description}</p>
           </div>
+
+          {/* Why it's important */}
+          {event.why && (
+            <div className="prose max-w-none text-foreground/90">
+                <h2 className="text-xl font-semibold mb-2 flex items-center gap-2"><Heart className="h-5 w-5 text-primary"/> Why It&apos;s Important</h2>
+                <p>{event.why}</p>
+            </div>
+          )}
+
+          {/* Your Impact */}
+          {event.impact && (
+            <div className="prose max-w-none text-foreground/90">
+                <h2 className="text-xl font-semibold mb-2 flex items-center gap-2"><TrendingUp className="h-5 w-5 text-primary"/> Your Impact</h2>
+                <p>{event.impact}</p>
+            </div>
+          )}
 
           {/* Skills Section */}
           <div>

@@ -14,6 +14,8 @@ export type Event = {
   time: string;
   location: string;
   description: string;
+  why: string;
+  impact: string;
   skills: string[];
   imageUrl: string;
   cause: string;
