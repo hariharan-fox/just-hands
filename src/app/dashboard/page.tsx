@@ -1,6 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CheckCircle, Clock, Award, Users, Lightbulb } from "lucide-react";
 import Link from "next/link";
 import { volunteer, featuredEvents, featuredNgos, learningSegments, upcomingCommitments } from "@/lib/placeholder-data";
@@ -26,11 +25,6 @@ export default function DashboardPage() {
         )}
         <div>
           <h1 className="text-2xl font-bold">Welcome back, {volunteer.name}!</h1>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {volunteer.skills.map(skill => (
-              <Badge key={skill} variant="secondary">{skill}</Badge>
-            ))}
-          </div>
         </div>
       </div>
 
