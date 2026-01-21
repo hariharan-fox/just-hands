@@ -43,15 +43,6 @@ export default function SettingsPage() {
               <Input id="email" type="email" defaultValue={volunteer.email} disabled />
               <p className="text-xs text-muted-foreground">Your email address is not displayed publicly.</p>
             </div>
-              <div className="space-y-2">
-              <Label htmlFor="interests">My Interests</Label>
-              <Textarea
-                id="interests"
-                defaultValue={volunteer.interests.join(', ')}
-                placeholder="e.g., Education, Environment, Animal Welfare"
-              />
-              <p className="text-xs text-muted-foreground">Enter interests separated by commas.</p>
-            </div>
             <Button>Update Profile</Button>
           </CardContent>
         </Card>
