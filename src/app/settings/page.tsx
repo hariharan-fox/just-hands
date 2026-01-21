@@ -75,7 +75,7 @@ export default function SettingsPage() {
           <CardContent className="space-y-6">
             <div className="space-y-2">
                 <Label>Password</Label>
-                <Button variant="outline">Change Password</Button>
+                <Button variant="outline" className="mt-4">Change Password</Button>
                 <p className="text-xs text-muted-foreground">You will be sent an email to reset your password.</p>
             </div>
             <Separator />
