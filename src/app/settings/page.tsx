@@ -43,15 +43,6 @@ export default function SettingsPage() {
               <Input id="email" type="email" defaultValue={volunteer.email} disabled />
               <p className="text-xs text-muted-foreground">Your email address is not displayed publicly.</p>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="skills">My Skills</Label>
-              <Textarea
-                id="skills"
-                defaultValue={volunteer.skills.join(', ')}
-                placeholder="e.g., Web Development, Event Planning, Public Speaking"
-              />
-                <p className="text-xs text-muted-foreground">Enter skills separated by commas.</p>
-            </div>
               <div className="space-y-2">
               <Label htmlFor="interests">My Interests</Label>
               <Textarea
