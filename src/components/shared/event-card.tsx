@@ -38,13 +38,13 @@ export default function EventCard({ event }: EventCardProps) {
         </Link>
       </CardHeader>
       <CardContent className="p-4 flex-1">
-        <Badge variant="outline" className="mb-2">{event.cause}</Badge>
+        <Badge variant="outline" className="mb-2 text-xs">{event.cause}</Badge>
         <CardTitle className="text-sm mb-2">
           <Link href={`/events/${event.id}`} className="hover:text-primary transition-colors">
             {event.title}
           </Link>
         </CardTitle>
-        <div className="text-sm text-muted-foreground space-y-2">
+        <div className="text-xs text-muted-foreground space-y-1">
           <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4" />
             <span>{event.date}</span>
@@ -64,10 +64,10 @@ export default function EventCard({ event }: EventCardProps) {
                      <AvatarFallback>{ngo.name.charAt(0)}</AvatarFallback>
                   </Avatar>
                )}
-               <span className="text-sm text-muted-foreground group-hover:text-primary transition-colors">{ngo.name}</span>
+               <span className="text-xs text-muted-foreground group-hover:text-primary transition-colors">{ngo.name}</span>
             </Link>
          )}
-         <Button asChild variant="ghost" size="sm" className="text-primary hover:text-primary">
+         <Button asChild variant="ghost" size="sm" className="text-primary hover:text-primary text-xs">
             <Link href={`/events/${event.id}`}>
                 View <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
