@@ -1,18 +1,15 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ArrowRight, CheckCircle, Clock, Award, Users, Lightbulb } from "lucide-react";
+import { CheckCircle, Clock, Award, Users } from "lucide-react";
 import Link from "next/link";
-import { volunteer, featuredEvents, featuredNgos, learningSegments, upcomingCommitments } from "@/lib/placeholder-data";
+import { volunteer, featuredEvents, featuredNgos, upcomingCommitments } from "@/lib/placeholder-data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import type { Event } from "@/lib/types";
 import EventCard from "@/components/shared/event-card";
 import NgoCard from "@/components/shared/ngo-card";
-import { Progress } from "@/components/ui/progress";
-import { Button } from "@/components/ui/button";
 
 export default function DashboardPage() {
   const volunteerAvatar = PlaceHolderImages.find(p => p.id === 'avatar-priya-sharma');
-  const totalProgress = (learningSegments.reduce((acc, segment) => acc + segment.progress, 0) / (learningSegments.length > 0 ? learningSegments.length : 1));
   
   return (
     <div className="container mx-auto px-4 md:px-6 py-8 space-y-12">
@@ -96,29 +93,6 @@ export default function DashboardPage() {
         </div>
 
         <div className="lg:col-span-1 space-y-8">
-
-          <section>
-             <h2 className="text-2xl font-bold mb-4">Your Learning Journey</h2>
-              <Card>
-                <CardHeader className="flex flex-row items-center gap-4">
-                  <div className="p-3 bg-primary/10 rounded-full">
-                    <Lightbulb className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <CardTitle>Learning Progress</CardTitle>
-                    <CardDescription>You've completed {Math.round(totalProgress)}% of your journey.</CardDescription>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <Progress value={totalProgress} className="mb-4" />
-                  <Button asChild className="w-full">
-                    <Link href="/learning">
-                      Continue Learning <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-          </section>
           
           <section>
             <h2 className="text-2xl font-bold mb-4">Upcoming Commitments</h2>

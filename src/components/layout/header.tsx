@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, Home, Calendar, Building, MessagesSquare, Settings, LogOut, Lightbulb } from 'lucide-react';
+import { Menu, Home, Calendar, Building, MessagesSquare, Settings, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
@@ -13,7 +13,6 @@ const navLinks = [
   { href: '/events', label: 'Events', icon: Calendar },
   { href: '/ngos', label: 'NGOs', icon: Building },
   { href: '/forum', label: 'Forum', icon: MessagesSquare },
-  { href: '/learning', label: 'Learning', icon: Lightbulb },
 ];
 
 export default function Header() {

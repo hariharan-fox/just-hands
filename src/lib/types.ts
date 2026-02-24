@@ -1,5 +1,3 @@
-import type { ElementType } from 'react';
-
 export type Volunteer = {
   id: string;
   name: string;
@@ -53,15 +51,4 @@ export type Testimonial = {
   name: string;
   role: string;
   avatarId: string;
-};
-
-export type LearningSegment = {
-  id: number;
-  title: string;
-  icon: ElementType;
-  summary: string;
-  actionPoints: string[];
-  reflectionQuestions: string[];
-  progress: number;
-  isLocked: boolean;
 };
