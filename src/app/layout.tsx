@@ -4,9 +4,9 @@ import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/header';
 import Sidebar from '@/components/layout/sidebar';
-import { Playfair_Display, Inter } from 'next/font/google';
+import { Merriweather, Inter } from 'next/font/google';
 
-const headlineFont = Playfair_Display({
+const headlineFont = Merriweather({
   subsets: ['latin'],
   weight: '700',
   display: 'swap',
