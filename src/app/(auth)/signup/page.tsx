@@ -12,7 +12,7 @@ export default function SignupPage() {
       <Card className="mx-auto max-w-sm w-full">
         <CardHeader className="text-center">
           <Logo className="justify-center mb-2" />
-          <CardTitle className="text-xl">Sign Up</CardTitle>
+          <CardTitle className="text-lg">Sign Up</CardTitle>
           <CardDescription>Create your account to start making a difference</CardDescription>
         </CardHeader>
         <CardContent>

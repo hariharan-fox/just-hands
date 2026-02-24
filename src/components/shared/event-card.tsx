@@ -39,7 +39,7 @@ export default function EventCard({ event }: EventCardProps) {
       </CardHeader>
       <CardContent className="p-4 flex-1">
         <Badge variant="outline" className="mb-2">{event.cause}</Badge>
-        <CardTitle className="text-base mb-2">
+        <CardTitle className="text-sm mb-2">
           <Link href={`/events/${event.id}`} className="hover:text-primary transition-colors">
             {event.title}
           </Link>

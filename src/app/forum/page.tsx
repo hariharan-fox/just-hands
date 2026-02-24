@@ -11,8 +11,8 @@ export default function ForumPage() {
     <div className="container mx-auto px-4 md:px-6 py-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Community Forum</h1>
-          <p className="mt-2 text-base text-muted-foreground">
+          <h1 className="text-2xl font-bold">Community Forum</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
             Connect, share, and learn with fellow volunteers and NGOs.
           </p>
         </div>
@@ -40,7 +40,7 @@ export default function ForumPage() {
                           </Avatar>
                       )}
                       <div>
-                        <Link href="#" className="font-semibold text-base hover:text-primary">{post.title}</Link>
+                        <Link href="#" className="font-semibold text-sm hover:text-primary">{post.title}</Link>
                         <p className="text-sm text-muted-foreground">
                           Started by <span className="font-medium text-foreground">{post.authorName}</span> {post.createdAt}
                         </p>
@@ -49,7 +49,7 @@ export default function ForumPage() {
                     <div className="col-span-6 md:col-span-2 text-center">
                       <div className="flex items-center justify-center gap-2 text-muted-foreground">
                         <MessageSquare className="h-5 w-5" />
-                        <span className="font-bold text-base text-foreground">{post.replies}</span>
+                        <span className="font-bold text-sm text-foreground">{post.replies}</span>
                         <span className="hidden md:inline">replies</span>
                       </div>
                     </div>

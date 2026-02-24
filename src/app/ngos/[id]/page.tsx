@@ -40,7 +40,7 @@ export default function NgoDetailPage({ params }: { params: { id: string } }) {
             )}
             <div className="flex-1">
               <Badge>{ngo.cause.join(', ')}</Badge>
-              <h1 className="text-2xl font-bold mt-2">{ngo.name}</h1>
+              <h1 className="text-xl font-bold mt-2">{ngo.name}</h1>
               <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4" />
                 <span>{ngo.location}</span>
@@ -51,11 +51,11 @@ export default function NgoDetailPage({ params }: { params: { id: string } }) {
           {/* Mission & Impact */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="prose max-w-none text-foreground/90">
-                <h2 className="text-lg font-semibold mb-2 flex items-center gap-2"><Target className="h-5 w-5 text-primary"/> Our Mission</h2>
+                <h2 className="text-base font-semibold mb-2 flex items-center gap-2"><Target className="h-5 w-5 text-primary"/> Our Mission</h2>
                 <p className="text-sm">{ngo.mission}</p>
             </div>
             <div className="prose max-w-none text-foreground/90">
-                <h2 className="text-lg font-semibold mb-2 flex items-center gap-2"><Users className="h-5 w-5 text-primary"/> Our Impact</h2>
+                <h2 className="text-base font-semibold mb-2 flex items-center gap-2"><Users className="h-5 w-5 text-primary"/> Our Impact</h2>
                 <p className="text-sm">{ngo.impact}</p>
             </div>
           </div>
@@ -82,7 +82,7 @@ export default function NgoDetailPage({ params }: { params: { id: string } }) {
           <div className="sticky top-24 space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Contact & Connect</CardTitle>
+                <CardTitle className="text-sm">Contact & Connect</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 text-sm">
                  <div className="space-y-3">

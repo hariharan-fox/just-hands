@@ -8,8 +8,8 @@ export default function NgosPage() {
     <div className="bg-card">
       <div className="container mx-auto px-4 md:px-6 py-8">
         <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold tracking-tight">Meet the Change-Makers</h1>
-          <p className="mt-2 text-base text-muted-foreground">
+          <h1 className="text-2xl font-bold tracking-tight">Meet the Change-Makers</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
             Discover and connect with organizations dedicated to creating a positive impact.
           </p>
         </div>

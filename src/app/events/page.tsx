@@ -11,8 +11,8 @@ export default function EventsPage() {
     <div className="bg-card">
       <div className="container mx-auto px-4 md:px-6 py-8">
         <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold tracking-tight">Find Your Calling</h1>
-          <p className="mt-2 text-base text-muted-foreground">
+          <h1 className="text-2xl font-bold tracking-tight">Find Your Calling</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
             Explore diverse opportunities to contribute to causes you care about.
           </p>
         </div>

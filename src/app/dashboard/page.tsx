@@ -21,7 +21,7 @@ export default function DashboardPage() {
             </Avatar>
         )}
         <div>
-          <h1 className="text-2xl font-bold">Welcome back, {volunteer.name}!</h1>
+          <h1 className="text-xl font-bold">Welcome back, {volunteer.name}!</h1>
         </div>
       </div>
 
@@ -32,7 +32,7 @@ export default function DashboardPage() {
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-xl font-bold">42</div>
+            <div className="text-lg font-bold">42</div>
             <p className="text-xs text-muted-foreground">in the last 3 months</p>
           </CardContent>
         </Card>
@@ -42,7 +42,7 @@ export default function DashboardPage() {
             <CheckCircle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-xl font-bold">5</div>
+            <div className="text-lg font-bold">5</div>
             <p className="text-xs text-muted-foreground">+2 since last month</p>
           </CardContent>
         </Card>
@@ -52,7 +52,7 @@ export default function DashboardPage() {
             <Award className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-xl font-bold">2</div>
+            <div className="text-lg font-bold">2</div>
             <p className="text-xs text-muted-foreground">Community Leader</p>
           </CardContent>
         </Card>
@@ -62,7 +62,7 @@ export default function DashboardPage() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-xl font-bold">3</div>
+            <div className="text-lg font-bold">3</div>
             <p className="text-xs text-muted-foreground">Education, Environment</p>
           </CardContent>
         </Card>
@@ -73,7 +73,7 @@ export default function DashboardPage() {
         <div className="lg:col-span-2 space-y-8">
           
           <section>
-            <h2 className="text-2xl font-bold mb-4">Featured Events</h2>
+            <h2 className="text-xl font-bold mb-4">Featured Events</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {featuredEvents.map((event) => (
                 <EventCard key={event.id} event={event} />
@@ -82,7 +82,7 @@ export default function DashboardPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-4">Featured NGOs</h2>
+            <h2 className="text-xl font-bold mb-4">Featured NGOs</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               {featuredNgos.map((ngo) => (
                 <NgoCard key={ngo.id} ngo={ngo} />
@@ -95,7 +95,7 @@ export default function DashboardPage() {
         <div className="lg:col-span-1 space-y-8">
           
           <section>
-            <h2 className="text-2xl font-bold mb-4">Upcoming Commitments</h2>
+            <h2 className="text-xl font-bold mb-4">Upcoming Commitments</h2>
             <Card>
               <CardContent className="p-6">
                  {upcomingCommitments.length > 0 ? (

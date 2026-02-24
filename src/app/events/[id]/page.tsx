@@ -30,7 +30,7 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
           {/* Event Header */}
           <div>
             <Badge>{event.cause}</Badge>
-            <h1 className="text-3xl md:text-4xl font-bold mt-2">{event.title}</h1>
+            <h1 className="text-2xl md:text-3xl font-bold mt-2">{event.title}</h1>
           </div>
 
           {/* Event Image */}
@@ -48,14 +48,14 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
           
           {/* About Section */}
           <div className="prose max-w-none text-foreground/90">
-            <h2 className="text-xl font-semibold mb-2">About this Event</h2>
+            <h2 className="text-lg font-semibold mb-2">About this Event</h2>
             <p>{event.description}</p>
           </div>
 
           {/* Why it's important */}
           {event.why && (
             <div className="prose max-w-none text-foreground/90">
-                <h2 className="text-xl font-semibold mb-2 flex items-center gap-2"><Heart className="h-5 w-5 text-primary"/> Why It&apos;s Important</h2>
+                <h2 className="text-lg font-semibold mb-2 flex items-center gap-2"><Heart className="h-5 w-5 text-primary"/> Why It&apos;s Important</h2>
                 <p>{event.why}</p>
             </div>
           )}
@@ -63,14 +63,14 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
           {/* Your Impact */}
           {event.impact && (
             <div className="prose max-w-none text-foreground/90">
-                <h2 className="text-xl font-semibold mb-2 flex items-center gap-2"><TrendingUp className="h-5 w-5 text-primary"/> Your Impact</h2>
+                <h2 className="text-lg font-semibold mb-2 flex items-center gap-2"><TrendingUp className="h-5 w-5 text-primary"/> Your Impact</h2>
                 <p>{event.impact}</p>
             </div>
           )}
 
           {/* Skills Section */}
           <div>
-            <h3 className="text-lg font-semibold flex items-center gap-2 mb-3"><Target className="h-5 w-5 text-primary"/> Skills Needed</h3>
+            <h3 className="text-base font-semibold flex items-center gap-2 mb-3"><Target className="h-5 w-5 text-primary"/> Skills Needed</h3>
             <div className="flex flex-wrap gap-2">
               {event.skills.map((skill) => (
                 <Badge key={skill} variant="secondary">{skill}</Badge>
@@ -86,7 +86,7 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
             {/* Action Card */}
             <Card className="shadow-lg">
               <CardContent className="p-6 space-y-4">
-                <Button size="lg" className="w-full text-base">
+                <Button size="lg" className="w-full text-sm">
                   <UserPlus className="mr-2 h-5 w-5" />
                   Sign Up for this Event
                 </Button>
@@ -112,7 +112,7 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
             {ngo && (
               <Card>
                 <CardHeader>
-                    <CardTitle className="text-base">Organized by</CardTitle>
+                    <CardTitle className="text-sm">Organized by</CardTitle>
                 </CardHeader>
                 <CardContent className="flex items-center gap-4">
                     {ngoLogo && (
