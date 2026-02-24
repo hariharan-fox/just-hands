@@ -19,7 +19,7 @@ export default function EventCard({ event }: EventCardProps) {
   const ngoLogo = ngo ? PlaceHolderImages.find(p => p.id === ngo.logoUrl) : undefined;
   
   return (
-    <Card className="flex flex-col overflow-hidden h-full shadow-lg">
+    <Card className="flex flex-col overflow-hidden h-full">
       <CardHeader className="p-0 relative">
         <Link href={`/events/${event.id}`}>
           <div className="aspect-video w-full relative">
