@@ -5,7 +5,7 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, MapPin, Target, UserPlus, Building, Heart, TrendingUp } from "lucide-react";
+import { Calendar, MapPin, Target, UserPlus, Building, Heart, TrendingUp, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -22,6 +22,12 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-8">
+      <div className="mb-6">
+        <Link href="/events" className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary">
+          <ArrowLeft className="h-4 w-4" />
+          Back to all events
+        </Link>
+      </div>
       <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
         
         {/* Main Content */}
@@ -30,7 +36,7 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
           {/* Event Header */}
           <div>
             <Badge>{event.cause}</Badge>
-            <h1 className="text-2xl md:text-3xl font-bold mt-2">{event.title}</h1>
+            <h1 className="text-xl md:text-2xl font-bold mt-2">{event.title}</h1>
           </div>
 
           {/* Event Image */}
@@ -48,29 +54,29 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
           
           {/* About Section */}
           <div className="prose max-w-none text-foreground/90">
-            <h2 className="text-lg font-semibold mb-2">About this Event</h2>
-            <p>{event.description}</p>
+            <h2 className="text-base font-semibold mb-2">About this Event</h2>
+            <p className="text-sm">{event.description}</p>
           </div>
 
           {/* Why it's important */}
           {event.why && (
             <div className="prose max-w-none text-foreground/90">
-                <h2 className="text-lg font-semibold mb-2 flex items-center gap-2"><Heart className="h-5 w-5 text-primary"/> Why It&apos;s Important</h2>
-                <p>{event.why}</p>
+                <h2 className="text-base font-semibold mb-2 flex items-center gap-2"><Heart className="h-4 w-4 text-primary"/> Why It&apos;s Important</h2>
+                <p className="text-sm">{event.why}</p>
             </div>
           )}
 
           {/* Your Impact */}
           {event.impact && (
             <div className="prose max-w-none text-foreground/90">
-                <h2 className="text-lg font-semibold mb-2 flex items-center gap-2"><TrendingUp className="h-5 w-5 text-primary"/> Your Impact</h2>
-                <p>{event.impact}</p>
+                <h2 className="text-base font-semibold mb-2 flex items-center gap-2"><TrendingUp className="h-4 w-4 text-primary"/> Your Impact</h2>
+                <p className="text-sm">{event.impact}</p>
             </div>
           )}
 
           {/* Skills Section */}
           <div>
-            <h3 className="text-base font-semibold flex items-center gap-2 mb-3"><Target className="h-5 w-5 text-primary"/> Skills Needed</h3>
+            <h3 className="text-base font-semibold flex items-center gap-2 mb-3"><Target className="h-4 w-4 text-primary"/> Skills Needed</h3>
             <div className="flex flex-wrap gap-2">
               {event.skills.map((skill) => (
                 <Badge key={skill} variant="secondary">{skill}</Badge>
@@ -86,8 +92,8 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
             {/* Action Card */}
             <Card className="shadow-lg">
               <CardContent className="p-6 space-y-4">
-                <Button size="lg" className="w-full text-sm">
-                  <UserPlus className="mr-2 h-5 w-5" />
+                <Button size="lg" className="w-full text-base">
+                  <UserPlus className="mr-2 h-4 w-4" />
                   Sign Up for this Event
                 </Button>
                 <div className="space-y-3 text-sm">
@@ -95,7 +101,7 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
                     <Calendar className="h-4 w-4 mt-1 flex-shrink-0 text-muted-foreground" />
                     <div>
                       <p className="font-semibold">{event.date}</p>
-                      <p className="text-muted-foreground">{event.time}</p>
+                      <p className="text-muted-foreground text-xs">{event.time}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -112,7 +118,7 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
             {ngo && (
               <Card>
                 <CardHeader>
-                    <CardTitle className="text-sm">Organized by</CardTitle>
+                    <CardTitle className="text-base">Organized by</CardTitle>
                 </CardHeader>
                 <CardContent className="flex items-center gap-4">
                     {ngoLogo && (
