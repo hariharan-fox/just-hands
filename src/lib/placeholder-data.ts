@@ -137,7 +137,7 @@ export const allEvents: Event[] = [
   },
 ];
 
-export const featuredEvents = allEvents.slice(0, 3);
+export const featuredEvents = allEvents.slice(0, 2);
 export const upcomingCommitments = allEvents.slice(3, 5);
 
 export const forumPosts: ForumPost[] = [

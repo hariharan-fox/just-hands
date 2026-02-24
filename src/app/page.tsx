@@ -15,7 +15,7 @@ export default function DashboardPage() {
     <div className="container mx-auto px-4 md:px-6 py-8 space-y-12">
       <div className="flex items-center gap-4">
         {volunteerAvatar && (
-            <Avatar className="h-20 w-20">
+            <Avatar className="h-16 w-16">
               <AvatarImage src={volunteerAvatar.imageUrl} alt={volunteer.name} data-ai-hint={volunteerAvatar.imageHint} />
               <AvatarFallback>{volunteer.name.charAt(0)}</AvatarFallback>
             </Avatar>
@@ -74,7 +74,7 @@ export default function DashboardPage() {
           
           <section>
             <h2 className="text-xl font-bold mb-4">Featured Events</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {featuredEvents.map((event) => (
                 <EventCard key={event.id} event={event} />
               ))}
@@ -111,8 +111,8 @@ export default function DashboardPage() {
                               </Avatar>
                             )}
                             <div>
-                              <Link href={`/events/${event.id}`} className="font-semibold hover:underline">{event.title}</Link>
-                              <p className="text-sm text-muted-foreground">{event.date} at {event.time}</p>
+                              <Link href={`/events/${event.id}`} className="font-semibold hover:underline text-sm">{event.title}</Link>
+                              <p className="text-xs text-muted-foreground">{event.date} at {event.time}</p>
                             </div>
                           </li>
                          )
