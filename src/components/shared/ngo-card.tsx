@@ -15,7 +15,7 @@ export default function NgoCard({ ngo }: NgoCardProps) {
   const ngoLogo = PlaceHolderImages.find((p) => p.id === ngo.logoUrl);
 
   return (
-    <Card className="flex flex-col overflow-hidden h-full transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+    <Card className="flex flex-col overflow-hidden h-full shadow-xl">
       <CardHeader className="flex-row items-center gap-4">
         {ngoLogo && (
           <Avatar className="h-16 w-16">

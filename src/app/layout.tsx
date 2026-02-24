@@ -4,18 +4,17 @@ import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/header';
 import Sidebar from '@/components/layout/sidebar';
-import { Playfair_Display, Lato } from 'next/font/google';
+import { Poppins, Inter } from 'next/font/google';
 
-const headlineFont = Playfair_Display({
+const headlineFont = Poppins({
   subsets: ['latin'],
   weight: '700',
   display: 'swap',
   variable: '--font-headline',
 });
 
-const bodyFont = Lato({
+const bodyFont = Inter({
   subsets: ['latin'],
-  weight: '400',
   display: 'swap',
   variable: '--font-body',
 });
