@@ -1,5 +1,5 @@
 import type { Volunteer, Event, NGO, Testimonial, Certificate } from './types';
-import { BookOpen, Sprout, HeartPulse, Users, ShieldCheck } from 'lucide-react';
+import { BookOpen, Sprout, HeartPulse, Users, ShieldCheck, Rocket, Star, Heart } from 'lucide-react';
 
 export const volunteer: Volunteer = {
   id: 'vol-1',
@@ -169,6 +169,13 @@ export const allCertificates: Certificate[] = [
     isEarned: true,
   },
   {
+    id: 'cert-6',
+    name: 'Fast Starter',
+    description: 'Complete an event within 7 days of joining.',
+    icon: Rocket,
+    isEarned: true,
+  },
+  {
     id: 'cert-3',
     name: 'Education Enthusiast',
     description: 'Mentor in 2 educational workshops.',
@@ -181,7 +188,21 @@ export const allCertificates: Certificate[] = [
     description: 'Volunteer for 3 different causes.',
     icon: Users,
     isEarned: false,
-  }
+  },
+  {
+    id: 'cert-7',
+    name: 'Animal Lover',
+    description: 'Complete 3 animal-related events.',
+    icon: Heart,
+    isEarned: false,
+  },
+  {
+    id: 'cert-8',
+    name: 'Top Volunteer',
+    description: 'Be in the top 10% of volunteers by hours logged this quarter.',
+    icon: Star,
+    isEarned: false,
+  },
 ];
 
 
