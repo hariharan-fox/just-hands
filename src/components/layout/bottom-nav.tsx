@@ -2,12 +2,13 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Calendar, Building, User } from 'lucide-react';
+import { Home, Calendar, Building, User, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
     { href: '/', label: 'Dashboard', icon: Home },
     { href: '/events', label: 'Events', icon: Calendar },
+    { href: '/dashboard/my-impact', label: 'Impact', icon: Award },
     { href: '/ngos', label: 'NGOs', icon: Building },
     { href: '/settings', label: 'Profile', icon: User },
 ];

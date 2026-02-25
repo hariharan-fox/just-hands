@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Calendar, Building, Settings, LogOut } from 'lucide-react';
+import { Home, Calendar, Building, Settings, LogOut, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Logo } from '../shared/logo';
 import { Button } from '@/components/ui/button';
@@ -12,6 +12,7 @@ const navLinks = [
     { href: '/', label: 'Dashboard', icon: Home },
     { href: '/events', label: 'Events', icon: Calendar },
     { href: '/ngos', label: 'NGOs', icon: Building },
+    { href: '/dashboard/my-impact', label: 'My Impact', icon: Award },
 ];
 
 export default function Sidebar() {

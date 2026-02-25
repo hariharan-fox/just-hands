@@ -1,4 +1,5 @@
-import type { Volunteer, Event, NGO, Testimonial } from './types';
+import type { Volunteer, Event, NGO, Testimonial, Certificate } from './types';
+import { BookOpen, Sprout, HeartPulse } from 'lucide-react';
 
 export const volunteer: Volunteer = {
   id: 'vol-1',
@@ -138,7 +139,33 @@ export const allEvents: Event[] = [
 ];
 
 export const featuredEvents = allEvents.slice(0, 2);
-export const upcomingCommitments = allEvents.slice(3, 5);
+export const upcomingCommitments = allEvents.slice(4, 6);
+export const completedEvents: Event[] = [
+  allEvents[0],
+  allEvents[1],
+  allEvents[3],
+];
+
+export const earnedCertificates: Certificate[] = [
+  {
+    id: 'cert-1',
+    name: 'Community Champion',
+    description: 'Awarded for completing 3 community-focused events.',
+    icon: HeartPulse,
+  },
+  {
+    id: 'cert-2',
+    name: 'Green Guardian',
+    description: 'Awarded for dedicating over 10 hours to environmental causes.',
+    icon: Sprout,
+  },
+  {
+    id: 'cert-3',
+    name: 'Education Enthusiast',
+    description: 'Awarded for mentoring in educational workshops.',
+    icon: BookOpen,
+  },
+];
 
 export const howItWorks = [
   {

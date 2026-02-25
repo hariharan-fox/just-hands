@@ -38,3 +38,10 @@ export type Testimonial = {
   role: string;
   avatarId: string;
 };
+
+export type Certificate = {
+  id: string;
+  name: string;
+  description: string;
+  icon: any;
+};
