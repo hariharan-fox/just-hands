@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import Header from './header';
 import Sidebar from './sidebar';
 import { useAuth } from '@/lib/auth-context';
+import BottomNav from './bottom-nav';
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -39,10 +40,11 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
             <Sidebar />
             <div className="flex flex-col">
                 <Header />
-                <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+                <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 pb-20 md:pb-6">
                     {children}
                 </main>
             </div>
+            <BottomNav />
         </div>
     );
 }
