@@ -37,7 +37,7 @@ export const allNgos: NGO[] = [
     cause: ['Education', 'Technology'],
     impact: 'Trained over 1,000 young adults in coding, with 60% securing jobs in the tech industry.',
   },
-   {
+  {
     id: 'ngo-4',
     name: 'Animal Allies',
     logoUrl: 'ngo-animal-allies',
@@ -141,45 +141,45 @@ export const featuredEvents = allEvents.slice(0, 2);
 export const upcomingCommitments = allEvents.slice(3, 5);
 
 export const forumPosts: ForumPost[] = [
-    {
-        id: 'post-1',
-        title: 'Best practices for first-time volunteers?',
-        authorId: 'vol-2',
-        authorName: 'Arjun',
-        createdAt: '2 days ago',
-        replies: 5,
-        lastReply: {
-            authorId: 'ngo-1',
-            authorName: 'Green Earth',
-            createdAt: '3 hours ago',
-        }
-    },
-    {
-        id: 'post-2',
-        title: 'How do you measure impact for educational programs?',
-        authorId: 'ngo-3',
-        authorName: 'Tech Forward',
-        createdAt: '5 days ago',
-        replies: 12,
-        lastReply: {
-            authorId: 'vol-1',
-            authorName: 'Priya Sharma',
-            createdAt: '1 day ago',
-        }
-    },
-    {
-        id: 'post-3',
-        title: 'Share your most memorable volunteering experience!',
-        authorId: 'vol-3',
-        authorName: 'Sameer',
-        createdAt: '1 week ago',
-        replies: 28,
-        lastReply: {
-            authorId: 'vol-4',
-            authorName: 'Anika',
-            createdAt: 'just now',
-        }
+  {
+    id: 'post-1',
+    title: 'Best practices for first-time volunteers?',
+    authorId: 'vol-2',
+    authorName: 'Arjun',
+    createdAt: '2 days ago',
+    replies: 5,
+    lastReply: {
+      authorId: 'ngo-1',
+      authorName: 'Green Earth',
+      createdAt: '3 hours ago',
     }
+  },
+  {
+    id: 'post-2',
+    title: 'How do you measure impact for educational programs?',
+    authorId: 'ngo-3',
+    authorName: 'Tech Forward',
+    createdAt: '5 days ago',
+    replies: 12,
+    lastReply: {
+      authorId: 'vol-1',
+      authorName: 'Priya Sharma',
+      createdAt: '1 day ago',
+    }
+  },
+  {
+    id: 'post-3',
+    title: 'Share your most memorable volunteering experience!',
+    authorId: 'vol-3',
+    authorName: 'Sameer',
+    createdAt: '1 week ago',
+    replies: 28,
+    lastReply: {
+      authorId: 'vol-4',
+      authorName: 'Anika',
+      createdAt: 'just now',
+    }
+  }
 ];
 
 export const howItWorks = [
@@ -198,22 +198,22 @@ export const howItWorks = [
 ];
 
 export const testimonials: Testimonial[] = [
-    {
-        quote: 'ConnectSphere made it so easy to find a cause I\'m passionate about. I\'ve met amazing people and feel like I\'m truly making a difference in my local community.',
-        name: 'Jane Doe',
-        role: 'Volunteer',
-        avatarId: 'avatar-jane-doe'
-    },
-    {
-        quote: 'As a small NGO, finding dedicated volunteers was always a challenge. This platform has connected us with a pool of skilled and enthusiastic individuals. It\'s been a game-changer!',
-        name: 'John Smith',
-        role: 'Director, Hope Helpers',
-        avatarId: 'avatar-john-smith'
-    },
-    {
-        quote: 'The dashboard is fantastic for tracking my hours and seeing my volunteering history all in one place. It keeps me motivated to do more!',
-        name: 'Priya Sharma',
-        role: 'Volunteer',
-        avatarId: 'avatar-priya-sharma'
-    }
+  {
+    quote: 'ConnectSphere made it so easy to find a cause I\'m passionate about. I\'ve met amazing people and feel like I\'m truly making a difference in my local community.',
+    name: 'Jane Doe',
+    role: 'Volunteer',
+    avatarId: 'avatar-jane-doe'
+  },
+  {
+    quote: 'As a small NGO, finding dedicated volunteers was always a challenge. This platform has connected us with a pool of skilled and enthusiastic individuals. It\'s been a game-changer!',
+    name: 'John Smith',
+    role: 'Director, Hope Helpers',
+    avatarId: 'avatar-john-smith'
+  },
+  {
+    quote: 'The dashboard is fantastic for tracking my hours and seeing my volunteering history all in one place. It keeps me motivated to do more!',
+    name: 'Priya Sharma',
+    role: 'Volunteer',
+    avatarId: 'avatar-priya-sharma'
+  }
 ];

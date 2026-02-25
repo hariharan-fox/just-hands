@@ -9,8 +9,9 @@ import { Calendar, MapPin, Target, UserPlus, Building, Heart, TrendingUp, ArrowL
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export default function EventDetailPage({ params }: { params: { id: string } }) {
-  const event = allEvents.find((e) => e.id === params.id);
+export default async function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const event = allEvents.find((e) => e.id === id);
 
   if (!event) {
     notFound();
@@ -29,10 +30,10 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
         </Link>
       </div>
       <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
-        
+
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
-          
+
           {/* Event Header */}
           <div>
             <Badge>{event.cause}</Badge>
@@ -51,7 +52,7 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
               />
             </div>
           )}
-          
+
           {/* About Section */}
           <div className="prose max-w-none text-foreground/90">
             <h2 className="text-base font-semibold mb-2">About this Event</h2>
@@ -61,22 +62,22 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
           {/* Why it's important */}
           {event.why && (
             <div className="prose max-w-none text-foreground/90">
-                <h2 className="text-base font-semibold mb-2 flex items-center gap-2"><Heart className="h-4 w-4 text-primary"/> Why It&apos;s Important</h2>
-                <p className="text-sm">{event.why}</p>
+              <h2 className="text-base font-semibold mb-2 flex items-center gap-2"><Heart className="h-4 w-4 text-primary" /> Why It&apos;s Important</h2>
+              <p className="text-sm">{event.why}</p>
             </div>
           )}
 
           {/* Your Impact */}
           {event.impact && (
             <div className="prose max-w-none text-foreground/90">
-                <h2 className="text-base font-semibold mb-2 flex items-center gap-2"><TrendingUp className="h-4 w-4 text-primary"/> Your Impact</h2>
-                <p className="text-sm">{event.impact}</p>
+              <h2 className="text-base font-semibold mb-2 flex items-center gap-2"><TrendingUp className="h-4 w-4 text-primary" /> Your Impact</h2>
+              <p className="text-sm">{event.impact}</p>
             </div>
           )}
 
           {/* Skills Section */}
           <div>
-            <h3 className="text-base font-semibold flex items-center gap-2 mb-3"><Target className="h-4 w-4 text-primary"/> Skills Needed</h3>
+            <h3 className="text-base font-semibold flex items-center gap-2 mb-3"><Target className="h-4 w-4 text-primary" /> Skills Needed</h3>
             <div className="flex flex-wrap gap-2">
               {event.skills.map((skill) => (
                 <Badge key={skill} variant="secondary">{skill}</Badge>
@@ -84,11 +85,11 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
             </div>
           </div>
         </div>
-        
+
         {/* Sidebar */}
         <aside className="lg:col-span-1 space-y-6">
           <div className="sticky top-24 space-y-6">
-            
+
             {/* Action Card */}
             <Card className="shadow-lg">
               <CardContent className="p-6 space-y-4">
@@ -118,22 +119,22 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
             {ngo && (
               <Card>
                 <CardHeader>
-                    <CardTitle className="text-base">Organized by</CardTitle>
+                  <CardTitle className="text-base">Organized by</CardTitle>
                 </CardHeader>
                 <CardContent className="flex items-center gap-4">
-                    {ngoLogo && (
-                        <Avatar className="h-12 w-12">
-                            <AvatarImage src={ngoLogo.imageUrl} alt={ngo.name} data-ai-hint={ngoLogo.imageHint}/>
-                            <AvatarFallback>{ngo.name.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                    )}
-                    <div className="flex-1">
-                        <Link href={`/ngos/${ngo.id}`} className="font-bold hover:underline">{ngo.name}</Link>
-                        <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
-                            <Building className="h-3 w-3" />
-                            <span>NGO</span>
-                        </div>
+                  {ngoLogo && (
+                    <Avatar className="h-12 w-12">
+                      <AvatarImage src={ngoLogo.imageUrl} alt={ngo.name} data-ai-hint={ngoLogo.imageHint} />
+                      <AvatarFallback>{ngo.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                  )}
+                  <div className="flex-1">
+                    <Link href={`/ngos/${ngo.id}`} className="font-bold hover:underline">{ngo.name}</Link>
+                    <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
+                      <Building className="h-3 w-3" />
+                      <span>NGO</span>
                     </div>
+                  </div>
                 </CardContent>
               </Card>
             )}
