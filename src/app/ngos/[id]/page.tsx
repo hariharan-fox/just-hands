@@ -47,7 +47,9 @@ export default async function NgoDetailPage({ params }: { params: Promise<{ id: 
               </div>
             )}
             <div className="flex-1">
-              <Badge>{ngo.cause.join(', ')}</Badge>
+              <div className="flex flex-wrap gap-2">
+                {ngo.cause.map(c => <Badge key={c} variant="secondary">{c}</Badge>)}
+              </div>
               <h1 className="text-xl font-bold mt-2">{ngo.name}</h1>
               <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4" />
