@@ -148,73 +148,73 @@ export const completedEvents: Event[] = [
 
 export const allCertificates: Certificate[] = [
   // Getting Started
-  { id: 'start-1', name: 'Verified Volunteer', description: 'Complete your first event and get verified.', icon: ShieldCheck, isEarned: true, level: 'Bronze' },
-  { id: 'start-2', name: 'Fast Starter', description: 'Complete an event within your first 7 days.', icon: Rocket, isEarned: true, level: 'Silver' },
-  { id: 'start-3', name: 'Profile Pro', description: 'Complete your user profile with skills and interests.', icon: Users, isEarned: true, level: 'Bronze' },
+  { id: 'start-1', name: 'Verified Volunteer', description: 'Complete your first event and get verified.', icon: ShieldCheck, isEarned: true, level: 'Bronze', shape: 'hexagon' },
+  { id: 'start-2', name: 'Fast Starter', description: 'Complete an event within your first 7 days.', icon: Rocket, isEarned: true, level: 'Silver', shape: 'pentagon' },
+  { id: 'start-3', name: 'Profile Pro', description: 'Complete your user profile with skills and interests.', icon: Users, isEarned: true, level: 'Bronze', shape: 'circle' },
 
   // Event Participation
-  { id: 'event-1', name: 'First Step', description: 'Complete your first event.', icon: Medal, isEarned: true, level: 'Bronze' },
-  { id: 'event-2', name: 'Active Volunteer', description: 'Complete 5 events.', icon: Medal, isEarned: true, level: 'Silver' },
-  { id: 'event-3', name: 'Dedicated Volunteer', description: 'Complete 15 events.', icon: Medal, isEarned: false, level: 'Gold' },
-  { id: 'event-4', name: 'Volunteer Extraordinaire', description: 'Complete 30 events.', icon: Medal, isEarned: false, level: 'Platinum' },
+  { id: 'event-1', name: 'First Step', description: 'Complete your first event.', icon: Medal, isEarned: true, level: 'Bronze', shape: 'hexagon' },
+  { id: 'event-2', name: 'Active Volunteer', description: 'Complete 5 events.', icon: Medal, isEarned: true, level: 'Silver', shape: 'pentagon' },
+  { id: 'event-3', name: 'Dedicated Volunteer', description: 'Complete 15 events.', icon: Medal, isEarned: false, level: 'Gold', shape: 'circle' },
+  { id: 'event-4', name: 'Volunteer Extraordinaire', description: 'Complete 30 events.', icon: Medal, isEarned: false, level: 'Platinum', shape: 'hexagon' },
 
   // Hours Logged
-  { id: 'hours-1', name: 'Hour Hero', description: 'Log 10 volunteer hours.', icon: Trophy, isEarned: true, level: 'Bronze' },
-  { id: 'hours-2', name: 'Hour Hero', description: 'Log 25 volunteer hours.', icon: Trophy, isEarned: true, level: 'Silver' },
-  { id: 'hours-3', name: 'Hour Hero', description: 'Log 50 volunteer hours.', icon: Trophy, isEarned: false, level: 'Gold' },
-  { id: 'hours-4', name: 'Hour Hero', description: 'Log 100 volunteer hours.', icon: Trophy, isEarned: false, level: 'Platinum' },
+  { id: 'hours-1', name: 'Hour Hero', description: 'Log 10 volunteer hours.', icon: Trophy, isEarned: true, level: 'Bronze', shape: 'pentagon' },
+  { id: 'hours-2', name: 'Hour Hero', description: 'Log 25 volunteer hours.', icon: Trophy, isEarned: true, level: 'Silver', shape: 'circle' },
+  { id: 'hours-3', name: 'Hour Hero', description: 'Log 50 volunteer hours.', icon: Trophy, isEarned: false, level: 'Gold', shape: 'hexagon' },
+  { id: 'hours-4', name: 'Hour Hero', description: 'Log 100 volunteer hours.', icon: Trophy, isEarned: false, level: 'Platinum', shape: 'pentagon' },
   
   // Cause-Specific: Community
-  { id: 'cause-comm-1', name: 'Community Champion', description: 'Complete 3 community-focused events.', icon: HeartPulse, isEarned: true, level: 'Bronze' },
-  { id: 'cause-comm-2', name: 'Community Champion', description: 'Complete 7 community-focused events.', icon: HeartPulse, isEarned: false, level: 'Silver' },
-  { id: 'cause-comm-3', name: 'Community Champion', description: 'Complete 15 community-focused events.', icon: HeartPulse, isEarned: false, level: 'Gold' },
+  { id: 'cause-comm-1', name: 'Community Champion', description: 'Complete 3 community-focused events.', icon: HeartPulse, isEarned: true, level: 'Bronze', shape: 'circle' },
+  { id: 'cause-comm-2', name: 'Community Champion', description: 'Complete 7 community-focused events.', icon: HeartPulse, isEarned: false, level: 'Silver', shape: 'hexagon' },
+  { id: 'cause-comm-3', name: 'Community Champion', description: 'Complete 15 community-focused events.', icon: HeartPulse, isEarned: false, level: 'Gold', shape: 'pentagon' },
 
   // Cause-Specific: Environment
-  { id: 'cause-env-1', name: 'Green Guardian', description: 'Complete 3 environmental events.', icon: Sprout, isEarned: true, level: 'Bronze' },
-  { id: 'cause-env-2', name: 'Green Guardian', description: 'Complete 7 environmental events.', icon: Sprout, isEarned: false, level: 'Silver' },
-  { id: 'cause-env-3', name: 'Green Guardian', description: 'Complete 15 environmental events.', icon: Sprout, isEarned: false, level: 'Gold' },
+  { id: 'cause-env-1', name: 'Green Guardian', description: 'Complete 3 environmental events.', icon: Sprout, isEarned: true, level: 'Bronze', shape: 'circle' },
+  { id: 'cause-env-2', name: 'Green Guardian', description: 'Complete 7 environmental events.', icon: Sprout, isEarned: false, level: 'Silver', shape: 'hexagon' },
+  { id: 'cause-env-3', name: 'Green Guardian', description: 'Complete 15 environmental events.', icon: Sprout, isEarned: false, level: 'Gold', shape: 'pentagon' },
 
   // Cause-Specific: Education
-  { id: 'cause-edu-1', name: 'Education Enthusiast', description: 'Complete 3 education-focused events.', icon: BookOpen, isEarned: false, level: 'Bronze' },
-  { id: 'cause-edu-2', name: 'Education Enthusiast', description: 'Complete 7 education-focused events.', icon: BookOpen, isEarned: false, level: 'Silver' },
-  { id: 'cause-edu-3', name: 'Education Enthusiast', description: 'Complete 15 education-focused events.', icon: BookOpen, isEarned: false, level: 'Gold' },
+  { id: 'cause-edu-1', name: 'Education Enthusiast', description: 'Complete 3 education-focused events.', icon: BookOpen, isEarned: false, level: 'Bronze', shape: 'circle' },
+  { id: 'cause-edu-2', name: 'Education Enthusiast', description: 'Complete 7 education-focused events.', icon: BookOpen, isEarned: false, level: 'Silver', shape: 'hexagon' },
+  { id: 'cause-edu-3', name: 'Education Enthusiast', description: 'Complete 15 education-focused events.', icon: BookOpen, isEarned: false, level: 'Gold', shape: 'pentagon' },
 
   // Cause-Specific: Animals
-  { id: 'cause-animal-1', name: 'Animal Ally', description: 'Complete 3 animal welfare events.', icon: Heart, isEarned: true, level: 'Bronze' },
-  { id: 'cause-animal-2', name: 'Animal Ally', description: 'Complete 7 animal welfare events.', icon: Heart, isEarned: false, level: 'Silver' },
-  { id: 'cause-animal-3', name: 'Animal Ally', description: 'Complete 15 animal welfare events.', icon: Heart, isEarned: false, level: 'Gold' },
+  { id: 'cause-animal-1', name: 'Animal Ally', description: 'Complete 3 animal welfare events.', icon: Heart, isEarned: true, level: 'Bronze', shape: 'circle' },
+  { id: 'cause-animal-2', name: 'Animal Ally', description: 'Complete 7 animal welfare events.', icon: Heart, isEarned: false, level: 'Silver', shape: 'hexagon' },
+  { id: 'cause-animal-3', name: 'Animal Ally', description: 'Complete 15 animal welfare events.', icon: Heart, isEarned: false, level: 'Gold', shape: 'pentagon' },
   
   // Diversity of Causes
-  { id: 'diverse-1', name: 'Cause Connector', description: 'Volunteer for 3 different causes.', icon: Users, isEarned: false, level: 'Bronze' },
-  { id: 'diverse-2', name: 'Cause Explorer', description: 'Volunteer for 5 different causes.', icon: Users, isEarned: false, level: 'Silver' },
-  { id: 'diverse-3', name: 'Cause Connoisseur', description: 'Volunteer for 7 different causes.', icon: Users, isEarned: false, level: 'Gold' },
+  { id: 'diverse-1', name: 'Cause Connector', description: 'Volunteer for 3 different causes.', icon: Users, isEarned: false, level: 'Bronze', shape: 'circle' },
+  { id: 'diverse-2', name: 'Cause Explorer', description: 'Volunteer for 5 different causes.', icon: Users, isEarned: false, level: 'Silver', shape: 'hexagon' },
+  { id: 'diverse-3', name: 'Cause Connoisseur', description: 'Volunteer for 7 different causes.', icon: Users, isEarned: false, level: 'Gold', shape: 'pentagon' },
   
   // Special Milestones
-  { id: 'special-1', name: 'Weekend Warrior', description: 'Volunteer on 3 consecutive weekends.', icon: Zap, isEarned: false, level: 'Silver' },
-  { id: 'special-2', name: 'Top Volunteer', description: 'Be in the top 10% of volunteers by hours this quarter.', icon: Star, isEarned: false, level: 'Gold' },
-  { id: 'special-3', name: 'NGO Nomad', description: 'Volunteer with 5 different NGOs.', icon: TrendingUp, isEarned: false, level: 'Silver' },
-  { id: 'special-4', name: 'Leadership', description: 'Lead a volunteer team at an event.', icon: Crown, isEarned: false, level: 'Gold' },
-  { id: 'special-5', name: 'Recruiter', description: 'Recruit 3 new volunteers to the platform.', icon: Gem, isEarned: false, level: 'Gold' },
+  { id: 'special-1', name: 'Weekend Warrior', description: 'Volunteer on 3 consecutive weekends.', icon: Zap, isEarned: false, level: 'Silver', shape: 'circle' },
+  { id: 'special-2', name: 'Top Volunteer', description: 'Be in the top 10% of volunteers by hours this quarter.', icon: Star, isEarned: false, level: 'Gold', shape: 'hexagon' },
+  { id: 'special-3', name: 'NGO Nomad', description: 'Volunteer with 5 different NGOs.', icon: TrendingUp, isEarned: false, level: 'Silver', shape: 'pentagon' },
+  { id: 'special-4', name: 'Leadership', description: 'Lead a volunteer team at an event.', icon: Crown, isEarned: false, level: 'Gold', shape: 'circle' },
+  { id: 'special-5', name: 'Recruiter', description: 'Recruit 3 new volunteers to the platform.', icon: Gem, isEarned: false, level: 'Gold', shape: 'hexagon' },
 
   // Placeholder Badges to reach 50
-  { id: 'placeholder-1', name: 'Skill Sharer', description: 'Volunteer for an event using one of your top skills.', icon: Award, isEarned: false, level: 'Bronze' },
-  { id: 'placeholder-2', name: 'Tech Guru', description: 'Complete 5 tech-related events.', icon: Award, isEarned: false, level: 'Silver' },
-  { id: 'placeholder-3', name: 'Health Hero', description: 'Complete 5 health-focused events.', icon: Award, isEarned: false, level: 'Silver' },
-  { id: 'placeholder-4', name: 'Arts Advocate', description: 'Complete 5 arts & culture events.', icon: Award, isEarned: false, level: 'Silver' },
-  { id: 'placeholder-5', name: 'Senior Support', description: 'Complete 5 events focused on senior citizens.', icon: Award, isEarned: false, level: 'Silver' },
-  { id: 'placeholder-6', name: 'Team Player', description: 'Complete events with 10 different volunteers.', icon: Award, isEarned: false, level: 'Bronze' },
-  { id: 'placeholder-7', name: 'Night Owl', description: 'Volunteer for an event that ends after 9 PM.', icon: Award, isEarned: false, level: 'Bronze' },
-  { id: 'placeholder-8', name: 'Early Bird', description: 'Volunteer for an event that starts before 8 AM.', icon: Award, isEarned: false, level: 'Bronze' },
-  { id: 'placeholder-9', name: 'Loyalty', description: 'Complete 5 events with the same NGO.', icon: Award, isEarned: false, level: 'Gold' },
-  { id: 'placeholder-10', name: 'Super Streaker', description: 'Volunteer at least once a month for 6 consecutive months.', icon: Award, isEarned: false, level: 'Platinum' },
-  { id: 'placeholder-11', name: 'Annual Achiever', description: 'Log 200 volunteer hours in a single year.', icon: Gem, isEarned: false, level: 'Platinum' },
-  { id: 'placeholder-12', name: 'Grandmaster', description: 'Log 500 volunteer hours in total.', icon: Crown, isEarned: false, level: 'Platinum' },
-  { id: 'placeholder-13', name: 'Mentor Master', description: 'Mentor 5 times in educational workshops.', icon: BookOpen, isEarned: false, level: 'Platinum' },
-  { id: 'placeholder-14', name: 'Environmental Steward', description: 'Log 50 hours in environmental causes.', icon: Sprout, isEarned: false, level: 'Platinum' },
-  { id: 'placeholder-15', name: 'Community Pillar', description: 'Log 50 hours in community causes.', icon: HeartPulse, isEarned: false, level: 'Platinum' },
-  { id: 'placeholder-16', name: 'Animal Guardian', description: 'Log 50 hours in animal welfare causes.', icon: Heart, isEarned: false, level: 'Platinum' },
-  { id: 'placeholder-17', name: 'All-Star', description: 'Unlock 25 other badges.', icon: Star, isEarned: false, level: 'Platinum' },
-  { id: 'placeholder-18', name: 'Legend', description: 'Unlock all other 49 badges.', icon: Crown, isEarned: false, level: 'Platinum' },
+  { id: 'placeholder-1', name: 'Skill Sharer', description: 'Volunteer for an event using one of your top skills.', icon: Award, isEarned: false, level: 'Bronze', shape: 'pentagon' },
+  { id: 'placeholder-2', name: 'Tech Guru', description: 'Complete 5 tech-related events.', icon: Award, isEarned: false, level: 'Silver', shape: 'circle' },
+  { id: 'placeholder-3', name: 'Health Hero', description: 'Complete 5 health-focused events.', icon: Award, isEarned: false, level: 'Silver', shape: 'hexagon' },
+  { id: 'placeholder-4', name: 'Arts Advocate', description: 'Complete 5 arts & culture events.', icon: Award, isEarned: false, level: 'Silver', shape: 'pentagon' },
+  { id: 'placeholder-5', name: 'Senior Support', description: 'Complete 5 events focused on senior citizens.', icon: Award, isEarned: false, level: 'Silver', shape: 'circle' },
+  { id: 'placeholder-6', name: 'Team Player', description: 'Complete events with 10 different volunteers.', icon: Award, isEarned: false, level: 'Bronze', shape: 'hexagon' },
+  { id: 'placeholder-7', name: 'Night Owl', description: 'Volunteer for an event that ends after 9 PM.', icon: Award, isEarned: false, level: 'Bronze', shape: 'pentagon' },
+  { id: 'placeholder-8', name: 'Early Bird', description: 'Volunteer for an event that starts before 8 AM.', icon: Award, isEarned: false, level: 'Bronze', shape: 'circle' },
+  { id: 'placeholder-9', name: 'Loyalty', description: 'Complete 5 events with the same NGO.', icon: Award, isEarned: false, level: 'Gold', shape: 'hexagon' },
+  { id: 'placeholder-10', name: 'Super Streaker', description: 'Volunteer at least once a month for 6 consecutive months.', icon: Award, isEarned: false, level: 'Platinum', shape: 'pentagon' },
+  { id: 'placeholder-11', name: 'Annual Achiever', description: 'Log 200 volunteer hours in a single year.', icon: Gem, isEarned: false, level: 'Platinum', shape: 'circle' },
+  { id: 'placeholder-12', name: 'Grandmaster', description: 'Log 500 volunteer hours in total.', icon: Crown, isEarned: false, level: 'Platinum', shape: 'hexagon' },
+  { id: 'placeholder-13', name: 'Mentor Master', description: 'Mentor 5 times in educational workshops.', icon: BookOpen, isEarned: false, level: 'Platinum', shape: 'pentagon' },
+  { id: 'placeholder-14', name: 'Environmental Steward', description: 'Log 50 hours in environmental causes.', icon: Sprout, isEarned: false, level: 'Platinum', shape: 'circle' },
+  { id: 'placeholder-15', name: 'Community Pillar', description: 'Log 50 hours in community causes.', icon: HeartPulse, isEarned: false, level: 'Platinum', shape: 'hexagon' },
+  { id: 'placeholder-16', name: 'Animal Guardian', description: 'Log 50 hours in animal welfare causes.', icon: Heart, isEarned: false, level: 'Platinum', shape: 'pentagon' },
+  { id: 'placeholder-17', name: 'All-Star', description: 'Unlock 25 other badges.', icon: Star, isEarned: false, level: 'Platinum', shape: 'circle' },
+  { id: 'placeholder-18', name: 'Legend', description: 'Unlock all other 49 badges.', icon: Crown, isEarned: false, level: 'Platinum', shape: 'hexagon' },
 ];
 
 

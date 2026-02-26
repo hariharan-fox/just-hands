@@ -8,7 +8,7 @@ export type Volunteer = {
 };
 
 export type Event = {
-  id: string;
+  id:string;
   title: string;
   ngoId: string;
   date: string;
@@ -46,4 +46,5 @@ export type Certificate = {
   icon: any;
   isEarned: boolean;
   level?: 'Bronze' | 'Silver' | 'Gold' | 'Platinum';
+  shape?: 'circle' | 'pentagon' | 'hexagon';
 };
