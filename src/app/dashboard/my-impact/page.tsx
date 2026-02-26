@@ -182,8 +182,10 @@ export default function BadgesPage() {
                 <Badge badge={selectedBadge} size="large" />
               </div>
               <div className="p-6 text-center space-y-3">
-                <h2 className="text-xl font-bold">{selectedBadge.name} {selectedBadge.level && `(${selectedBadge.level})`}</h2>
-                <p className="text-muted-foreground text-sm">{selectedBadge.description}</p>
+                <DialogHeader className="p-0 space-y-2 text-center">
+                    <DialogTitle className="text-xl font-bold">{selectedBadge.name} {selectedBadge.level && `(${selectedBadge.level})`}</DialogTitle>
+                    <DialogDescription className="text-muted-foreground text-sm">{selectedBadge.description}</DialogDescription>
+                </DialogHeader>
                 
                 {selectedBadge.isEarned ? (
                   <div className="flex items-center justify-center gap-2 text-primary font-semibold text-sm">
