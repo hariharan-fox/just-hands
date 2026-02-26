@@ -16,13 +16,13 @@ export default function DashboardPage() {
     <div className="container mx-auto px-4 md:px-6 py-8 space-y-12">
       <div className="flex items-center gap-4">
         {volunteerAvatar && (
-            <Avatar className="h-16 w-16">
+            <Avatar className="h-12 w-12 md:h-16 md:w-16">
               <AvatarImage src={volunteerAvatar.imageUrl} alt={volunteer.name} data-ai-hint={volunteerAvatar.imageHint} />
               <AvatarFallback>{volunteer.name.charAt(0)}</AvatarFallback>
             </Avatar>
         )}
         <div>
-          <h1 className="text-xl font-bold">Welcome back, {volunteer.name}!</h1>
+          <h1 className="text-lg md:text-xl font-bold">Welcome back, {volunteer.name}!</h1>
         </div>
       </div>
 
