@@ -20,7 +20,7 @@ export default function Sidebar() {
     const { logout } = useAuth();
 
     return (
-        <aside className="hidden border-r bg-card md:block sticky top-0 h-screen">
+        <aside className="hidden border-r bg-background/60 backdrop-blur-xl md:block sticky top-0 h-screen">
             <div className="flex h-full max-h-screen flex-col gap-2">
                 <div className="flex h-16 items-center border-b px-6">
                     <Logo />
@@ -35,7 +35,7 @@ export default function Sidebar() {
                                     href={link.href}
                                     className={cn(
                                         'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent',
-                                        isActive && 'bg-accent text-primary font-semibold'
+                                        isActive && 'bg-primary text-primary-foreground font-semibold hover:bg-primary/90'
                                     )}
                                 >
                                     <link.icon className="h-4 w-4" />

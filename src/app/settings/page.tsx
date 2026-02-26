@@ -19,7 +19,7 @@ export default function SettingsPage() {
   const volunteerEmail = user?.email || volunteer.email;
 
   return (
-    <div className="container mx-auto px-4 md:px-6 py-8">
+    <div className="container mx-auto px-4 md:px-6 py-8 animate-slide-in-from-bottom">
       <div className="max-w-3xl mx-auto space-y-8">
         <h1 className="text-lg font-bold">My Profile & Settings</h1>
         

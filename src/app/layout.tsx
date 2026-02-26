@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
-import Header from '@/components/layout/header';
-import Sidebar from '@/components/layout/sidebar';
 import { AuthProvider } from '@/lib/auth-context';
 import { ClientLayout } from '@/components/layout/client-layout';
 import { Merriweather, Inter } from 'next/font/google';
@@ -32,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn(headlineFont.variable, bodyFont.variable)}>
+    <html lang="en" className={cn('dark', headlineFont.variable, bodyFont.variable)}>
       <body className={cn('min-h-screen bg-background font-body text-foreground/90 antialiased')}>
         <AuthProvider>
           <ClientLayout>

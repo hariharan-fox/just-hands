@@ -140,7 +140,7 @@ export default function BadgesPage() {
 
   return (
     <>
-      <div className="container mx-auto px-4 md:px-6 py-8 space-y-12">
+      <div className="container mx-auto px-4 md:px-6 py-8 space-y-12 animate-slide-in-from-bottom">
         <div className="text-center">
           <h1 className="text-2xl font-bold flex items-center justify-center gap-3">
              My Badges 

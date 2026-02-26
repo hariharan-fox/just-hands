@@ -13,7 +13,7 @@ export default function DashboardPage() {
   const volunteerAvatar = PlaceHolderImages.find(p => p.id === 'avatar-priya-sharma');
   
   return (
-    <div className="container mx-auto px-4 md:px-6 py-8 space-y-12">
+    <div className="container mx-auto px-4 md:px-6 py-8 space-y-12 animate-slide-in-from-bottom">
       <div className="flex items-center gap-4">
         {volunteerAvatar && (
             <Avatar className="h-16 w-16">

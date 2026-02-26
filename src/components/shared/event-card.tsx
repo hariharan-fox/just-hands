@@ -19,8 +19,8 @@ export default function EventCard({ event }: EventCardProps) {
   const ngoLogo = ngo ? PlaceHolderImages.find(p => p.id === ngo.logoUrl) : undefined;
   
   return (
-    <Card className="flex flex-col overflow-hidden h-full">
-      <CardHeader className="p-0 relative">
+    <Card className="flex flex-col h-full group">
+      <CardHeader className="p-0 relative overflow-hidden rounded-t-2xl">
         <Link href={`/events/${event.id}`}>
           <div className="aspect-video w-full relative">
             {eventImage ? (
@@ -28,7 +28,7 @@ export default function EventCard({ event }: EventCardProps) {
                 src={eventImage.imageUrl}
                 alt={event.title}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
                 data-ai-hint={eventImage.imageHint}
               />
             ) : (
@@ -38,7 +38,7 @@ export default function EventCard({ event }: EventCardProps) {
         </Link>
       </CardHeader>
       <CardContent className="p-4 flex-1">
-        <Badge variant="outline" className="mb-2 text-xs">{event.cause}</Badge>
+        <Badge variant="secondary" className="mb-2 text-xs">{event.cause}</Badge>
         <CardTitle className="text-sm mb-2">
           <Link href={`/events/${event.id}`} className="hover:text-primary transition-colors">
             {event.title}

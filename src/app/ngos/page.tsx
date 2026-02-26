@@ -40,7 +40,7 @@ export default function NgosPage() {
   }, [searchQuery, selectedLocation, selectedCause]);
 
   return (
-    <div className="bg-card">
+    <div className="bg-transparent animate-slide-in-from-bottom">
       <div className="container mx-auto px-4 md:px-6 py-8">
         <div className="text-center mb-12">
           <h1 className="text-xl font-bold tracking-tight">Meet the Change-Makers</h1>

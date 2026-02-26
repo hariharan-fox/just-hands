@@ -8,7 +8,7 @@ import { Search } from "lucide-react";
 
 export default function EventsPage() {
   return (
-    <div className="bg-card">
+    <div className="bg-transparent animate-slide-in-from-bottom">
       <div className="container mx-auto px-4 md:px-6 py-8">
         <div className="text-center mb-12">
           <h1 className="text-2xl font-bold tracking-tight">Find Your Calling</h1>
