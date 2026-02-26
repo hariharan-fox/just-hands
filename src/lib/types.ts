@@ -45,4 +45,5 @@ export type Certificate = {
   description: string;
   icon: any;
   isEarned: boolean;
+  level?: 'Bronze' | 'Silver' | 'Gold' | 'Platinum';
 };

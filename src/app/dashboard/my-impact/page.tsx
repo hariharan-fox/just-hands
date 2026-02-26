@@ -1,82 +1,149 @@
 'use client';
 
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { allCertificates } from "@/lib/placeholder-data";
-import { CheckCircle, Share2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { allCertificates } from '@/lib/placeholder-data';
+import type { Certificate } from '@/lib/types';
+import { useToast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { cn } from '@/lib/utils';
+import { Share2, Linkedin, Twitter } from 'lucide-react';
+
+const levelBorderColors: { [key: string]: string } = {
+  Bronze: 'border-yellow-600/60',
+  Silver: 'border-slate-400/60',
+  Gold: 'border-amber-400/60',
+  Platinum: 'border-cyan-400/60',
+};
+
+const levelIconColors: { [key:string]: string } = {
+    Bronze: 'text-yellow-600',
+    Silver: 'text-slate-400',
+    Gold: 'text-amber-400',
+    Platinum: 'text-cyan-400',
+};
 
 export default function BadgesPage() {
-  const earnedBadges = allCertificates.filter(c => c.isEarned);
-  const unearnedBadges = allCertificates.filter(c => !c.isEarned);
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [selectedBadge, setSelectedBadge] = useState<Certificate | null>(null);
   const { toast } = useToast();
 
-  const handleShare = (badgeName: string) => {
-    const shareText = `I just earned the "${badgeName}" badge on Just Hands for my volunteer work! #JustHands #Volunteering`;
-    navigator.clipboard.writeText(shareText);
-    toast({
-      title: "Copied to clipboard!",
-      description: "You can now share your achievement.",
-    });
+  const earnedBadges = allCertificates.filter((c) => c.isEarned);
+  const unearnedBadges = allCertificates.filter((c) => !c.isEarned);
+  
+  const handleBadgeClick = (badge: Certificate) => {
+    if (badge.isEarned) {
+      setSelectedBadge(badge);
+      setShareDialogOpen(true);
+    }
   };
 
+  const copyToClipboard = () => {
+    if (!selectedBadge) return;
+    const shareText = `I just earned the "${selectedBadge.name} (${selectedBadge.level})" badge on Just Hands for my volunteer work! #JustHands #Volunteering #MakingADifference`;
+    navigator.clipboard.writeText(shareText);
+    toast({
+      title: 'Link Copied!',
+      description: 'You can now share your achievement.',
+    });
+    setShareDialogOpen(false);
+  };
+
+  const BadgeIcon = ({ badge }: { badge: Certificate }) => (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger
+          onClick={() => handleBadgeClick(badge)}
+          className={cn(
+            'transition-transform hover:scale-110',
+            badge.isEarned ? 'cursor-pointer' : 'cursor-default'
+          )}
+        >
+          <div
+            className={cn(
+              'flex items-center justify-center h-24 w-24 rounded-full border-4 bg-card shadow-md',
+              badge.isEarned
+                ? levelBorderColors[badge.level || 'Bronze']
+                : 'border-muted',
+              !badge.isEarned && 'grayscale opacity-50'
+            )}
+          >
+            <badge.icon
+              className={cn(
+                'h-12 w-12',
+                badge.isEarned
+                  ? levelIconColors[badge.level || 'Bronze']
+                  : 'text-muted-foreground'
+              )}
+            />
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p className="font-bold">{badge.name} {badge.level && `(${badge.level})`}</p>
+          <p className="text-sm text-muted-foreground">{badge.description}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+
   return (
-    <div className="container mx-auto px-4 md:px-6 py-8 space-y-12">
-      <div>
-        <h1 className="text-xl font-bold">My Badges</h1>
-        <p className="text-muted-foreground text-sm">
-          Recognizing your dedication and impact. Keep up the great work!
-        </p>
+    <>
+      <div className="container mx-auto px-4 md:px-6 py-8 space-y-12">
+        <div>
+          <h1 className="text-xl font-bold">My Badges</h1>
+          <p className="text-muted-foreground text-sm">
+            Recognizing your dedication and impact. Keep up the great work!
+          </p>
+        </div>
+
+        <section>
+          <h2 className="text-lg font-bold mb-6">
+            Earned Badges ({earnedBadges.length})
+          </h2>
+          <div className="flex flex-wrap gap-x-6 gap-y-8 justify-center sm:justify-start">
+            {earnedBadges.map((badge) => (
+              <BadgeIcon key={badge.id} badge={badge} />
+            ))}
+          </div>
+        </section>
+
+        <section>
+          <h2 className="text-lg font-bold mb-6">
+            Badges to Unlock ({unearnedBadges.length})
+          </h2>
+          <div className="flex flex-wrap gap-x-6 gap-y-8 justify-center sm:justify-start">
+            {unearnedBadges.map((badge) => (
+              <BadgeIcon key={badge.id} badge={badge} />
+            ))}
+          </div>
+        </section>
       </div>
 
-      <section>
-        <h2 className="text-lg font-bold mb-4">Earned Badges ({earnedBadges.length})</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {earnedBadges.map((cert) => (
-            <Card key={cert.id} className="border-primary/50 border-2 shadow-lg bg-primary/5 flex flex-col">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-semibold">{cert.name}</CardTitle>
-                <CheckCircle className="h-5 w-5 text-primary" />
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-full bg-primary/10 text-primary">
-                    <cert.icon className="h-6 w-6" />
-                  </div>
-                  <p className="text-xs text-muted-foreground">{cert.description}</p>
-                </div>
-              </CardContent>
-              <CardFooter className="pt-2 justify-end">
-                <Button size="sm" variant="ghost" className="text-primary hover:text-primary -mr-2" onClick={() => handleShare(cert.name)}>
-                  <Share2 className="mr-2 h-4 w-4" />
-                  Share
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-      </section>
-      
-      <section>
-        <h2 className="text-lg font-bold mb-4">Badges to Unlock ({unearnedBadges.length})</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {unearnedBadges.map((cert) => (
-            <Card key={cert.id} className="bg-card">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-semibold text-muted-foreground">{cert.name}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-full bg-muted text-muted-foreground">
-                    <cert.icon className="h-6 w-6" />
-                  </div>
-                  <p className="text-xs text-muted-foreground">{cert.description}</p>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-    </div>
+      <Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Share Your Achievement!</DialogTitle>
+            <DialogDescription>
+              You've earned the "{selectedBadge?.name}" badge. Share your success with your network.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col space-y-2">
+            <Button variant="outline">
+              <Twitter className="mr-2 h-4 w-4" />
+              Share on X
+            </Button>
+            <Button variant="outline">
+              <Linkedin className="mr-2 h-4 w-4" />
+              Share on LinkedIn
+            </Button>
+            <Button onClick={copyToClipboard}>
+              <Share2 className="mr-2 h-4 w-4" />
+              Copy Share Link
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
