@@ -50,9 +50,9 @@ export default function BottomNav() {
                         </button>
                     </SheetTrigger>
                     <SheetContent side="left" className="p-0 w-60 bg-background/90 backdrop-blur-lg">
-                        <SheetHeader className="sr-only">
-                           <SheetTitle>Menu</SheetTitle>
-                           <SheetDescription>
+                        <SheetHeader>
+                           <SheetTitle className="sr-only">Menu</SheetTitle>
+                           <SheetDescription className="sr-only">
                              Navigate through the app sections.
                            </SheetDescription>
                         </SheetHeader>
