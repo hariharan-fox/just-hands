@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Calendar, Building, User, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '../ui/sheet';
 import { PanelLeft } from 'lucide-react';
 import { Logo } from '../shared/logo';
 
@@ -50,6 +50,12 @@ export default function BottomNav() {
                         </button>
                     </SheetTrigger>
                     <SheetContent side="left" className="p-0 w-60 bg-background/90 backdrop-blur-lg">
+                        <SheetHeader className="sr-only">
+                           <SheetTitle>Menu</SheetTitle>
+                           <SheetDescription>
+                             Navigate through the app sections.
+                           </SheetDescription>
+                        </SheetHeader>
                         <div className="flex h-16 items-center border-b px-6">
                             <Logo />
                         </div>
