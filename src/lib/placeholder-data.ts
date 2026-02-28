@@ -1,4 +1,4 @@
-import type { Volunteer, Event, NGO, Testimonial, Certificate } from './types';
+import type { Volunteer, Event, NGO, Testimonial, Certificate, Notification } from './types';
 import { BookOpen, Sprout, HeartPulse, Users, ShieldCheck, Rocket, Star, Heart, Medal, Trophy, Gem, Crown, Zap, TrendingUp, Award } from 'lucide-react';
 
 export const volunteer: Volunteer = {
@@ -217,6 +217,36 @@ export const allCertificates: Certificate[] = [
   { id: 'placeholder-18', name: 'Legend', description: 'Unlock all other 49 badges.', rule: 'Earn all 49 other badges', icon: Crown, isEarned: false, level: 'Platinum', shape: 'hexagon' },
 ];
 
+export const notifications: Notification[] = [
+  {
+    id: 'notif-1',
+    title: 'New Badge Unlocked!',
+    description: 'You earned the "Active Volunteer" badge. Keep up the great work!',
+    createdAt: '2 hours ago',
+    isRead: false,
+  },
+  {
+    id: 'notif-2',
+    title: 'Event Reminder',
+    description: 'Your commitment for "Weekend Food Donation Sorting" is tomorrow.',
+    createdAt: '1 day ago',
+    isRead: false,
+  },
+  {
+    id: 'notif-3',
+    title: 'New Event Opportunity',
+    description: 'Green Earth Foundation just posted a new event: "Urban Gardening Workshop".',
+    createdAt: '3 days ago',
+    isRead: true,
+  },
+    {
+    id: 'notif-4',
+    title: 'Welcome to Just Hands!',
+    description: 'Thank you for joining our community of volunteers.',
+    createdAt: '1 week ago',
+    isRead: true,
+  },
+];
 
 export const howItWorks = [
   {

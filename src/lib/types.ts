@@ -49,3 +49,11 @@ export type Certificate = {
   level?: 'Bronze' | 'Silver' | 'Gold' | 'Platinum';
   shape?: 'circle' | 'pentagon' | 'hexagon';
 };
+
+export type Notification = {
+  id: string;
+  title: string;
+  description: string;
+  createdAt: string;
+  isRead: boolean;
+};
