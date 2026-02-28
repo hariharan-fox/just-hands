@@ -43,6 +43,7 @@ export type Certificate = {
   id: string;
   name: string;
   description: string;
+  rule: string;
   icon: any;
   isEarned: boolean;
   level?: 'Bronze' | 'Silver' | 'Gold' | 'Platinum';
