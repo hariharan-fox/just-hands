@@ -1,14 +1,14 @@
-
 'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Calendar, Building, Bell } from 'lucide-react';
+import { Home, Calendar, Building, Bell, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
     { href: '/', label: 'Dashboard', icon: Home },
     { href: '/events', label: 'Events', icon: Calendar },
+    { href: '/dashboard/my-impact', label: 'Badges', icon: Award },
     { href: '/notifications', label: 'Updates', icon: Bell },
     { href: '/ngos', label: 'NGOs', icon: Building },
 ];
