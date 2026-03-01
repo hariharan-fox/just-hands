@@ -1,8 +1,7 @@
-
 'use client';
 
 import Link from 'next/link';
-import { Bell } from 'lucide-react';
+import { Bell, Menu } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -13,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/lib/auth-context';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -81,11 +81,38 @@ export default function Header() {
              <div className="flex items-center gap-4">
                 <Logo />
              </div>
-             <div className="flex items-center gap-2">
+             
+             {/* Desktop Menu */}
+             <nav className="hidden items-center gap-2 md:flex">
                 <Button variant="ghost" asChild><Link href="/events">Events</Link></Button>
                 <Button variant="ghost" asChild><Link href="/ngos">NGOs</Link></Button>
                 <Button variant="ghost" asChild><Link href="/login">Login</Link></Button>
                 <Button asChild><Link href="/signup">Sign Up</Link></Button>
+             </nav>
+             
+             {/* Mobile Menu */}
+             <div className="md:hidden">
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button variant="outline" size="icon">
+                      <Menu className="h-5 w-5" />
+                      <span className="sr-only">Open menu</span>
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="flex flex-col p-0">
+                    <div className="p-4 border-b">
+                        <Logo />
+                    </div>
+                    <nav className="grid gap-4 text-base p-4">
+                        <Link href="/events" className="text-muted-foreground hover:text-foreground">Events</Link>
+                        <Link href="/ngos" className="text-muted-foreground hover:text-foreground">NGOs</Link>
+                    </nav>
+                    <div className="mt-auto p-4 space-y-4 border-t">
+                        <Button asChild variant="outline" className="w-full"><Link href="/login">Login</Link></Button>
+                        <Button asChild className="w-full"><Link href="/signup">Sign Up</Link></Button>
+                    </div>
+                  </SheetContent>
+                </Sheet>
              </div>
         </header>
     );
