@@ -65,7 +65,9 @@ export default function Header() {
                             <DropdownMenuItem asChild>
                               <Link href="/settings">Settings</Link>
                             </DropdownMenuItem>
-                            <DropdownMenuItem>Support</DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                              <a href="mailto:support@just-hands.app">Support</a>
+                            </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
                         </DropdownMenuContent>
