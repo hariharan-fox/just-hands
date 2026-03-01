@@ -3,6 +3,7 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/lib/auth-context';
+import { BadgeUnlockProvider } from '@/lib/badge-unlock-context';
 import { ClientLayout } from '@/components/layout/client-layout';
 import { Merriweather, Inter } from 'next/font/google';
 
@@ -33,9 +34,11 @@ export default function RootLayout({
     <html lang="en" className={cn(headlineFont.variable, bodyFont.variable)}>
       <body className={cn('min-h-screen bg-background font-body text-foreground/90 antialiased')}>
         <AuthProvider>
-          <ClientLayout>
-            {children}
-          </ClientLayout>
+          <BadgeUnlockProvider>
+            <ClientLayout>
+              {children}
+            </ClientLayout>
+          </BadgeUnlockProvider>
         </AuthProvider>
         <Toaster />
       </body>
