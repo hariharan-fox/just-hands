@@ -2,12 +2,12 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { allEvents, allNgos } from "@/lib/placeholder-data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, MapPin, Target, UserPlus, Building, Heart, TrendingUp, ArrowLeft } from "lucide-react";
+import { Calendar, MapPin, Target, Building, Heart, TrendingUp, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import EventSignUpButton from "@/components/shared/event-signup-button";
 
 export default async function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -93,10 +93,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
             {/* Action Card */}
             <Card className="shadow-lg">
               <CardContent className="p-6 space-y-4">
-                <Button size="lg" className="w-full text-base">
-                  <UserPlus className="mr-2 h-4 w-4" />
-                  Sign Up for this Event
-                </Button>
+                <EventSignUpButton eventId={event.id} eventTitle={event.title} />
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-3">
                     <Calendar className="h-4 w-4 mt-1 flex-shrink-0 text-muted-foreground" />
