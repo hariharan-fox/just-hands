@@ -5,7 +5,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Trophy } from 'lucide-react';
+import { Trophy, Clock, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function LeaderboardPage() {
@@ -40,8 +40,8 @@ export default function LeaderboardPage() {
                             <TableRow>
                                 <TableHead className="w-16 text-center">Rank</TableHead>
                                 <TableHead>Volunteer</TableHead>
-                                <TableHead className="text-right">Hours Logged</TableHead>
-                                <TableHead className="text-right">Events Completed</TableHead>
+                                <TableHead className="text-right hidden md:table-cell">Hours Logged</TableHead>
+                                <TableHead className="text-right hidden md:table-cell">Events Completed</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -51,7 +51,7 @@ export default function LeaderboardPage() {
                                 return (
                                     <TableRow key={entry.volunteer.id} className={cn(isTopThree && "bg-accent/50")}>
                                         <TableCell className="text-center">
-                                            <div className="flex justify-center items-center">
+                                            <div className="flex justify-center items-center h-10 w-10">
                                                 {getRankIndicator(entry.rank)}
                                             </div>
                                         </TableCell>
@@ -63,11 +63,17 @@ export default function LeaderboardPage() {
                                                         <AvatarFallback>{entry.volunteer.name.charAt(0)}</AvatarFallback>
                                                     </Avatar>
                                                 )}
-                                                <span className={cn("font-medium", isTopThree && "font-bold")}>{entry.volunteer.name}</span>
+                                                <div>
+                                                    <span className={cn("font-medium", isTopThree && "font-bold")}>{entry.volunteer.name}</span>
+                                                    <div className="md:hidden text-xs text-muted-foreground flex items-center gap-3 mt-1">
+                                                        <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {entry.hoursLogged} hrs</span>
+                                                        <span className="flex items-center gap-1"><CheckCircle className="h-3 w-3" /> {entry.eventsCompleted} events</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </TableCell>
-                                        <TableCell className="text-right font-medium">{entry.hoursLogged}</TableCell>
-                                        <TableCell className="text-right font-medium">{entry.eventsCompleted}</TableCell>
+                                        <TableCell className="text-right font-medium hidden md:table-cell">{entry.hoursLogged}</TableCell>
+                                        <TableCell className="text-right font-medium hidden md:table-cell">{entry.eventsCompleted}</TableCell>
                                     </TableRow>
                                 );
                             })}
