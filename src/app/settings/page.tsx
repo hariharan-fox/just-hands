@@ -9,14 +9,25 @@ import { volunteer, completedEvents } from "@/lib/placeholder-data";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { useAuth } from "@/lib/auth-context";
-import { LogOut, ArrowRight } from "lucide-react";
+import { LogOut, ArrowRight, Gift, Copy } from "lucide-react";
 import Link from "next/link";
+import { useToast } from "@/hooks/use-toast";
 
 export default function SettingsPage() {
   const { user, logout } = useAuth();
+  const { toast } = useToast();
   const volunteerAvatar = PlaceHolderImages.find(p => p.id === 'avatar-priya-sharma');
   const volunteerName = user?.name || volunteer.name;
   const volunteerEmail = user?.email || volunteer.email;
+  const referralLink = `https://just-hands.app/signup?ref=${user?.id || 'volunteer123'}`;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(referralLink);
+    toast({
+      title: "Referral Link Copied!",
+      description: "You can now share it with your friends.",
+    });
+  };
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-8 animate-slide-in-from-bottom">
@@ -50,6 +61,33 @@ export default function SettingsPage() {
               <p className="text-xs text-muted-foreground">Your email address is not displayed publicly.</p>
             </div>
             <Button>Update Profile</Button>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base flex items-center gap-2">
+              <Gift className="h-5 w-5 text-primary" />
+              Refer a Friend
+            </CardTitle>
+            <CardDescription>
+              Share your love for volunteering! Invite friends to join Just Hands and earn badges.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="referral-link">Your Unique Referral Link</Label>
+              <div className="flex gap-2">
+                <Input id="referral-link" value={referralLink} readOnly />
+                <Button variant="outline" size="icon" onClick={handleCopy}>
+                  <Copy className="h-4 w-4" />
+                  <span className="sr-only">Copy Link</span>
+                </Button>
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground">
+                For each friend that signs up and completes an event, you'll make progress towards new referral badges.
+            </p>
           </CardContent>
         </Card>
 

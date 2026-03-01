@@ -117,6 +117,7 @@ export default function BadgesPage() {
     'Cause Champion',
     'Skill & Dedication',
     'Community & Leadership',
+    'Referral Achievements',
     'Grandmaster Badges'
   ];
 

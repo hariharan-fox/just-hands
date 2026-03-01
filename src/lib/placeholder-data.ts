@@ -1,5 +1,5 @@
 import type { Volunteer, Event, NGO, Testimonial, Certificate, Notification } from './types';
-import { BookOpen, Sprout, HeartPulse, Users, ShieldCheck, Rocket, Star, Heart, Medal, Trophy, Gem, Crown, Zap, TrendingUp, Award } from 'lucide-react';
+import { BookOpen, Sprout, HeartPulse, Users, ShieldCheck, Rocket, Star, Heart, Medal, Trophy, Gem, Crown, Zap, TrendingUp, Award, UserPlus } from 'lucide-react';
 
 export const volunteer: Volunteer = {
   id: 'vol-1',
@@ -192,9 +192,13 @@ export const allCertificates: Certificate[] = [
   { id: 'special-3', name: 'NGO Nomad', description: 'Volunteer with 5 different NGOs.', rule: 'Volunteer with 5 different NGOs', icon: TrendingUp, isEarned: false, level: 'Silver', shape: 'pentagon', category: 'Community & Leadership' },
   { id: 'diverse-3', name: 'Cause Connoisseur', description: 'Volunteer for 7 different causes.', rule: 'Volunteer for 7 unique causes', icon: Users, isEarned: false, level: 'Gold', shape: 'pentagon', category: 'Community & Leadership' },
   { id: 'special-4', name: 'Leadership', description: 'Lead a volunteer team at an event.', rule: 'Lead a team at an event', icon: Crown, isEarned: false, level: 'Gold', shape: 'circle', category: 'Community & Leadership' },
-  { id: 'special-5', name: 'Recruiter', description: 'Recruit 3 new volunteers to the platform.', rule: 'Refer 3 new volunteers who complete an event', icon: Gem, isEarned: false, level: 'Gold', shape: 'hexagon', category: 'Community & Leadership' },
   { id: 'special-2', name: 'Top Volunteer', description: 'Be in the top 10% of volunteers by hours this quarter.', rule: 'Be a top 10% volunteer for a quarter', icon: Star, isEarned: false, level: 'Gold', shape: 'hexagon', category: 'Community & Leadership' },
   { id: 'placeholder-13', name: 'Mentor Master', description: 'Mentor 5 times in educational workshops.', rule: 'Mentor 5 times', icon: BookOpen, isEarned: false, level: 'Platinum', shape: 'pentagon', category: 'Community & Leadership' },
+
+  // Referral Achievements
+  { id: 'referral-1', name: 'Recruiter', description: 'Refer 1 friend who completes an event.', rule: 'Refer 1 new volunteer', icon: UserPlus, isEarned: false, level: 'Bronze', shape: 'hexagon', category: 'Referral Achievements' },
+  { id: 'referral-2', name: 'Super Recruiter', description: 'Refer 3 friends who complete an event.', rule: 'Refer 3 new volunteers', icon: Users, isEarned: false, level: 'Silver', shape: 'pentagon', category: 'Referral Achievements' },
+  { id: 'referral-3', name: 'Community Builder', description: 'Refer 5 friends who complete an event.', rule: 'Refer 5 new volunteers', icon: Crown, isEarned: false, level: 'Gold', shape: 'circle', category: 'Referral Achievements' },
   
   // Grandmaster Badges
   { id: 'placeholder-10', name: 'Super Streaker', description: 'Volunteer at least once a month for 6 consecutive months.', rule: 'Volunteer monthly for 6 months straight', icon: Award, isEarned: false, level: 'Platinum', shape: 'pentagon', category: 'Grandmaster Badges' },
