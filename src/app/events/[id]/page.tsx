@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import type { Metadata } from 'next';
 import { allEvents, allNgos } from "@/lib/placeholder-data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Badge } from "@/components/ui/badge";
@@ -9,8 +10,37 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import EventSignUpButton from "@/components/shared/event-signup-button";
 
-export default async function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const event = allEvents.find((e) => e.id === params.id);
+  const eventImage = event ? PlaceHolderImages.find((p) => p.id === event.imageUrl) : undefined;
+
+  if (!event) {
+    return {
+      title: "Event Not Found | Just Hands",
+      description: "The event you are looking for could not be found.",
+    };
+  }
+
+  return {
+    title: `${event.title} | Just Hands`,
+    description: event.description.substring(0, 160),
+    openGraph: {
+        title: `${event.title} | Just Hands`,
+        description: event.description.substring(0, 160),
+        images: eventImage ? [
+            {
+                url: eventImage.imageUrl,
+                width: 1200,
+                height: 630,
+                alt: event.title,
+            },
+        ] : [],
+    },
+  };
+}
+
+export default async function EventDetailPage({ params }: { params: { id: string } }) {
+  const { id } = params;
   const event = allEvents.find((e) => e.id === id);
 
   if (!event) {

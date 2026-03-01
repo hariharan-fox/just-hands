@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import type { Metadata } from 'next';
 import { allNgos, allEvents } from "@/lib/placeholder-data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,8 +10,37 @@ import { MapPin, Target, Users, Mail, Phone, Globe, ArrowLeft } from "lucide-rea
 import EventCard from "@/components/shared/event-card";
 import Link from "next/link";
 
-export default async function NgoDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const ngo = allNgos.find((n) => n.id === params.id);
+  const ngoLogo = ngo ? PlaceHolderImages.find((p) => p.id === ngo.logoUrl) : undefined;
+
+  if (!ngo) {
+    return {
+      title: "NGO Not Found | Just Hands",
+      description: "The NGO you are looking for could not be found.",
+    };
+  }
+
+  return {
+    title: `${ngo.name} | Just Hands`,
+    description: ngo.mission.substring(0, 160),
+    openGraph: {
+        title: `${ngo.name} | Just Hands`,
+        description: ngo.mission.substring(0, 160),
+        images: ngoLogo ? [
+            {
+                url: ngoLogo.imageUrl,
+                width: 1080,
+                height: 1080,
+                alt: ngo.name,
+            },
+        ] : [],
+    },
+  };
+}
+
+export default async function NgoDetailPage({ params }: { params: { id: string } }) {
+  const { id } = params;
   const ngo = allNgos.find((n) => n.id === id);
 
   if (!ngo) {
