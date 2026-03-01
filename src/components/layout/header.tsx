@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/lib/auth-context';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -101,6 +101,7 @@ export default function Header() {
                   </SheetTrigger>
                   <SheetContent side="left" className="flex flex-col p-0">
                     <div className="p-4 border-b">
+                        <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
                         <Logo />
                     </div>
                     <nav className="grid gap-4 text-base p-4">
