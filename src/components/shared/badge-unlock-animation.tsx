@@ -4,59 +4,98 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { BadgeVisual } from '@/components/shared/badge-visual';
 import type { Certificate } from '@/lib/types';
-import { X } from 'lucide-react';
+import { X, Share2, Linkedin, Twitter } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 const ConfettiPiece = ({ style }: { style: React.CSSProperties }) => (
-  <div
-    className="absolute h-2 w-1 rounded-full"
-    style={style}
-  />
+  <div className="absolute h-2 w-1 rounded-full" style={style} />
 );
 
 export default function BadgeUnlockAnimation({ badge, onClose }: { badge: Certificate; onClose: () => void }) {
-    const confetti = Array.from({ length: 50 }).map((_, i) => {
-        const style = {
-            left: `${Math.random() * 100}%`,
-            animation: `confetti-rain ${Math.random() * 2 + 3}s linear ${Math.random() * 2}s infinite`,
-            backgroundColor: `hsl(${Math.random() * 360}, 70%, 60%)`,
-        };
-        return <ConfettiPiece key={i} style={style} />;
+  const { toast } = useToast();
+
+  const confetti = Array.from({ length: 100 }).map((_, i) => {
+    const style = {
+      left: `${Math.random() * 100}%`,
+      animation: `confetti-rain ${Math.random() * 2 + 3}s linear ${Math.random() * 2}s infinite`,
+      backgroundColor: `hsl(${Math.random() * 360}, 80%, 60%)`,
+    };
+    return <ConfettiPiece key={i} style={style} />;
+  });
+
+  const copyToClipboard = () => {
+    const shareText = `I just earned the "${badge.name}" badge on Just Hands for my volunteer work! #JustHands #Volunteering #Achievement`;
+    navigator.clipboard.writeText(shareText);
+    toast({
+      title: 'Link Copied!',
+      description: 'You can now share your achievement.',
     });
+  };
+
+  const LEVEL_BG_COLORS = {
+    Bronze: "from-amber-600/20 via-transparent to-transparent",
+    Silver: "from-slate-400/20 via-transparent to-transparent",
+    Gold: "from-yellow-400/20 via-transparent to-transparent",
+    Platinum: "from-sky-400/20 via-transparent to-transparent",
+  };
+  const bgGradient = LEVEL_BG_COLORS[badge.level || 'Bronze'];
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center animate-in fade-in-0">
-      <div className="absolute inset-0 overflow-hidden">
+    <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in-0">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {confetti}
       </div>
 
-      <div className="relative w-full max-w-md m-4 bg-background/80 backdrop-blur-lg rounded-2xl border border-border/50 shadow-2xl p-8 text-center animate-scale-in">
+      <div className="relative w-full max-w-sm m-4 bg-card rounded-2xl border shadow-2xl overflow-hidden text-center animate-in zoom-in-95">
         <Button
-            variant="ghost"
-            size="icon"
-            className="absolute top-4 right-4 text-muted-foreground"
-            onClick={onClose}
+          variant="ghost"
+          size="icon"
+          className="absolute top-2 right-2 text-muted-foreground z-10"
+          onClick={onClose}
         >
-            <X className="h-4 w-4" />
-            <span className="sr-only">Close</span>
+          <X className="h-5 w-5" />
+          <span className="sr-only">Close</span>
         </Button>
 
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-primary">New Achievement Unlocked!</h2>
-        
-        <div className="my-8 flex justify-center">
-            <div className="relative">
-                <BadgeVisual badge={{...badge, isEarned: true}} size="large" />
-                <div className="absolute inset-0 overflow-hidden rounded-full">
-                    <div className="absolute -top-4 -left-8 h-24 w-48 bg-white/30 transform -rotate-45 animate-shine"></div>
-                </div>
+        <div className={cn("relative p-8 pt-12 flex flex-col items-center bg-gradient-to-b", bgGradient)}>
+           <div className="relative">
+              <BadgeVisual badge={{ ...badge, isEarned: true }} size="large" />
+              <div className="absolute inset-0 overflow-hidden rounded-full">
+                  <div className="absolute -top-2 -left-12 h-32 w-64 bg-white/20 transform -rotate-45 animate-shine opacity-50"></div>
+              </div>
             </div>
         </div>
 
-        <h3 className="text-xl font-bold">{badge.name}</h3>
-        <p className="text-muted-foreground mt-2 text-sm">{badge.description}</p>
+        <div className="p-6 pt-4 space-y-3">
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary">New Achievement Unlocked!</p>
+          <h3 className="text-xl font-bold">{badge.name} {badge.level && `(${badge.level})`}</h3>
+          <p className="text-muted-foreground text-sm">{badge.description}</p>
+        </div>
         
-        <Button onClick={onClose} className="mt-8">
-            Continue
-        </Button>
+        <div className="px-6 pb-6 space-y-4">
+           <div className="border-t pt-4 flex flex-col space-y-2">
+              <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Share Your Achievement</p>
+              <Button variant="outline">
+                  <Twitter className="mr-2 h-4 w-4" />
+                  Share on X
+              </Button>
+              <Button variant="outline">
+                  <Linkedin className="mr-2 h-4 w-4" />
+                  Share on LinkedIn
+              </Button>
+              <Button onClick={copyToClipboard}>
+                  <Share2 className="mr-2 h-4 w-4" />
+                  Copy Share Link
+              </Button>
+            </div>
+        </div>
+
+        <div className="p-4 bg-secondary/30 border-t">
+          <Button variant="ghost" onClick={onClose} className="w-full">
+              Continue
+          </Button>
+        </div>
       </div>
     </div>
   );
