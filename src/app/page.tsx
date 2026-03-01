@@ -66,7 +66,7 @@ export default function DashboardPage() {
                         />
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-6 md:p-8 flex flex-col justify-end">
-                        <h2 className="text-lg md:text-2xl font-bold text-white shadow-lg">{event.title}</h2>
+                        <h2 className="text-base md:text-xl font-bold text-white shadow-lg">{event.title}</h2>
                         <p className="text-sm text-white/90 mt-2 shadow-md max-w-lg hidden md:block">{event.description.substring(0, 100)}...</p>
                          <Button variant="secondary" size="sm" className="mt-4 w-fit">
                             View Event
