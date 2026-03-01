@@ -8,21 +8,8 @@ import { X, Share2, Linkedin, Twitter } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
-const ConfettiPiece = ({ style }: { style: React.CSSProperties }) => (
-  <div className="absolute h-2 w-1 rounded-full" style={style} />
-);
-
 export default function BadgeUnlockAnimation({ badge, onClose }: { badge: Certificate; onClose: () => void }) {
   const { toast } = useToast();
-
-  const confetti = Array.from({ length: 100 }).map((_, i) => {
-    const style = {
-      left: `${Math.random() * 100}%`,
-      animation: `confetti-rain ${Math.random() * 2 + 3}s linear ${Math.random() * 2}s infinite`,
-      backgroundColor: `hsl(${Math.random() * 360}, 80%, 60%)`,
-    };
-    return <ConfettiPiece key={i} style={style} />;
-  });
 
   const copyToClipboard = () => {
     const shareText = `I just earned the "${badge.name}" badge on Just Hands for my volunteer work! #JustHands #Volunteering #Achievement`;
@@ -43,10 +30,6 @@ export default function BadgeUnlockAnimation({ badge, onClose }: { badge: Certif
 
   return (
     <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in-0">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {confetti}
-      </div>
-
       <div className="relative w-full max-w-sm m-4 bg-card rounded-2xl border shadow-2xl overflow-hidden text-center animate-in zoom-in-95">
         <Button
           variant="ghost"
@@ -59,12 +42,7 @@ export default function BadgeUnlockAnimation({ badge, onClose }: { badge: Certif
         </Button>
 
         <div className={cn("relative p-8 pt-12 flex flex-col items-center bg-gradient-to-b", bgGradient)}>
-           <div className="relative">
-              <BadgeVisual badge={{ ...badge, isEarned: true }} size="large" />
-              <div className="absolute inset-0 overflow-hidden rounded-full">
-                  <div className="absolute -top-2 -left-12 h-32 w-64 bg-white/20 transform -rotate-45 animate-shine opacity-50"></div>
-              </div>
-            </div>
+           <BadgeVisual badge={{ ...badge, isEarned: true }} size="large" shine="animate" />
         </div>
 
         <div className="p-6 pt-4 space-y-3">
