@@ -10,11 +10,13 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Logo } from '@/components/shared/logo';
 import { useAuth } from '@/lib/auth-context';
+import { useToast } from '@/hooks/use-toast';
 
 export default function SignupPage() {
   const { signup } = useAuth();
   const searchParams = useSearchParams();
   const referrerId = searchParams.get('ref');
+  const { toast } = useToast();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -34,6 +36,13 @@ export default function SignupPage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleGoogleSignup = () => {
+    toast({
+      title: 'Feature Coming Soon!',
+      description: 'Google sign-up is not yet available but will be in a future update.',
+    });
   };
 
   return (
@@ -102,7 +111,7 @@ export default function SignupPage() {
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? 'Creating account...' : 'Create an account'}
             </Button>
-            <Button variant="outline" className="w-full" type="button">
+            <Button variant="outline" className="w-full" type="button" onClick={handleGoogleSignup}>
               Sign up with Google
             </Button>
           </form>

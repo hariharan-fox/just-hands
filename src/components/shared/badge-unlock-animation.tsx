@@ -11,13 +11,22 @@ import { cn } from '@/lib/utils';
 export default function BadgeUnlockAnimation({ badge, onClose }: { badge: Certificate; onClose: () => void }) {
   const { toast } = useToast();
 
-  const copyToClipboard = () => {
+  const handleShare = (platform: 'twitter' | 'linkedin' | 'copy') => {
     const shareText = `I just earned the "${badge.name}" badge on Just Hands for my volunteer work! #JustHands #Volunteering #Achievement`;
-    navigator.clipboard.writeText(shareText);
-    toast({
-      title: 'Link Copied!',
-      description: 'You can now share your achievement.',
-    });
+    const url = 'https://just-hands.app';
+    
+    if (platform === 'copy') {
+        navigator.clipboard.writeText(`${shareText} ${url}`);
+        toast({
+            title: 'Link Copied!',
+            description: 'You can now share your achievement.',
+        });
+    } else {
+        const intentUrl = platform === 'twitter'
+            ? `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`
+            : `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(`New Achievement on Just Hands!`)}&summary=${encodeURIComponent(shareText)}`;
+        window.open(intentUrl, '_blank', 'noopener,noreferrer');
+    }
   };
 
   const LEVEL_BG_COLORS = {
@@ -54,15 +63,15 @@ export default function BadgeUnlockAnimation({ badge, onClose }: { badge: Certif
         <div className="px-6 pb-6 space-y-4">
            <div className="border-t pt-4 flex flex-col space-y-2">
               <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Share Your Achievement</p>
-              <Button variant="outline">
+              <Button variant="outline" onClick={() => handleShare('twitter')}>
                   <Twitter className="mr-2 h-4 w-4" />
                   Share on X
               </Button>
-              <Button variant="outline">
+              <Button variant="outline" onClick={() => handleShare('linkedin')}>
                   <Linkedin className="mr-2 h-4 w-4" />
                   Share on LinkedIn
               </Button>
-              <Button onClick={copyToClipboard}>
+              <Button onClick={() => handleShare('copy')}>
                   <Share2 className="mr-2 h-4 w-4" />
                   Copy Share Link
               </Button>

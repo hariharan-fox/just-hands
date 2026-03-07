@@ -29,6 +29,13 @@ export default function SettingsPage() {
     });
   };
 
+  const showComingSoonToast = (feature: string) => {
+    toast({
+      title: 'Feature Coming Soon!',
+      description: `${feature} is not yet available but will be in a future update.`,
+    });
+  };
+
   return (
     <div className="container mx-auto px-4 md:px-6 py-8 animate-slide-in-from-bottom">
       <div className="max-w-3xl mx-auto space-y-8">
@@ -49,7 +56,7 @@ export default function SettingsPage() {
                     <AvatarFallback>{volunteerName.charAt(0)}</AvatarFallback>
                   </Avatar>
               )}
-              <Button variant="outline">Change Photo</Button>
+              <Button variant="outline" onClick={() => showComingSoonToast('Changing your photo')}>Change Photo</Button>
             </div>
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
@@ -60,7 +67,7 @@ export default function SettingsPage() {
               <Input id="email" type="email" defaultValue={volunteerEmail} disabled />
               <p className="text-xs text-muted-foreground">Your email address is not displayed publicly.</p>
             </div>
-            <Button>Update Profile</Button>
+            <Button onClick={() => showComingSoonToast('Updating your profile')}>Update Profile</Button>
           </CardContent>
         </Card>
 
@@ -147,7 +154,7 @@ export default function SettingsPage() {
             </div>
             <Separator />
             <div className="space-y-2">
-                <Button variant="outline" className="mt-4">Change Password</Button>
+                <Button variant="outline" className="mt-4" onClick={() => showComingSoonToast('Changing your password')}>Change Password</Button>
                 <p className="text-xs text-muted-foreground">You will be sent an email to reset your password.</p>
             </div>
             <Separator />
@@ -159,7 +166,7 @@ export default function SettingsPage() {
                           <h4 className="font-semibold">Delete Account</h4>
                           <p className="text-sm text-muted-foreground">Permanently delete your account and all of your content.</p>
                       </div>
-                        <Button variant="destructive">Delete Account</Button>
+                        <Button variant="destructive" onClick={() => showComingSoonToast('Deleting your account')}>Delete Account</Button>
                   </div>
                 </div>
             </div>

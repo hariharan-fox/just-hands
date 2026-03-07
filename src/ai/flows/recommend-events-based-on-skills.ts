@@ -9,18 +9,20 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import type { Event } from '@/lib/types';
 
 const RecommendEventsBasedOnSkillsInputSchema = z.object({
   volunteerSkills: z
     .string()
     .describe('A comma separated list of skills the volunteer possesses.'),
+  events: z.array(z.any()).describe('The list of all available events to choose from.'),
 });
 export type RecommendEventsBasedOnSkillsInput = z.infer<typeof RecommendEventsBasedOnSkillsInputSchema>;
 
 const RecommendEventsBasedOnSkillsOutputSchema = z.object({
-  recommendedEvents: z
-    .string()
-    .describe('A list of events recommended based on the volunteer skills.'),
+  recommendedEventIds: z
+    .array(z.string())
+    .describe('An array of event IDs that are the best match for the user\'s skills. Only return IDs from the provided event list.'),
 });
 export type RecommendEventsBasedOnSkillsOutput = z.infer<typeof RecommendEventsBasedOnSkillsOutputSchema>;
 
@@ -32,11 +34,21 @@ const prompt = ai.definePrompt({
   name: 'recommendEventsBasedOnSkillsPrompt',
   input: {schema: RecommendEventsBasedOnSkillsInputSchema},
   output: {schema: RecommendEventsBasedOnSkillsOutputSchema},
-  prompt: `You are an expert at matching volunteers to events.
+  prompt: `You are an expert at matching volunteers to events based on their skills.
+  You will be given a list of volunteer skills and a JSON array of available events.
 
-  Based on the volunteer's skills, recommend a list of events that they would be well suited for.
+  Your task is to analyze the volunteer's skills and compare them against the 'skills' and 'description' required for each event.
+  Identify the top 2-3 events that are the most relevant match.
 
-  Skills: {{{volunteerSkills}}}
+  You MUST return your answer as a JSON object containing a list of the recommended event IDs, using the key "recommendedEventIds".
+  Only return IDs for events that exist in the provided list.
+
+  Volunteer Skills: {{{volunteerSkills}}}
+
+  Available Events:
+  \`\`\`json
+  {{{jsonStringify events}}}
+  \`\`\`
   `,
 });
 

@@ -72,14 +72,23 @@ export default function BadgesPage() {
     }
   };
 
-  const copyToClipboard = () => {
+  const handleShare = (platform: 'twitter' | 'linkedin' | 'copy') => {
     if (!selectedBadge) return;
     const shareText = `I just earned the "${selectedBadge.name} (${selectedBadge.level})" badge on Just Hands for my volunteer work! #JustHands #Volunteering #MakingADifference`;
-    navigator.clipboard.writeText(shareText);
-    toast({
-      title: 'Link Copied!',
-      description: 'You can now share your achievement.',
-    });
+    const url = 'https://just-hands.app';
+    
+    if (platform === 'copy') {
+        navigator.clipboard.writeText(`${shareText} ${url}`);
+        toast({
+            title: 'Link Copied!',
+            description: 'You can now share your achievement.',
+        });
+    } else {
+        const intentUrl = platform === 'twitter'
+            ? `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`
+            : `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(`New Achievement on Just Hands!`)}&summary=${encodeURIComponent(shareText)}`;
+        window.open(intentUrl, '_blank', 'noopener,noreferrer');
+    }
     setDetailDialogOpen(false);
   };
   
@@ -117,7 +126,7 @@ export default function BadgesPage() {
                 <Progress value={progress} className="w-full h-2" />
                 <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">{earned} / {total} Unlocked</span>
               </div>
-              <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-x-2 gap-y-8 justify-items-center">
+              <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-x-2 gap-y-8 justify-items-center">
                 {badges.map((badge) => (
                   <BadgeDisplay key={badge.id} badge={badge} onClick={handleBadgeClick} />
                 ))}
@@ -150,15 +159,15 @@ export default function BadgesPage() {
 
                 <div className="pt-4 flex flex-col space-y-2">
                     <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Share Your Achievement</p>
-                    <Button variant="outline">
+                    <Button variant="outline" onClick={() => handleShare('twitter')}>
                         <Twitter className="mr-2 h-4 w-4" />
                         Share on X
                     </Button>
-                    <Button variant="outline">
+                    <Button variant="outline" onClick={() => handleShare('linkedin')}>
                         <Linkedin className="mr-2 h-4 w-4" />
                         Share on LinkedIn
                     </Button>
-                    <Button onClick={copyToClipboard}>
+                    <Button onClick={() => handleShare('copy')}>
                         <Share2 className="mr-2 h-4 w-4" />
                         Copy Share Link
                     </Button>

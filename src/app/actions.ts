@@ -3,6 +3,7 @@
 import { z } from 'zod';
 import { allEvents } from '@/lib/placeholder-data';
 import type { Event } from '@/lib/types';
+import { recommendEventsBasedOnSkills } from '@/ai/flows/recommend-events-based-on-skills';
 
 
 const skillSchema = z.object({
@@ -30,14 +31,35 @@ export async function getRecommendedEvents(
     };
   }
 
-  // Simulate API call and return mock data
-  await new Promise(resolve => setTimeout(resolve, 1000));
+  try {
+    const aiResult = await recommendEventsBasedOnSkills({
+      volunteerSkills: validatedFields.data.skills,
+      events: allEvents,
+    });
     
-  // In a real app, this would be a sophisticated search.
-  // For now, we'll return a few mock events that seem related.
-  const recommendedEvents = allEvents.slice(0, 2);
+    if (!aiResult.recommendedEventIds || aiResult.recommendedEventIds.length === 0) {
+      return {
+        message: `We couldn't find any specific event recommendations for '${validatedFields.data.skills}', but here are some popular upcoming events you might be interested in.`,
+        events: allEvents.slice(0, 2),
+      }
+    }
+  
+    const recommendedEvents = allEvents.filter(event => aiResult.recommendedEventIds.includes(event.id));
 
-  const mockMessage = `Based on your skills in '${validatedFields.data.skills}', we've found a couple of events where you could make a real difference. Check them out!`;
-
-  return { message: mockMessage, events: recommendedEvents };
+    if (recommendedEvents.length === 0) {
+       return {
+        message: `We couldn't find any specific event recommendations for '${validatedFields.data.skills}', but here are some popular upcoming events you might be interested in.`,
+        events: allEvents.slice(0, 2),
+      }
+    }
+  
+    const message = `Based on your skills in '${validatedFields.data.skills}', we've found a few events where you could make a real difference. Check them out!`;
+  
+    return { message, events: recommendedEvents };
+  } catch(e: any) {
+    console.error(e);
+    return {
+      error: e.message || "An error occurred while getting recommendations."
+    }
+  }
 }
