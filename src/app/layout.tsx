@@ -21,7 +21,7 @@ const bodyFont = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Just Hands',
+  title: 'Meet A Cause',
   description: 'Connecting volunteers with NGOs for a better world.',
 };
 

@@ -241,7 +241,7 @@ export const notifications: Notification[] = [
   },
     {
     id: 'notif-4',
-    title: 'Welcome to Just Hands!',
+    title: 'Welcome to Meet A Cause!',
     description: 'Thank you for joining our community of volunteers.',
     createdAt: '1 week ago',
     isRead: true,

@@ -19,7 +19,7 @@ export default function SettingsPage() {
   const volunteerAvatar = PlaceHolderImages.find(p => p.id === 'avatar-priya-sharma');
   const volunteerName = user?.name || volunteer.name;
   const volunteerEmail = user?.email || volunteer.email;
-  const referralLink = `https://just-hands.app/signup?ref=${user?.id || 'volunteer123'}`;
+  const referralLink = `https://meet-a-cause.app/signup?ref=${user?.id || 'volunteer123'}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(referralLink);
@@ -78,7 +78,7 @@ export default function SettingsPage() {
               Refer a Friend
             </CardTitle>
             <CardDescription>
-              Share your love for volunteering! Invite friends to join Just Hands and earn badges.
+              Share your love for volunteering! Invite friends to join Meet A Cause and earn badges.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">

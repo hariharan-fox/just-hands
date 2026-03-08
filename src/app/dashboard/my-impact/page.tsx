@@ -74,8 +74,8 @@ export default function BadgesPage() {
 
   const handleShare = (platform: 'twitter' | 'linkedin' | 'copy') => {
     if (!selectedBadge) return;
-    const shareText = `I just earned the "${selectedBadge.name} (${selectedBadge.level})" badge on Just Hands for my volunteer work! #JustHands #Volunteering #MakingADifference`;
-    const url = 'https://just-hands.app';
+    const shareText = `I just earned the "${selectedBadge.name} (${selectedBadge.level})" badge on Meet A Cause for my volunteer work! #MeetACause #Volunteering #MakingADifference`;
+    const url = 'https://meet-a-cause.app';
     
     if (platform === 'copy') {
         navigator.clipboard.writeText(`${shareText} ${url}`);
@@ -86,7 +86,7 @@ export default function BadgesPage() {
     } else {
         const intentUrl = platform === 'twitter'
             ? `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`
-            : `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(`New Achievement on Just Hands!`)}&summary=${encodeURIComponent(shareText)}`;
+            : `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(`New Achievement on Meet A Cause!`)}&summary=${encodeURIComponent(shareText)}`;
         window.open(intentUrl, '_blank', 'noopener,noreferrer');
     }
     setDetailDialogOpen(false);
@@ -173,7 +173,7 @@ export default function BadgesPage() {
                     </Button>
                 </div>
                  <div className="pt-4">
-                  <p className="text-xs text-muted-foreground">Powered by Just Hands</p>
+                  <p className="text-xs text-muted-foreground">Powered by Meet A Cause</p>
                 </div>
               </div>
             </div>

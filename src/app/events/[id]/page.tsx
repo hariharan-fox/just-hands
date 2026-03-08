@@ -16,16 +16,16 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 
   if (!event) {
     return {
-      title: "Event Not Found | Just Hands",
+      title: "Event Not Found | Meet A Cause",
       description: "The event you are looking for could not be found.",
     };
   }
 
   return {
-    title: `${event.title} | Just Hands`,
+    title: `${event.title} | Meet A Cause`,
     description: event.description.substring(0, 160),
     openGraph: {
-        title: `${event.title} | Just Hands`,
+        title: `${event.title} | Meet A Cause`,
         description: event.description.substring(0, 160),
         images: eventImage ? [
             {

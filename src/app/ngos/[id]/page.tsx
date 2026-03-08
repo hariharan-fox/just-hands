@@ -16,16 +16,16 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 
   if (!ngo) {
     return {
-      title: "NGO Not Found | Just Hands",
+      title: "NGO Not Found | Meet A Cause",
       description: "The NGO you are looking for could not be found.",
     };
   }
 
   return {
-    title: `${ngo.name} | Just Hands`,
+    title: `${ngo.name} | Meet A Cause`,
     description: ngo.mission.substring(0, 160),
     openGraph: {
-        title: `${ngo.name} | Just Hands`,
+        title: `${ngo.name} | Meet A Cause`,
         description: ngo.mission.substring(0, 160),
         images: ngoLogo ? [
             {

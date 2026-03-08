@@ -38,7 +38,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-6 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} ConnectSphere. All rights reserved.
+          © {new Date().getFullYear()} Meet A Cause. All rights reserved.
         </div>
       </div>
     </footer>

@@ -12,8 +12,8 @@ export default function BadgeUnlockAnimation({ badge, onClose }: { badge: Certif
   const { toast } = useToast();
 
   const handleShare = (platform: 'twitter' | 'linkedin' | 'copy') => {
-    const shareText = `I just earned the "${badge.name}" badge on Just Hands for my volunteer work! #JustHands #Volunteering #Achievement`;
-    const url = 'https://just-hands.app';
+    const shareText = `I just earned the "${badge.name}" badge on Meet A Cause for my volunteer work! #MeetACause #Volunteering #Achievement`;
+    const url = 'https://meet-a-cause.app';
     
     if (platform === 'copy') {
         navigator.clipboard.writeText(`${shareText} ${url}`);
@@ -24,7 +24,7 @@ export default function BadgeUnlockAnimation({ badge, onClose }: { badge: Certif
     } else {
         const intentUrl = platform === 'twitter'
             ? `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`
-            : `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(`New Achievement on Just Hands!`)}&summary=${encodeURIComponent(shareText)}`;
+            : `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(`New Achievement on Meet A Cause!`)}&summary=${encodeURIComponent(shareText)}`;
         window.open(intentUrl, '_blank', 'noopener,noreferrer');
     }
   };

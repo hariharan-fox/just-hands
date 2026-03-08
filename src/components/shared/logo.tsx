@@ -8,7 +8,7 @@ export function Logo({ className }: { className?: string }) {
       className={cn("text-xl font-bold font-headline text-foreground", className)}
       suppressHydrationWarning
     >
-      <span>Just Hands</span>
+      <span>Meet A Cause</span>
     </Link>
   );
 }

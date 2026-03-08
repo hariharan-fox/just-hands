@@ -1,4 +1,4 @@
-# Just Hands - Volunteer Matching Platform
+# Meet A Cause - Volunteer Matching Platform
 
 This application is a modern, feature-rich web platform designed to connect volunteers with non-governmental organizations (NGOs). It provides a seamless experience for users to find volunteering opportunities, track their contributions, and engage with a community of change-makers.
 
@@ -16,8 +16,6 @@ This application is a modern, feature-rich web platform designed to connect volu
 ---
 
 ## Project Structure
-
-The project follows a standard Next.js App Router structure.
 
 ```
 /
