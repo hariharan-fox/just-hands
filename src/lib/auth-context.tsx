@@ -42,7 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           const mockUser: User = { id: '1', name: 'Priya Sharma', email, role: 'volunteer' };
           setUser(mockUser);
           localStorage.setItem('mockUser', JSON.stringify(mockUser));
-          router.push('/');
+          router.push('/dashboard');
           resolve();
         } else {
           reject(new Error('Invalid credentials (use password "password")'));
@@ -62,7 +62,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const newUser: User = { id: Date.now().toString(), name, email, role };
         setUser(newUser);
         localStorage.setItem('mockUser', JSON.stringify(newUser));
-        router.push('/');
+        router.push('/dashboard');
         resolve();
       }, 500);
     });

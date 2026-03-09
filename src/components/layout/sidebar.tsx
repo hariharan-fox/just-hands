@@ -9,10 +9,10 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/lib/auth-context';
 
 const navLinks = [
-    { href: '/', label: 'Dashboard', icon: Home },
+    { href: '/dashboard', label: 'Dashboard', icon: Home },
     { href: '/events', label: 'Events', icon: Calendar },
     { href: '/ngos', label: 'NGOs', icon: Building },
-    { href: '/dashboard/my-impact', label: 'My Badges', icon: Award },
+    { href: '/my-impact', label: 'My Badges', icon: Award },
     { href: '/notifications', label: 'Notifications', icon: Bell },
 ];
 
@@ -29,7 +29,9 @@ export default function Sidebar() {
                 <div className="flex-1 py-4 overflow-y-auto">
                     <nav className="grid items-start gap-1 px-2 text-sm font-medium">
                         {navLinks.map((link) => {
-                            const isActive = link.href === '/' ? pathname === link.href : pathname.startsWith(link.href);
+                            const isActive = link.href === '/dashboard' 
+                                ? pathname === link.href 
+                                : pathname.startsWith(link.href);
                             return (
                                 <Link
                                     key={link.href}

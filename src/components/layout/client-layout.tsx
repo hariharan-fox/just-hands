@@ -13,17 +13,22 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const { user, isLoading } = useAuth();
 
-    const isAuthPage = pathname?.startsWith('/login') || pathname?.startsWith('/signup');
-    const isPublicPage = isAuthPage || pathname?.startsWith('/events') || pathname?.startsWith('/ngos') || pathname?.startsWith('/waitlist');
+    const isAuthPage = pathname?.startsWith('/login') || pathname?.startsWith('/signup') || pathname?.startsWith('/waitlist');
+    const isPublicPage = pathname === '/' || isAuthPage || pathname?.startsWith('/events') || pathname?.startsWith('/ngos');
 
     useEffect(() => {
         if (isLoading) return;
 
-        if (!user && !isPublicPage) {
-            router.push('/login');
-        }
-        if (user && isAuthPage) {
-            router.push('/');
+        if (user) {
+            // If user is logged in, redirect away from auth pages and landing page
+            if (isAuthPage || pathname === '/') {
+                router.push('/dashboard');
+            }
+        } else {
+            // If user is not logged in, protect non-public pages
+            if (!isPublicPage) {
+                router.push('/login');
+            }
         }
     }, [user, isLoading, isPublicPage, isAuthPage, router, pathname]);
 
@@ -32,7 +37,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
     }
 
     if (user) {
-        // Authenticated user layout
+        // Authenticated user layout (e.g., for /dashboard)
         return (
             <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
                 <Sidebar />
@@ -48,20 +53,8 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
     }
     
     // Public layout for unauthenticated users
-    if (isAuthPage || pathname?.startsWith('/waitlist')) {
-        return (
-            <div className="flex flex-col min-h-screen">
-                <Header />
-                <main className="flex-1 flex items-center justify-center p-4">
-                    {children}
-                </main>
-                <Footer />
-            </div>
-        );
-    }
-
-    if (isPublicPage) {
-        return (
+    if (pathname === '/' || pathname?.startsWith('/events') || pathname?.startsWith('/ngos')) {
+         return (
             <div className="flex flex-col min-h-screen">
                 <Header />
                 <main className="flex-1">
@@ -72,5 +65,17 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
         );
     }
 
-    return null; // Should be redirected
+    if (isAuthPage) {
+         return (
+            <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-1 flex items-center justify-center p-4">
+                    {children}
+                </main>
+                <Footer />
+            </div>
+        );
+    }
+
+    return null; // Should be covered by redirects
 }

@@ -6,10 +6,10 @@ import { Home, Calendar, Building, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
-    { href: '/', label: 'Dashboard', icon: Home },
+    { href: '/dashboard', label: 'Dashboard', icon: Home },
     { href: '/events', label: 'Events', icon: Calendar },
     { href: '/ngos', label: 'NGOs', icon: Building },
-    { href: '/dashboard/my-impact', label: 'Badges', icon: Award },
+    { href: '/my-impact', label: 'Badges', icon: Award },
 ];
 
 export default function BottomNav() {
@@ -19,7 +19,7 @@ export default function BottomNav() {
         <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-t">
             <div className="flex justify-around h-16 items-center">
                 {navLinks.map((link) => {
-                    const isActive = link.href === '/' ? pathname === link.href : pathname.startsWith(link.href);
+                    const isActive = link.href === '/dashboard' ? pathname === link.href : pathname.startsWith(link.href);
                     return (
                         <Link
                             key={link.href}

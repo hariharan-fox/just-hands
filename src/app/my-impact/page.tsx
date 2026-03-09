@@ -158,7 +158,7 @@ export default function BadgesPage() {
                 )}
 
                 <div className="pt-4 flex flex-col space-y-2">
-                    <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Share Your Achievement</p>
+                    <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wide">Share Your Achievement</p>
                     <Button variant="outline" onClick={() => handleShare('twitter')}>
                         <Twitter className="mr-2 h-4 w-4" />
                         Share on X
