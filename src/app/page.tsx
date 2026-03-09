@@ -3,9 +3,27 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Heart, Sparkles, BookOpen } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { howItWorks, testimonials } from '@/lib/placeholder-data';
+import { testimonials } from '@/lib/placeholder-data';
+
+const howItWorks = [
+  {
+    icon: Heart,
+    title: 'Find Your Story',
+    description: "Every cause has a story waiting for its hero. A rescued animal, a student's dream, a thriving forest. Find the narrative that calls to your heart."
+  },
+  {
+    icon: Sparkles,
+    title: 'Become a Character',
+    description: "Step into the story. Lend your unique skills, join a team of passionate people, and become an active character in the narrative of change. Your time is a powerful plot twist."
+  },
+  {
+    icon: BookOpen,
+    title: 'Witness the Sequel',
+    description: "See the impact of your contribution not in numbers, but in lives transformed. Your chapter of giving becomes part of a much larger legacy of hope."
+  }
+];
 
 export default function LandingPage() {
     
@@ -16,10 +34,10 @@ export default function LandingPage() {
                 <div className="container mx-auto px-4 md:px-6">
                     <div className="max-w-3xl mx-auto">
                         <h1 className="text-3xl md:text-5xl font-bold mb-4 animate-slide-in-from-bottom" style={{ animationDelay: '100ms' }}>
-                            Your Cause is Calling.
+                            Your Compassion Can Change a Life.
                         </h1>
                         <p className="text-base md:text-lg text-muted-foreground mb-8 animate-slide-in-from-bottom" style={{ animationDelay: '200ms' }}>
-                            Meet A Cause is the bridge between you and the organizations making a real difference. We're currently building our network of impactful NGOs. Join our waitlist to be the first to know when we launch.
+                            Imagine a child’s smile when they finally learn to read. Picture a cleaner shore, a safe haven for wildlife. Feel the warmth of a community united. These aren’t just moments; they’re movements. And they start with one person: **you**. We are building a place where your desire to help meets the hearts that need you most. Be the first to answer the call.
                         </p>
                         <div className="animate-slide-in-from-bottom" style={{ animationDelay: '300ms' }}>
                             <Button size="lg" asChild>
@@ -40,14 +58,14 @@ export default function LandingPage() {
             <section id="how-it-works" className="py-20 bg-secondary/30">
                 <div className="container mx-auto px-4 md:px-6">
                     <div className="text-center mb-12">
-                        <h2 className="text-2xl font-bold">Simple Steps to Make a Big Impact</h2>
-                        <p className="text-muted-foreground mt-2">Connecting with your cause has never been easier.</p>
+                        <h2 className="text-2xl font-bold">A Story in Three Acts</h2>
+                        <p className="text-muted-foreground mt-2">This is how your journey of impact will unfold.</p>
                     </div>
                     <div className="grid md:grid-cols-3 gap-8 text-center max-w-5xl mx-auto">
                         {howItWorks.map((step, index) => (
                             <div key={index} className="flex flex-col items-center p-4">
-                                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary text-primary-foreground font-bold text-3xl mb-6 shadow-lg shadow-primary/20">
-                                    {index + 1}
+                                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-background mb-6 shadow-lg">
+                                    <step.icon className="h-8 w-8 text-primary" />
                                 </div>
                                 <h3 className="font-bold text-lg mb-2">{step.title}</h3>
                                 <p className="text-muted-foreground text-sm">{step.description}</p>
@@ -61,8 +79,8 @@ export default function LandingPage() {
             <section id="testimonials" className="py-20 bg-transparent">
                 <div className="container mx-auto px-4 md:px-6">
                     <div className="text-center mb-12">
-                        <h2 className="text-2xl font-bold">Hear From Our Community</h2>
-                         <p className="text-muted-foreground mt-2">See what others are saying about their experience.</p>
+                        <h2 className="text-2xl font-bold">Chapters from Our Community</h2>
+                         <p className="text-muted-foreground mt-2">Real stories from people just like you.</p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                         {testimonials.map((testimonial) => {
