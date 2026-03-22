@@ -22,13 +22,12 @@ This application is a modern, feature-rich web platform designed to connect volu
 ├── src/
 │   ├── app/                # Main application routes (pages)
 │   │   ├── (auth)/         # Auth-related pages (Login, Signup)
-│   │   ├── dashboard/      # User dashboard and related pages
 │   │   ├── events/         # Event listing and detail pages
 │   │   ├── ngos/           # NGO listing and detail pages
 │   │   ├── notifications/  # User notifications page
 │   │   ├── settings/       # User profile and settings page
 │   │   ├── layout.tsx      # Root layout
-│   │   └── page.tsx        # Main landing/dashboard page
+│   │   └── page.tsx        # Main dashboard page
 │   │
 │   ├── ai/                 # Genkit AI configuration and flows
 │   │   ├── flows/          # Specific AI-powered workflows
@@ -63,7 +62,7 @@ This application is a modern, feature-rich web platform designed to connect volu
 
 ### 2. Dashboard
 
-- **Location:** `src/app/page.tsx` (and `src/app/dashboard/page.tsx`)
+- **Location:** `src/app/page.tsx`
 - **Description:** The central hub for logged-in users. It features:
     - A welcome message and user avatar.
     - A dynamic carousel highlighting featured events.
@@ -87,7 +86,7 @@ This application is a modern, feature-rich web platform designed to connect volu
 
 ### 5. My Impact & Gamification
 
-- **Location:** `src/app/dashboard/my-impact/page.tsx`
+- **Location:** `src/app/my-impact/page.tsx`
 - **Description:** A gamified experience to motivate volunteers. This page displays a collection of badges that users can earn by completing various milestones (e.g., logging hours, completing events, volunteering for specific causes). It shows both earned and unearned badges.
 
 ### 6. AI-Powered Recommendations

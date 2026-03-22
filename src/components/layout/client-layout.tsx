@@ -20,9 +20,9 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
         if (isLoading) return;
 
         if (user) {
-            // If user is logged in, redirect away from auth pages and landing page
-            if (isAuthPage || pathname === '/') {
-                router.push('/dashboard');
+            // If user is logged in, redirect away from auth pages
+            if (isAuthPage) {
+                router.push('/');
             }
         } else {
             // If user is not logged in, protect non-public pages
@@ -37,7 +37,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
     }
 
     if (user) {
-        // Authenticated user layout (e.g., for /dashboard)
+        // Authenticated user layout
         return (
             <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
                 <Sidebar />

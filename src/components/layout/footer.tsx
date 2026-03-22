@@ -17,7 +17,7 @@ export default function Footer() {
             <ul className="space-y-1">
               <li><Link href="/events" className="text-sm text-muted-foreground hover:text-foreground">Events</Link></li>
               <li><Link href="/ngos" className="text-sm text-muted-foreground hover:text-foreground">NGOs</Link></li>
-              <li><Link href="/dashboard" className="text-sm text-muted-foreground hover:text-foreground">Dashboard</Link></li>
+              <li><Link href="/" className="text-sm text-muted-foreground hover:text-foreground">Dashboard</Link></li>
               <li><Link href="/about" className="text-sm text-muted-foreground hover:text-foreground">About Us</Link></li>
             </ul>
           </div>

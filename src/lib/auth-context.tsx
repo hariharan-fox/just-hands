@@ -213,7 +213,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           const { password: _, ...userToStore } = foundUser;
           setUser(userToStore);
           localStorage.setItem('mockUser', JSON.stringify(userToStore));
-          router.push('/dashboard');
+          router.push('/');
           resolve();
         } else {
           reject(new Error('Invalid email or password.'));
@@ -265,7 +265,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(userToStore);
         localStorage.setItem('mockUser', JSON.stringify(userToStore));
         
-        router.push('/dashboard');
+        router.push('/');
         resolve();
       }, 500);
     });
