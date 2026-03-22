@@ -179,31 +179,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     
     await updateProfile(user, { displayName: name });
 
-    const profileRef = doc(firestore, 'users', user.uid);
-    const newProfile: UserProfile = {
-      id: user.uid,
-      name: name,
-      email: email,
-      role: 'volunteer',
-      avatarUrl: '',
-      skills: [],
-      interests: [],
-      completedEventIds: [],
-      registeredEventIds: [],
-      earnedBadgeIds: [],
-      loggedHours: 0,
-      notifications: [{
-          id: `notif-welcome-${Date.now()}`,
-          title: 'Welcome to Meet A Cause!',
-          description: 'Thank you for joining our community. Explore events and start making an impact!',
-          createdAt: 'Just now',
-          isRead: false,
-      }],
-    };
-    
-    // Explicitly create the document right after creating the user.
-    // This is the key fix.
-    await setDoc(profileRef, newProfile);
+    // The onSnapshot listener will now handle creating the profile document,
+    // ensuring it's only done once and preventing race conditions.
   };
 
   const logout = () => {
