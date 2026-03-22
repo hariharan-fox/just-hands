@@ -13,24 +13,24 @@
     --popover: 40 20% 97%;
     --popover-foreground: 240 5% 15%;
 
-    --primary: 145 65% 35%; /* Emerald Green */
-    --primary-foreground: 145 10% 98%;
+    --primary: 148 62% 40%;      /* Vibrant Emerald */
+    --primary-foreground: 148 15% 95%;
 
-    --secondary: 30 30% 95%; /* Light Bronze */
-    --secondary-foreground: 240 4% 30%;
+    --secondary: 45 80% 95%;    /* Light Sunny Cream */
+    --secondary-foreground: 45 30% 25%; /* Dark Brown */
 
-    --muted: 30 30% 95%;
-    --muted-foreground: 240 4% 50%;
+    --muted: 45 80% 95%;
+    --muted-foreground: 45 25% 55%;
 
-    --accent: 30 30% 90%;
-    --accent-foreground: 240 5% 15%;
+    --accent: 40 85% 65%;       /* Vibrant Marigold */
+    --accent-foreground: 40 50% 15%; /* Dark Brown */
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 30 25% 85%;
-    --input: 30 25% 85%;
-    --ring: 145 65% 35%;
+    --border: 40 30% 88%;
+    --input: 40 30% 88%;
+    --ring: 148 62% 40%;
 
     --radius: 0.75rem;
   }
