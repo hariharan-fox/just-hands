@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Bell, Menu } from 'lucide-react';
+import { Bell, Menu, UserCircle } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -16,10 +16,12 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/lib/auth-context';
 import { notifications } from '@/lib/placeholder-data';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Logo } from '../shared/logo';
 
 export default function Header() {
     const { user, logout } = useAuth();
+    const userAvatar = user?.avatarUrl ? PlaceHolderImages.find(p => p.id === user.avatarUrl) : undefined;
 
     if (user) {
         const unreadNotifications = notifications.filter(n => !n.isRead).length;
@@ -48,7 +50,11 @@ export default function Header() {
                         <DropdownMenuTrigger asChild>
                             <Button variant="ghost" size="icon" className="rounded-full">
                                 <Avatar className="h-8 w-8">
-                                    <AvatarFallback>{user?.name?.charAt(0) || 'V'}</AvatarFallback>
+                                    {userAvatar ? (
+                                        <AvatarImage src={userAvatar.imageUrl} alt={user.name} />
+                                    ) : (
+                                        <AvatarFallback>{user?.name?.charAt(0) || 'V'}</AvatarFallback>
+                                    )}
                                 </Avatar>
                                 <span className="sr-only">Toggle user menu</span>
                             </Button>

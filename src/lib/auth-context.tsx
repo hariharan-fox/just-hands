@@ -8,7 +8,9 @@ type User = {
   name: string;
   email: string;
   role: 'volunteer';
+  avatarUrl?: string;
   completedEventIds: string[];
+  registeredEventIds: string[];
   earnedBadgeIds: string[];
   loggedHours: number;
 };
@@ -19,7 +21,7 @@ interface AuthContextType {
   signup: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
-  updateUser: (updatedData: Partial<User>) => void;
+  updateUser: (updatedData: Partial<Omit<User, 'password'>>) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -43,9 +45,11 @@ const initializeMockDB = () => {
       id: '1',
       name: 'Priya Sharma',
       email: 'priya.sharma@example.com',
+      avatarUrl: 'avatar-priya-sharma',
       role: 'volunteer',
       password: 'password', // Store mock password
       completedEventIds: ['evt-1', 'evt-2', 'evt-4'],
+      registeredEventIds: ['evt-5', 'evt-6'],
       earnedBadgeIds: ['start-1', 'start-2', 'start-3', 'event-1', 'hours-1'],
       loggedHours: 13,
     });
@@ -109,6 +113,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           role: 'volunteer',
           password,
           completedEventIds: [],
+          registeredEventIds: [],
           earnedBadgeIds: [],
           loggedHours: 0,
         };
@@ -133,7 +138,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     router.push('/login');
   };
 
-  const updateUser = (updatedData: Partial<User>) => {
+  const updateUser = (updatedData: Partial<Omit<User, 'password'>>) => {
     if (user) {
       const updatedUser = { ...user, ...updatedData };
       setUser(updatedUser);

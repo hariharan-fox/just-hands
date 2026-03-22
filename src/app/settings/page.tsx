@@ -23,7 +23,7 @@ export default function SettingsPage() {
     user?.completedEventIds?.includes(event.id)
   );
 
-  const userAvatar = PlaceHolderImages.find(p => p.id === 'avatar-priya-sharma');
+  const userAvatar = user?.avatarUrl ? PlaceHolderImages.find(p => p.id === user.avatarUrl) : undefined;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(referralLink);
@@ -55,8 +55,8 @@ export default function SettingsPage() {
           <CardContent className="space-y-6">
             <div className="flex items-center gap-4">
               <Avatar className="h-20 w-20">
-                {user?.name === 'Priya Sharma' && userAvatar ? (
-                  <AvatarImage src={userAvatar.imageUrl} alt={user.name} />
+                {userAvatar ? (
+                  <AvatarImage src={userAvatar.imageUrl} alt={user?.name || 'User'} />
                 ) : (
                   <AvatarFallback>{user?.name?.charAt(0) || 'V'}</AvatarFallback>
                 )}

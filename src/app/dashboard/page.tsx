@@ -4,12 +4,10 @@ import { useRef, useMemo } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { CheckCircle, Clock, Award, Users, ArrowRight } from 'lucide-react';
-
 import { featuredEvents, featuredNgos, allEvents } from '@/lib/placeholder-data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import type { Event } from '@/lib/types';
@@ -20,12 +18,12 @@ import { useAuth } from '@/lib/auth-context';
 
 export default function DashboardPage() {
   const { user } = useAuth();
-  
   const plugin = useRef(
     Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })
   );
 
   const carouselEvents = allEvents.slice(0, 4);
+  const userAvatar = user?.avatarUrl ? PlaceHolderImages.find(p => p.id === user.avatarUrl) : undefined;
 
   const stats = useMemo(() => {
     if (!user) {
@@ -34,26 +32,28 @@ export default function DashboardPage() {
     const completed = user.completedEventIds?.length || 0;
     const badges = user.earnedBadgeIds?.length || 0;
     const hours = user.loggedHours || 0;
-
     const supportedCauses = new Set(
       allEvents
         .filter((event) => user.completedEventIds?.includes(event.id))
         .map((event) => event.cause)
     );
     const causes = supportedCauses.size;
-
     return { hours, completed, badges, causes };
   }, [user]);
+  
+  const upcomingCommitments = useMemo(() => {
+    if (!user?.registeredEventIds) return [];
+    return allEvents.filter(event => user.registeredEventIds.includes(event.id))
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }, [user?.registeredEventIds]);
 
-  const userAvatar = PlaceHolderImages.find(p => p.id === 'avatar-priya-sharma');
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-8 space-y-12">
       <div className="flex items-center gap-4">
         <Avatar className="h-12 w-12 md:h-16 md:w-16">
-          {/* Note: In a real app, users would upload their own photo. For demo, we show Priya's photo or a fallback. */}
-          {user?.name === 'Priya Sharma' && userAvatar ? (
-             <AvatarImage src={userAvatar.imageUrl} alt={user.name} />
+          {userAvatar ? (
+             <AvatarImage src={userAvatar.imageUrl} alt={user?.name || 'User'} />
           ) : (
              <AvatarFallback>{user?.name?.charAt(0) || 'V'}</AvatarFallback>
           )}
@@ -182,8 +182,28 @@ export default function DashboardPage() {
           <section>
             <h2 className="text-xl font-bold mb-4">Upcoming Commitments</h2>
             <Card>
-              <CardContent className="p-6">
-                 <p className="text-muted-foreground text-sm">No upcoming commitments.</p>
+              <CardContent className="p-0">
+                 {upcomingCommitments.length > 0 ? (
+                    <ul className="divide-y">
+                      {upcomingCommitments.map((event) => (
+                        <li key={event.id} className="p-4 flex flex-wrap items-center justify-between gap-2">
+                            <div>
+                              <p className="font-semibold text-sm">{event.title}</p>
+                              <p className="text-xs text-muted-foreground">{event.date}</p>
+                            </div>
+                            <Button variant="ghost" size="sm" asChild className="text-xs">
+                              <Link href={`/events/${event.id}`}>
+                                View <ArrowRight className="ml-1 h-3 w-3" />
+                              </Link>
+                            </Button>
+                        </li>
+                      ))}
+                    </ul>
+                 ) : (
+                  <div className="p-6">
+                    <p className="text-muted-foreground text-sm">No upcoming commitments.</p>
+                  </div>
+                 )}
               </CardContent>
             </Card>
           </section>
