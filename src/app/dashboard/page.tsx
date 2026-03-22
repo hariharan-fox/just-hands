@@ -200,8 +200,11 @@ export default function DashboardPage() {
                       ))}
                     </ul>
                  ) : (
-                  <div className="p-6">
-                    <p className="text-muted-foreground text-sm">No upcoming commitments.</p>
+                  <div className="p-6 text-center">
+                    <p className="text-muted-foreground text-sm">No upcoming commitments yet.</p>
+                    <Button variant="link" asChild className="mt-2 text-sm">
+                      <Link href="/events">Explore Events</Link>
+                    </Button>
                   </div>
                  )}
               </CardContent>
