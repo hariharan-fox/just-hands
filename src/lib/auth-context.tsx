@@ -7,7 +7,10 @@ type User = {
   id: string;
   name: string;
   email: string;
-  role: 'volunteer' | 'ngo';
+  role: 'volunteer';
+  completedEventIds: string[];
+  earnedBadgeIds: string[];
+  loggedHours: number;
 };
 
 interface AuthContextType {
@@ -16,6 +19,7 @@ interface AuthContextType {
   signup: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
+  updateUser: (updatedData: Partial<User>) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -41,6 +45,9 @@ const initializeMockDB = () => {
       email: 'priya.sharma@example.com',
       role: 'volunteer',
       password: 'password', // Store mock password
+      completedEventIds: ['evt-1', 'evt-2', 'evt-4'],
+      earnedBadgeIds: ['start-1', 'start-2', 'start-3', 'event-1', 'hours-1'],
+      loggedHours: 13,
     });
     setMockUsers(users);
   }
@@ -99,8 +106,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           id: Date.now().toString(),
           name,
           email,
-          role: 'volunteer', // Role is always 'volunteer' now
+          role: 'volunteer',
           password,
+          completedEventIds: [],
+          earnedBadgeIds: [],
+          loggedHours: 0,
         };
         
         mockUsers.push(newUser);
@@ -123,8 +133,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     router.push('/login');
   };
 
+  const updateUser = (updatedData: Partial<User>) => {
+    if (user) {
+      const updatedUser = { ...user, ...updatedData };
+      setUser(updatedUser);
+      localStorage.setItem('mockUser', JSON.stringify(updatedUser));
+
+      // Also update the user in the mock DB so the data persists across logins
+      const mockUsers = getMockUsers();
+      const userIndex = mockUsers.findIndex(u => u.id === user.id);
+      if (userIndex !== -1) {
+        // We need to preserve the password
+        const existingUser = mockUsers[userIndex];
+        mockUsers[userIndex] = { ...existingUser, ...updatedUser };
+        setMockUsers(mockUsers);
+      }
+    }
+  };
+
+
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, isLoading }}>
+    <AuthContext.Provider value={{ user, login, signup, logout, isLoading, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

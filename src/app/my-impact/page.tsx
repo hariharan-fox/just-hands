@@ -11,6 +11,7 @@ import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
 import { Share2, Linkedin, Twitter, CheckCircle2 } from 'lucide-react';
 import { BadgeVisual } from '@/components/shared/badge-visual';
+import { useAuth } from '@/lib/auth-context';
 
 const BadgeDisplay = ({ badge, onClick }: { badge: Certificate; onClick: (badge: Certificate) => void; }) => {
   return (
@@ -37,9 +38,22 @@ const BadgeDisplay = ({ badge, onClick }: { badge: Certificate; onClick: (badge:
 
 
 export default function BadgesPage() {
+  const { user } = useAuth();
   const [detailDialogOpen, setDetailDialogOpen] = useState(false);
   const [selectedBadge, setSelectedBadge] = useState<Certificate | null>(null);
   const { toast } = useToast();
+
+  const allUserCertificates = useMemo(() => {
+    // If there's no user, all badges are unearned. This happens briefly during loading.
+    if (!user) {
+        return allCertificates.map(cert => ({ ...cert, isEarned: false }));
+    }
+    // Map over all possible certificates and set their earned status based on the user's profile
+    return allCertificates.map(cert => ({
+        ...cert,
+        isEarned: user.earnedBadgeIds?.includes(cert.id) || false
+    }));
+  }, [user]);
 
   const CATEGORY_ORDER = [
     'Getting Started',
@@ -55,15 +69,15 @@ export default function BadgesPage() {
   const badgeCategories = useMemo(() => {
     const categories: { [key: string]: Certificate[] } = {};
     CATEGORY_ORDER.forEach(cat => categories[cat] = []);
-    allCertificates.forEach(badge => {
+    allUserCertificates.forEach(badge => {
       if (categories[badge.category]) {
         categories[badge.category].push(badge);
       }
     });
     return categories;
-  }, []);
+  }, [allUserCertificates]);
   
-  const totalEarned = allCertificates.filter(c => c.isEarned).length;
+  const totalEarned = useMemo(() => allUserCertificates.filter(c => c.isEarned).length, [allUserCertificates]);
 
   const handleBadgeClick = (badge: Certificate) => {
     if (badge.isEarned) {

@@ -10,12 +10,20 @@ import { useAuth } from "@/lib/auth-context";
 import { LogOut, ArrowRight, Gift, Copy } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
+import { allEvents } from "@/lib/placeholder-data";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 export default function SettingsPage() {
   const { user, logout } = useAuth();
   const { toast } = useToast();
   
   const referralLink = `https://meet-a-cause.app/signup?ref=${user?.id || 'volunteer123'}`;
+
+  const userCompletedEvents = allEvents.filter(event => 
+    user?.completedEventIds?.includes(event.id)
+  );
+
+  const userAvatar = PlaceHolderImages.find(p => p.id === 'avatar-priya-sharma');
 
   const handleCopy = () => {
     navigator.clipboard.writeText(referralLink);
@@ -47,7 +55,11 @@ export default function SettingsPage() {
           <CardContent className="space-y-6">
             <div className="flex items-center gap-4">
               <Avatar className="h-20 w-20">
-                <AvatarFallback>{user?.name?.charAt(0) || 'V'}</AvatarFallback>
+                {user?.name === 'Priya Sharma' && userAvatar ? (
+                  <AvatarImage src={userAvatar.imageUrl} alt={user.name} />
+                ) : (
+                  <AvatarFallback>{user?.name?.charAt(0) || 'V'}</AvatarFallback>
+                )}
               </Avatar>
               <Button variant="outline" onClick={() => showComingSoonToast('Changing your photo')}>Change Photo</Button>
             </div>
@@ -95,9 +107,25 @@ export default function SettingsPage() {
           <h2 className="text-lg font-bold mb-4">Event History</h2>
           <Card>
             <CardContent className="p-0">
-              <ul className="divide-y">
-                  <p className="text-muted-foreground text-sm p-6 text-center">You haven't completed any events yet.</p>
-              </ul>
+              {userCompletedEvents.length > 0 ? (
+                <ul className="divide-y">
+                  {userCompletedEvents.map((event) => (
+                    <li key={event.id} className="p-4 flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                          <p className="font-semibold">{event.title}</p>
+                          <p className="text-sm text-muted-foreground">{event.date}</p>
+                        </div>
+                        <Button variant="ghost" size="sm" asChild>
+                          <Link href={`/events/${event.id}`}>
+                            View Event <ArrowRight className="ml-2 h-4 w-4" />
+                          </Link>
+                        </Button>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-muted-foreground text-sm p-6 text-center">You haven't completed any events yet.</p>
+              )}
             </CardContent>
           </Card>
         </section>

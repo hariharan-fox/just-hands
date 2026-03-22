@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -27,11 +27,36 @@ export default function DashboardPage() {
 
   const carouselEvents = allEvents.slice(0, 4);
 
+  const stats = useMemo(() => {
+    if (!user) {
+      return { hours: 0, completed: 0, badges: 0, causes: 0 };
+    }
+    const completed = user.completedEventIds?.length || 0;
+    const badges = user.earnedBadgeIds?.length || 0;
+    const hours = user.loggedHours || 0;
+
+    const supportedCauses = new Set(
+      allEvents
+        .filter((event) => user.completedEventIds?.includes(event.id))
+        .map((event) => event.cause)
+    );
+    const causes = supportedCauses.size;
+
+    return { hours, completed, badges, causes };
+  }, [user]);
+
+  const userAvatar = PlaceHolderImages.find(p => p.id === 'avatar-priya-sharma');
+
   return (
     <div className="container mx-auto px-4 md:px-6 py-8 space-y-12">
       <div className="flex items-center gap-4">
         <Avatar className="h-12 w-12 md:h-16 md:w-16">
-          <AvatarFallback>{user?.name?.charAt(0) || 'V'}</AvatarFallback>
+          {/* Note: In a real app, users would upload their own photo. For demo, we show Priya's photo or a fallback. */}
+          {user?.name === 'Priya Sharma' && userAvatar ? (
+             <AvatarImage src={userAvatar.imageUrl} alt={user.name} />
+          ) : (
+             <AvatarFallback>{user?.name?.charAt(0) || 'V'}</AvatarFallback>
+          )}
         </Avatar>
         <div>
           <h1 className="text-lg md:text-xl font-bold">Welcome back, {user?.name?.split(' ')[0]}!</h1>
@@ -87,8 +112,8 @@ export default function DashboardPage() {
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-lg font-bold">0</div>
-            <p className="text-xs text-muted-foreground">Your journey begins!</p>
+            <div className="text-lg font-bold">{stats.hours}</div>
+            <p className="text-xs text-muted-foreground">{stats.hours > 0 ? 'Making an impact!' : 'Your journey begins!'}</p>
           </CardContent>
         </Card>
         <Card>
@@ -97,8 +122,8 @@ export default function DashboardPage() {
             <CheckCircle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-lg font-bold">0</div>
-            <p className="text-xs text-muted-foreground">Let's get started.</p>
+            <div className="text-lg font-bold">{stats.completed}</div>
+            <p className="text-xs text-muted-foreground">{stats.completed > 0 ? 'Thank you!' : "Let's get started."}</p>
           </CardContent>
         </Card>
         <Card className="hover:bg-accent transition-colors">
@@ -109,7 +134,7 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between">
-                <div className="text-lg font-bold">0</div>
+                <div className="text-lg font-bold">{stats.badges}</div>
                 <ArrowRight className="h-4 w-4 text-muted-foreground" />
               </div>
               <p className="text-xs text-muted-foreground">View all badges</p>
@@ -122,8 +147,8 @@ export default function DashboardPage() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-lg font-bold">0</div>
-            <p className="text-xs text-muted-foreground">Discover your cause.</p>
+            <div className="text-lg font-bold">{stats.causes}</div>
+            <p className="text-xs text-muted-foreground">{stats.causes > 0 ? 'Thank you for your support!' : 'Discover your cause.'}</p>
           </CardContent>
         </Card>
       </div>

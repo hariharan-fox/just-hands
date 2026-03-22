@@ -160,26 +160,26 @@ export const completedEvents: Event[] = [
 
 export const allCertificates: Certificate[] = [
   // Getting Started
-  { id: 'start-1', name: 'Verified Volunteer', description: 'Complete your first event and get verified.', rule: 'Complete 1 event', icon: ShieldCheck, isEarned: true, level: 'Bronze', shape: 'hexagon', category: 'Getting Started' },
-  { id: 'start-2', name: 'Fast Starter', description: 'Complete an event within your first 7 days.', rule: 'Complete 1 event within 7 days of signup', icon: Rocket, isEarned: true, level: 'Silver', shape: 'pentagon', category: 'Getting Started' },
-  { id: 'start-3', name: 'Profile Pro', description: 'Complete your user profile with skills and interests.', rule: 'Fill out profile skills and interests', icon: Users, isEarned: true, level: 'Bronze', shape: 'circle', category: 'Getting Started' },
+  { id: 'start-1', name: 'Verified Volunteer', description: 'Complete your first event and get verified.', rule: 'Complete 1 event', icon: ShieldCheck, isEarned: false, level: 'Bronze', shape: 'hexagon', category: 'Getting Started' },
+  { id: 'start-2', name: 'Fast Starter', description: 'Complete an event within your first 7 days.', rule: 'Complete 1 event within 7 days of signup', icon: Rocket, isEarned: false, level: 'Silver', shape: 'pentagon', category: 'Getting Started' },
+  { id: 'start-3', name: 'Profile Pro', description: 'Complete your user profile with skills and interests.', rule: 'Fill out profile skills and interests', icon: Users, isEarned: false, level: 'Bronze', shape: 'circle', category: 'Getting Started' },
 
   // Event Participation
-  { id: 'event-1', name: 'First Step', description: 'Complete your first event.', rule: 'Complete 1 event', icon: Medal, isEarned: true, level: 'Bronze', shape: 'hexagon', category: 'Event Participation' },
-  { id: 'event-2', name: 'Active Volunteer', description: 'Complete 5 events.', rule: 'Complete 5 events', icon: Medal, isEarned: true, level: 'Silver', shape: 'pentagon', category: 'Event Participation' },
+  { id: 'event-1', name: 'First Step', description: 'Complete your first event.', rule: 'Complete 1 event', icon: Medal, isEarned: false, level: 'Bronze', shape: 'hexagon', category: 'Event Participation' },
+  { id: 'event-2', name: 'Active Volunteer', description: 'Complete 5 events.', rule: 'Complete 5 events', icon: Medal, isEarned: false, level: 'Silver', shape: 'pentagon', category: 'Event Participation' },
   { id: 'event-3', name: 'Dedicated Volunteer', description: 'Complete 15 events.', rule: 'Complete 15 events', icon: Medal, isEarned: false, level: 'Gold', shape: 'circle', category: 'Event Participation' },
   { id: 'event-4', name: 'Volunteer Extraordinaire', description: 'Complete 30 events.', rule: 'Complete 30 events', icon: Medal, isEarned: false, level: 'Platinum', shape: 'hexagon', category: 'Event Participation' },
 
   // Hours Logged
-  { id: 'hours-1', name: 'Hour Hero', description: 'Log 10 volunteer hours.', rule: 'Log 10 hours', icon: Trophy, isEarned: true, level: 'Bronze', shape: 'pentagon', category: 'Hours Logged' },
-  { id: 'hours-2', name: 'Hour Hero', description: 'Log 25 volunteer hours.', rule: 'Log 25 hours', icon: Trophy, isEarned: true, level: 'Silver', shape: 'circle', category: 'Hours Logged' },
+  { id: 'hours-1', name: 'Hour Hero', description: 'Log 10 volunteer hours.', rule: 'Log 10 hours', icon: Trophy, isEarned: false, level: 'Bronze', shape: 'pentagon', category: 'Hours Logged' },
+  { id: 'hours-2', name: 'Hour Hero', description: 'Log 25 volunteer hours.', rule: 'Log 25 hours', icon: Trophy, isEarned: false, level: 'Silver', shape: 'circle', category: 'Hours Logged' },
   { id: 'hours-3', name: 'Hour Hero', description: 'Log 50 volunteer hours.', rule: 'Log 50 hours', icon: Trophy, isEarned: false, level: 'Gold', shape: 'hexagon', category: 'Hours Logged' },
   { id: 'hours-4', name: 'Hour Hero', description: 'Log 100 volunteer hours.', rule: 'Log 100 hours', icon: Trophy, isEarned: false, level: 'Platinum', shape: 'pentagon', category: 'Hours Logged' },
   
   // Cause Champion
-  { id: 'cause-comm-1', name: 'Community Champion', description: 'Complete 3 community-focused events.', rule: 'Complete 3 events in "Community" cause', icon: HeartPulse, isEarned: true, level: 'Bronze', shape: 'circle', category: 'Cause Champion' },
-  { id: 'cause-env-1', name: 'Green Guardian', description: 'Complete 3 environmental events.', rule: 'Complete 3 events in "Environment" cause', icon: Sprout, isEarned: true, level: 'Bronze', shape: 'circle', category: 'Cause Champion' },
-  { id: 'cause-animal-1', name: 'Animal Ally', description: 'Complete 3 animal welfare events.', rule: 'Complete 3 events in "Animals" cause', icon: Heart, isEarned: true, level: 'Bronze', shape: 'circle', category: 'Cause Champion' },
+  { id: 'cause-comm-1', name: 'Community Champion', description: 'Complete 3 community-focused events.', rule: 'Complete 3 events in "Community" cause', icon: HeartPulse, isEarned: false, level: 'Bronze', shape: 'circle', category: 'Cause Champion' },
+  { id: 'cause-env-1', name: 'Green Guardian', description: 'Complete 3 environmental events.', rule: 'Complete 3 events in "Environment" cause', icon: Sprout, isEarned: false, level: 'Bronze', shape: 'circle', category: 'Cause Champion' },
+  { id: 'cause-animal-1', name: 'Animal Ally', description: 'Complete 3 animal welfare events.', rule: 'Complete 3 events in "Animals" cause', icon: Heart, isEarned: false, level: 'Bronze', shape: 'circle', category: 'Cause Champion' },
   { id: 'cause-edu-1', name: 'Education Enthusiast', description: 'Complete 3 education-focused events.', rule: 'Complete 3 events in "Education" cause', icon: BookOpen, isEarned: false, level: 'Bronze', shape: 'circle', category: 'Cause Champion' },
   { id: 'cause-comm-2', name: 'Community Champion', description: 'Complete 7 community-focused events.', rule: 'Complete 7 events in "Community" cause', icon: HeartPulse, isEarned: false, level: 'Silver', shape: 'hexagon', category: 'Cause Champion' },
   { id: 'cause-env-2', name: 'Green Guardian', description: 'Complete 7 environmental events.', rule: 'Complete 7 events in "Environment" cause', icon: Sprout, isEarned: false, level: 'Silver', shape: 'hexagon', category: 'Cause Champion' },
