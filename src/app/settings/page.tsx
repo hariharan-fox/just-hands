@@ -24,6 +24,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth as useFirebaseAuth } from "@/firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, linkWithCredential, ConfirmationResult } from "firebase/auth";
@@ -52,6 +60,9 @@ export default function SettingsPage() {
   const [isSendingOtp, setIsSendingOtp] = useState(false);
   const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
   const [phoneError, setPhoneError] = useState<string | null>(null);
+  
+  // State for photo change dialog
+  const [isPhotoDialogOpen, setIsPhotoDialogOpen] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -61,6 +72,7 @@ export default function SettingsPage() {
   }, [user]);
 
   const referralLink = `https://meet-a-cause.app/signup?ref=${user?.id || 'volunteer123'}`;
+  const availableAvatars = PlaceHolderImages.filter(p => p.id.startsWith('avatar-'));
 
   const userCompletedEvents = allEvents.filter(event => 
     user?.completedEventIds?.includes(event.id)
@@ -171,13 +183,6 @@ export default function SettingsPage() {
     });
   };
 
-  const showComingSoonToast = (feature: string) => {
-    toast({
-      title: 'Feature Coming Soon!',
-      description: `${feature} is not yet available but will be in a future update.`,
-    });
-  };
-
   const handleProfileUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsUpdatingProfile(true);
@@ -203,6 +208,23 @@ export default function SettingsPage() {
       });
     } finally {
       setIsUpdatingProfile(false);
+    }
+  };
+  
+  const handleAvatarSelect = async (avatarId: string) => {
+    setIsPhotoDialogOpen(false); // Close the dialog immediately
+    try {
+      await updateUser({ avatarUrl: avatarId });
+      toast({
+        title: "Avatar Updated",
+        description: "Your new profile photo has been saved.",
+      });
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Update Failed",
+        description: "Could not update your avatar. Please try again.",
+      });
     }
   };
 
@@ -289,7 +311,33 @@ export default function SettingsPage() {
                     <AvatarFallback>{user.name?.charAt(0).toUpperCase() || 'V'}</AvatarFallback>
                   )}
                 </Avatar>
-                <Button variant="outline" type="button" onClick={() => showComingSoonToast('Changing your photo')}>Change Photo</Button>
+                <Dialog open={isPhotoDialogOpen} onOpenChange={setIsPhotoDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" type="button">Change Photo</Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Choose Your Avatar</DialogTitle>
+                      <DialogDescription>
+                        Select a new photo for your profile from the options below.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid grid-cols-4 gap-4 py-4">
+                      {availableAvatars.map((avatar) => (
+                        <button
+                          key={avatar.id}
+                          className="rounded-full ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                          onClick={() => handleAvatarSelect(avatar.id)}
+                        >
+                          <Avatar className="h-20 w-20 hover:opacity-75 transition-opacity">
+                            <AvatarImage src={avatar.imageUrl} alt={avatar.description} />
+                            <AvatarFallback>{avatar.id.slice(-1)}</AvatarFallback>
+                          </Avatar>
+                        </button>
+                      ))}
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
               <div className="space-y-2">
                   <Label htmlFor="name">Full Name</Label>
