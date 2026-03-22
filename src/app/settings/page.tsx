@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/lib/auth-context";
-import { LogOut, ArrowRight, Gift, Copy, Phone } from "lucide-react";
+import { LogOut, ArrowRight, Gift, Copy, Phone, ShieldCheck, AlertTriangle } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { allEvents } from "@/lib/placeholder-data";
@@ -25,19 +25,35 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Textarea } from "@/components/ui/textarea";
-
+import { useAuth as useFirebaseAuth } from "@/firebase";
+import { RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, linkWithCredential, ConfirmationResult } from "firebase/auth";
 
 export default function SettingsPage() {
   const { user, logout, changePassword, deleteAccount, updateUser } = useAuth();
+  const firebaseAuth = useFirebaseAuth();
   const { toast } = useToast();
   
   // State for editable profile fields
   const [name, setName] = useState(user?.name || '');
-  const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber || '');
   const [skills, setSkills] = useState(user?.skills?.join(', ') || '');
   const [interests, setInterests] = useState(user?.interests?.join(', ') || '');
   const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
   
+  // State for phone verification
+  const [phone, setPhone] = useState('');
+  const [otp, setOtp] = useState('');
+  const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
+  const [isSendingOtp, setIsSendingOtp] = useState(false);
+  const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!user) return;
+    setName(user.name);
+    setSkills(user.skills?.join(', ') || '');
+    setInterests(user.interests?.join(', ') || '');
+  }, [user]);
+
   const referralLink = `https://meet-a-cause.app/signup?ref=${user?.id || 'volunteer123'}`;
 
   const userCompletedEvents = allEvents.filter(event => 
@@ -58,6 +74,77 @@ export default function SettingsPage() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteReason, setDeleteReason] = useState("");
 
+  // Phone Verification Logic
+  useEffect(() => {
+    if (!firebaseAuth) return;
+    window.recaptchaVerifier = new RecaptchaVerifier(firebaseAuth, 'recaptcha-container', {
+      'size': 'invisible',
+    });
+    return () => {
+      window.recaptchaVerifier?.clear();
+    }
+  }, [firebaseAuth]);
+
+  const handleSendOtp = async () => {
+    if (!phone) {
+      setPhoneError('Please enter a phone number.');
+      return;
+    }
+    // Simple validation for Indian numbers, can be improved
+    const phoneNumber = `+91${phone}`;
+    setPhoneError(null);
+    setIsSendingOtp(true);
+    try {
+      const verifier = window.recaptchaVerifier;
+      const result = await signInWithPhoneNumber(firebaseAuth, phoneNumber, verifier);
+      setConfirmationResult(result);
+      toast({ title: "OTP Sent!", description: `An OTP has been sent to ${phoneNumber}.` });
+    } catch (error: any) {
+      console.error("Error sending OTP:", error);
+      let message = 'Failed to send OTP. Please try again.';
+      if (error.code === 'auth/invalid-phone-number') {
+        message = 'The phone number is not valid.';
+      }
+      setPhoneError(message);
+    } finally {
+      setIsSendingOtp(false);
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    if (!otp) {
+      setPhoneError('Please enter the OTP.');
+      return;
+    }
+    if (!confirmationResult) {
+      setPhoneError('Please request an OTP first.');
+      return;
+    }
+    setPhoneError(null);
+    setIsVerifyingOtp(true);
+    try {
+      const credential = PhoneAuthProvider.credential(confirmationResult.verificationId, otp);
+      if (user?.auth) {
+        await linkWithCredential(user.auth, credential);
+        await updateUser({ phoneNumber: user.auth.phoneNumber });
+        toast({ title: "Phone Number Verified!", description: "Your phone number has been successfully linked to your account." });
+        setConfirmationResult(null);
+        setOtp('');
+      }
+    } catch (error: any) {
+      console.error("Error verifying OTP:", error);
+      let message = 'Failed to verify OTP. Please try again.';
+      if (error.code === 'auth/invalid-verification-code') {
+        message = 'The OTP you entered is invalid.';
+      } else if (error.code === 'auth/credential-already-in-use') {
+        message = 'This phone number is already linked to another account.';
+      }
+      setPhoneError(message);
+    } finally {
+      setIsVerifyingOtp(false);
+    }
+  };
+  // End Phone Verification Logic
 
   const handleCopy = () => {
     navigator.clipboard.writeText(referralLink);
@@ -82,9 +169,8 @@ export default function SettingsPage() {
     const interestsArray = interests.split(',').map(i => i.trim()).filter(Boolean);
 
     try {
-      updateUser({
+      await updateUser({
         name,
-        phoneNumber,
         skills: skillsArray,
         interests: interestsArray,
       });
@@ -125,7 +211,13 @@ export default function SettingsPage() {
       setNewPassword('');
       setConfirmPassword('');
     } catch (err: any) {
-      setPasswordError(err.message);
+      let message = err.message;
+      if (err.code === 'auth/requires-recent-login') {
+          message = "This is a sensitive operation. Please log out and log back in before changing your password.";
+      } else if (err.code === 'auth/wrong-password') {
+          message = "The current password you entered is incorrect.";
+      }
+      setPasswordError(message);
     } finally {
       setIsChangingPassword(false);
     }
@@ -137,20 +229,29 @@ export default function SettingsPage() {
       await deleteAccount(deleteReason);
       toast({
         title: "Account Deleted",
-        description: "Your account has been permanently deleted.",
+        description: "Your account has been permanently deleted. We're sad to see you go.",
       });
     } catch (error: any) {
+      let message = error.message;
+       if (error.code === 'auth/requires-recent-login') {
+          message = "This is a sensitive operation. Please log out and log back in before deleting your account.";
+      }
       toast({
         variant: "destructive",
         title: "Deletion Failed",
-        description: error.message,
+        description: message,
       });
       setIsDeleting(false);
     }
   };
 
+  if (!user) {
+    return null; // Or a loading spinner
+  }
+
   return (
     <div className="container mx-auto px-4 md:px-6 py-8 animate-slide-in-from-bottom">
+      <div id="recaptcha-container"></div>
       <div className="max-w-3xl mx-auto space-y-8">
         <h1 className="text-lg font-bold">My Profile & Settings</h1>
         
@@ -166,26 +267,20 @@ export default function SettingsPage() {
               <div className="flex items-center gap-4">
                 <Avatar className="h-20 w-20">
                   {userAvatar ? (
-                    <AvatarImage src={userAvatar.imageUrl} alt={user?.name || 'User'} />
+                    <AvatarImage src={userAvatar.imageUrl} alt={user.name} />
                   ) : (
-                    <AvatarFallback>{user?.name?.charAt(0).toUpperCase() || 'V'}</AvatarFallback>
+                    <AvatarFallback>{user.name?.charAt(0).toUpperCase() || 'V'}</AvatarFallback>
                   )}
                 </Avatar>
                 <Button variant="outline" type="button" onClick={() => showComingSoonToast('Changing your photo')}>Change Photo</Button>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
+              <div className="space-y-2">
                   <Label htmlFor="name">Full Name</Label>
                   <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
-                </div>
-                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number</Label>
-                  <Input id="phone" type="tel" placeholder="e.g. 9876543210" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-                </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" value={user?.email || ''} disabled />
+                <Input id="email" type="email" value={user.email || ''} disabled />
                 <p className="text-xs text-muted-foreground">Your email address is not displayed publicly.</p>
               </div>
               <div className="space-y-2">
@@ -203,6 +298,49 @@ export default function SettingsPage() {
               </Button>
             </CardContent>
           </form>
+        </Card>
+
+        <Card>
+            <CardHeader>
+                <CardTitle className="text-base">Phone Number Verification</CardTitle>
+                <CardDescription>Verify your phone number to unlock the "Communicator" badge and enhance account security.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                {user.auth.phoneNumber ? (
+                    <div className="flex items-center gap-2 text-green-600 font-medium p-3 bg-green-50 rounded-md border border-green-200">
+                        <ShieldCheck className="h-5 w-5" />
+                        <span>Verified: {user.auth.phoneNumber}</span>
+                    </div>
+                ) : (
+                    <div className="space-y-4">
+                        {phoneError && <p className="text-sm text-destructive flex items-center gap-2"><AlertTriangle className="h-4 w-4"/> {phoneError}</p>}
+                        {!confirmationResult ? (
+                            <div className="flex items-end gap-2">
+                                <div className="grid gap-2 flex-1">
+                                    <Label htmlFor="phone">Phone Number</Label>
+                                    <div className="flex items-center">
+                                        <span className="text-sm border border-r-0 rounded-l-md bg-muted h-10 px-3 flex items-center">+91</span>
+                                        <Input id="phone" type="tel" placeholder="98765 43210" value={phone} onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0,10))} className="rounded-l-none" />
+                                    </div>
+                                </div>
+                                <Button onClick={handleSendOtp} disabled={isSendingOtp}>
+                                    {isSendingOtp ? 'Sending...' : 'Send OTP'}
+                                </Button>
+                            </div>
+                        ) : (
+                             <div className="flex items-end gap-2">
+                                <div className="grid gap-2 flex-1">
+                                    <Label htmlFor="otp">Enter OTP</Label>
+                                    <Input id="otp" type="text" placeholder="123456" value={otp} onChange={(e) => setOtp(e.target.value)} />
+                                </div>
+                                <Button onClick={handleVerifyOtp} disabled={isVerifyingOtp}>
+                                    {isVerifyingOtp ? 'Verifying...' : 'Verify OTP'}
+                                </Button>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </CardContent>
         </Card>
 
         <Card>

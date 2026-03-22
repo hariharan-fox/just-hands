@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -12,6 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 
 export default function LoginPage() {
   const { login } = useAuth();
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -24,8 +26,22 @@ export default function LoginPage() {
     setError(null);
     try {
       await login(email, password);
+      router.push('/');
     } catch (err: any) {
-      setError(err.message);
+      let message = 'An unknown error occurred.';
+      if (err.code) {
+        switch (err.code) {
+          case 'auth/user-not-found':
+          case 'auth/wrong-password':
+          case 'auth/invalid-credential':
+            message = 'Invalid email or password.';
+            break;
+          default:
+            message = 'Failed to log in. Please try again.';
+            break;
+        }
+      }
+      setError(message);
     } finally {
       setIsLoading(false);
     }

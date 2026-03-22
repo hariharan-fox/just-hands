@@ -14,7 +14,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
     const { user, isLoading } = useAuth();
 
     const isAuthPage = pathname?.startsWith('/login') || pathname?.startsWith('/signup');
-    const isPublicPage = pathname === '/' || isAuthPage || pathname?.startsWith('/events') || pathname?.startsWith('/ngos');
+    const isPublicPage = isAuthPage || pathname?.startsWith('/events') || pathname?.startsWith('/ngos');
 
     useEffect(() => {
         if (isLoading) return;
@@ -26,13 +26,13 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
             }
         } else {
             // If user is not logged in, protect non-public pages
-            if (!isPublicPage) {
-                router.push('/login');
+            if (!isPublicPage && pathname !== '/') {
+                 router.push('/login');
             }
         }
     }, [user, isLoading, isPublicPage, isAuthPage, router, pathname]);
 
-    if (isLoading) {
+    if (isLoading && !user) {
         return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
     }
 
@@ -52,30 +52,14 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
         );
     }
     
-    // Public layout for unauthenticated users
-    if (pathname === '/' || pathname?.startsWith('/events') || pathname?.startsWith('/ngos')) {
-         return (
-            <div className="flex flex-col min-h-screen">
-                <Header />
-                <main className="flex-1">
-                    {children}
-                </main>
-                <Footer />
-            </div>
-        );
-    }
-
-    if (isAuthPage) {
-         return (
-            <div className="flex flex-col min-h-screen">
-                <Header />
-                <main className="flex-1 flex items-center justify-center p-4">
-                    {children}
-                </main>
-                <Footer />
-            </div>
-        );
-    }
-
-    return null; // Should be covered by redirects
+    // Public/Auth layout for unauthenticated users
+    return (
+        <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-1">
+                {children}
+            </main>
+            <Footer />
+        </div>
+    );
 }

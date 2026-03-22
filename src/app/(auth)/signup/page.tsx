@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -12,6 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 
 export default function SignupPage() {
   const { signup } = useAuth();
+  const router = useRouter();
   const { toast } = useToast();
 
   const [name, setName] = useState('');
@@ -26,8 +28,26 @@ export default function SignupPage() {
     setError(null);
     try {
       await signup(name, email, password);
+      router.push('/');
     } catch (err: any) {
-      setError(err.message);
+      let message = 'An unknown error occurred.';
+      if (err.code) {
+        switch (err.code) {
+          case 'auth/email-already-in-use':
+            message = 'An account with this email already exists.';
+            break;
+          case 'auth/weak-password':
+            message = 'Password should be at least 6 characters.';
+            break;
+          case 'auth/invalid-email':
+            message = 'Please enter a valid email address.';
+            break;
+          default:
+            message = 'Failed to create an account. Please try again.';
+            break;
+        }
+      }
+      setError(message);
     } finally {
       setIsLoading(false);
     }

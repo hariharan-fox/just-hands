@@ -1,14 +1,29 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
+import { 
+    type User as FirebaseAuthUser, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signOut,
+    updateProfile,
+    EmailAuthProvider,
+    reauthenticateWithCredential,
+    updatePassword,
+    deleteUser
+} from 'firebase/auth';
+import { doc, setDoc, getDoc, updateDoc, onSnapshot } from 'firebase/firestore';
+
+import { useUser as useFirebaseAuthState } from '@/firebase/auth/use-user';
+import { useAuth as useFirebaseAuth, useFirestore } from '@/firebase/provider';
 import type { Notification, Certificate } from './types';
-import { useBadgeUnlock } from '@/lib/badge-unlock-context';
-import { allCertificates, allEvents } from '@/lib/placeholder-data';
+import { useBadgeUnlock } from './badge-unlock-context';
+import { allCertificates, allEvents } from './placeholder-data';
 
-
-type User = {
-  id: string;
+// This will be the shape of our user data in Firestore
+type UserProfile = {
+  id: string; // This will be the UID from Firebase Auth
   name: string;
   email: string;
   role: 'volunteer';
@@ -23,104 +38,52 @@ type User = {
   notifications: Notification[];
 };
 
+// This is the combined user object we'll use throughout the app
+export type AppUser = UserProfile & {
+  auth: FirebaseAuthUser;
+};
+
 interface AuthContextType {
-  user: User | null;
+  user: AppUser | null;
   login: (email: string, password: string) => Promise<void>;
   signup: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
-  updateUser: (updatedData: Partial<Omit<User, 'password'>>) => void;
+  updateUser: (updatedData: Partial<UserProfile>) => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
   deleteAccount: (reason: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// --- Mock User Database ---
-const getMockUsers = (): (User & { password: string })[] => {
-  if (typeof window === 'undefined') return [];
-  const users = localStorage.getItem('mockUsersDB');
-  return users ? JSON.parse(users) : [];
-};
-
-const setMockUsers = (users: (User & { password: string })[]) => {
-  localStorage.setItem('mockUsersDB', JSON.stringify(users));
-};
-
-const initializeMockDB = () => {
-  const users = getMockUsers();
-  const priyaExists = users.some(u => u.email === 'priya.sharma@example.com');
-  if (!priyaExists) {
-    users.push({
-      id: '1',
-      name: 'Priya Sharma',
-      email: 'priya.sharma@example.com',
-      avatarUrl: 'avatar-priya-sharma',
-      role: 'volunteer',
-      password: 'password', // Store mock password
-      phoneNumber: '9876543210',
-      skills: ['Web Development', 'Graphic Design'],
-      interests: ['Education', 'Environment'],
-      completedEventIds: ['evt-1', 'evt-2', 'evt-4'],
-      registeredEventIds: ['evt-5', 'evt-6'],
-      earnedBadgeIds: ['start-1', 'start-3', 'start-4', 'event-1', 'event-2', 'hours-1', 'hours-2', 'cause-env-1', 'cause-animal-1'],
-      loggedHours: 13,
-      notifications: [
-        {
-          id: 'notif-1',
-          title: 'New Badge Unlocked!',
-          description: 'You earned the "Active Volunteer" badge. Keep up the great work!',
-          createdAt: '2 hours ago',
-          isRead: false,
-        },
-        {
-          id: 'notif-2',
-          title: 'Event Reminder',
-          description: 'Your commitment for "Weekend Food Donation Sorting" is tomorrow.',
-          createdAt: '1 day ago',
-          isRead: false,
-        },
-        {
-          id: 'notif-3',
-          title: 'New Event Opportunity',
-          description: 'Green Earth Foundation just posted a new event: "Urban Gardening Workshop".',
-          createdAt: '3 days ago',
-          isRead: true,
-        },
-          {
-          id: 'notif-4',
-          title: 'Welcome to Meet A Cause!',
-          description: 'Thank you for joining our community of volunteers.',
-          createdAt: '1 week ago',
-          isRead: true,
-        },
-      ],
-    });
-    setMockUsers(users);
-  }
-};
-// --------------------------
-
-
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const { user: firebaseUser, isLoading: isAuthLoading } = useFirebaseAuthState();
+  const firebaseAuth = useFirebaseAuth();
+  const firestore = useFirestore();
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true);
   const router = useRouter();
   const { unlockBadge } = useBadgeUnlock();
 
+  // Listen to profile changes in Firestore
   useEffect(() => {
-    // Initialize the mock DB with Priya if it's the first run
-    initializeMockDB();
-    
-    // Check for a logged-in user session
-    const storedUser = localStorage.getItem('mockUser');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    if (firebaseUser) {
+      setIsLoadingProfile(true);
+      const profileRef = doc(firestore, 'users', firebaseUser.uid);
+      const unsubscribe = onSnapshot(profileRef, (doc) => {
+        if (doc.exists()) {
+          setProfile(doc.data() as UserProfile);
+        }
+        setIsLoadingProfile(false);
+      });
+      return () => unsubscribe();
+    } else {
+      setProfile(null);
+      setIsLoadingProfile(false);
     }
-    setIsLoading(false);
-  }, []);
-
-  const checkAndUnlockBadges = (user: User): { earnedBadgeIds: string[], notifications: Notification[] } => {
+  }, [firebaseUser, firestore]);
+  
+  const checkAndUnlockBadges = useCallback(async (user: AppUser): Promise<{ earnedBadgeIds: string[], notifications: Notification[] } | null> => {
     const newlyEarnedBadges: Certificate[] = [];
     const unearnedBadges = allCertificates.filter(cert => !user.earnedBadgeIds.includes(cert.id));
 
@@ -129,47 +92,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const completedEvents = allEvents.filter(event => user.completedEventIds.includes(event.id));
 
         switch (badge.id) {
-            // Getting started
-            case 'start-1':
-            case 'event-1':
+            case 'start-1': case 'event-1':
                 if (user.completedEventIds.length >= 1) isUnlocked = true;
                 break;
             case 'start-3':
                 if ((user.skills?.length || 0) > 0 && (user.interests?.length || 0) > 0) isUnlocked = true;
                 break;
-            case 'start-4': // Communicator badge
-                if (user.phoneNumber && user.phoneNumber.length > 5) isUnlocked = true; // Basic check
+            case 'start-4':
+                if (user.auth.phoneNumber) isUnlocked = true;
                 break;
-            // Event counts
-            case 'event-2':
-                if (user.completedEventIds.length >= 5) isUnlocked = true;
-                break;
-            case 'event-3':
-                if (user.completedEventIds.length >= 15) isUnlocked = true;
-                break;
-            // Hour counts
-            case 'hours-1':
-                if (user.loggedHours >= 10) isUnlocked = true;
-                break;
-            case 'hours-2':
-                if (user.loggedHours >= 25) isUnlocked = true;
-                break;
-            case 'hours-3':
-                if (user.loggedHours >= 50) isUnlocked = true;
-                break;
-            // Cause specific
-            case 'cause-env-1':
-                if (completedEvents.filter(e => e.cause === 'Environment').length >= 3) isUnlocked = true;
-                break;
-            case 'cause-comm-1':
-                 if (completedEvents.filter(e => e.cause === 'Community').length >= 3) isUnlocked = true;
-                break;
-            case 'cause-animal-1':
-                 if (completedEvents.filter(e => e.cause === 'Animals').length >= 3) isUnlocked = true;
-                break;
-            case 'cause-edu-1':
-                 if (completedEvents.filter(e => e.cause === 'Education').length >= 3) isUnlocked = true;
-                break;
+            case 'event-2': if (user.completedEventIds.length >= 5) isUnlocked = true; break;
+            case 'event-3': if (user.completedEventIds.length >= 15) isUnlocked = true; break;
+            case 'hours-1': if (user.loggedHours >= 10) isUnlocked = true; break;
+            case 'hours-2': if (user.loggedHours >= 25) isUnlocked = true; break;
+            case 'hours-3': if (user.loggedHours >= 50) isUnlocked = true; break;
+            case 'cause-env-1': if (completedEvents.filter(e => e.cause === 'Environment').length >= 3) isUnlocked = true; break;
+            case 'cause-comm-1': if (completedEvents.filter(e => e.cause === 'Community').length >= 3) isUnlocked = true; break;
+            case 'cause-animal-1': if (completedEvents.filter(e => e.cause === 'Animals').length >= 3) isUnlocked = true; break;
+            case 'cause-edu-1': if (completedEvents.filter(e => e.cause === 'Education').length >= 3) isUnlocked = true; break;
         }
 
         if (isUnlocked) {
@@ -178,9 +118,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     if (newlyEarnedBadges.length > 0) {
-        // Show animation for the first unlocked badge
         unlockBadge(newlyEarnedBadges[0]);
-
         const newNotifications = newlyEarnedBadges.map(badge => ({
              id: `notif-badge-${badge.id}-${Date.now()}`,
              title: 'New Badge Unlocked!',
@@ -189,175 +127,85 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
              isRead: false,
         }));
         
-        const newBadgeIds = newlyEarnedBadges.map(b => b.id);
-
         return {
-            earnedBadgeIds: [...user.earnedBadgeIds, ...newBadgeIds],
+            earnedBadgeIds: [...user.earnedBadgeIds, ...newlyEarnedBadges.map(b => b.id)],
             notifications: [...newNotifications, ...user.notifications],
         };
     }
+    return null;
+  }, [unlockBadge]);
 
-    return { // No new badges
-        earnedBadgeIds: user.earnedBadgeIds,
-        notifications: user.notifications,
-    };
-  };
-
-  const login = async (email: string, password: string) => {
-    const mockUsers = getMockUsers();
-    const foundUser = mockUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
-
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        if (foundUser && foundUser.password === password) {
-          const { password: _, ...userToStore } = foundUser;
-          setUser(userToStore);
-          localStorage.setItem('mockUser', JSON.stringify(userToStore));
-          router.push('/');
-          resolve();
-        } else {
-          reject(new Error('Invalid email or password.'));
-        }
-      }, 500);
-    });
+  const login = (email: string, password: string) => {
+    return signInWithEmailAndPassword(firebaseAuth, email, password).then(() => {});
   };
 
   const signup = async (name: string, email: string, password: string) => {
-    let mockUsers = getMockUsers();
-    const userExists = mockUsers.some(u => u.email.toLowerCase() === email.toLowerCase());
+    const userCredential = await createUserWithEmailAndPassword(firebaseAuth, email, password);
+    const { user } = userCredential;
+    
+    await updateProfile(user, { displayName: name, photoURL: '' });
 
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        if (userExists) {
-          reject(new Error('An account with this email already exists.'));
-          return;
-        }
+    const newUserProfile: UserProfile = {
+      id: user.uid,
+      name: name,
+      email: email,
+      role: 'volunteer',
+      avatarUrl: '',
+      skills: [],
+      interests: [],
+      completedEventIds: [],
+      registeredEventIds: [],
+      earnedBadgeIds: [],
+      loggedHours: 0,
+      notifications: [{
+        id: `notif-welcome-${Date.now()}`,
+        title: 'Welcome to Meet A Cause!',
+        description: 'Thank you for joining our community. Explore events and start making an impact!',
+        createdAt: 'Just now',
+        isRead: false,
+      }],
+    };
 
-        const newUser: User & { password: string } = {
-          id: Date.now().toString(),
-          name,
-          email,
-          role: 'volunteer',
-          password,
-          phoneNumber: '',
-          skills: [],
-          interests: [],
-          completedEventIds: [],
-          registeredEventIds: [],
-          earnedBadgeIds: [],
-          loggedHours: 0,
-          notifications: [
-            {
-              id: `notif-welcome-${Date.now()}`,
-              title: 'Welcome to Meet A Cause!',
-              description: 'Thank you for joining our community. Explore events and start making an impact!',
-              createdAt: 'Just now',
-              isRead: false,
-            }
-          ],
-        };
-        
-        mockUsers.push(newUser);
-        setMockUsers(mockUsers);
-
-        // Automatically log the user in
-        const { password: _, ...userToStore } = newUser;
-        setUser(userToStore);
-        localStorage.setItem('mockUser', JSON.stringify(userToStore));
-        
-        router.push('/');
-        resolve();
-      }, 500);
-    });
+    const profileRef = doc(firestore, 'users', user.uid);
+    await setDoc(profileRef, newUserProfile);
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('mockUser');
+    signOut(firebaseAuth);
     router.push('/login');
   };
 
-  const updateUser = (updatedData: Partial<Omit<User, 'password'>>) => {
-    if (user) {
-      // Create the potential new state of the user
-      const potentialNewUser = { ...user, ...updatedData };
-      
-      // Check for any newly earned badges with the updated user data
-      const { earnedBadgeIds, notifications } = checkAndUnlockBadges(potentialNewUser);
+  const updateUser = async (updatedData: Partial<UserProfile>) => {
+    if (!firebaseUser || !profile) return;
+    
+    const profileRef = doc(firestore, 'users', firebaseUser.uid);
+    const newProfileState = { ...profile, ...updatedData };
+    
+    // Check for badges BEFORE updating firestore
+    const badgeUpdates = await checkAndUnlockBadges({ ...newProfileState, auth: firebaseUser });
 
-      // Create the final updated user object, including any new badges and notifications
-      const updatedUser = { 
-          ...potentialNewUser, 
-          earnedBadgeIds, 
-          notifications 
-      };
-      
-      setUser(updatedUser);
-      localStorage.setItem('mockUser', JSON.stringify(updatedUser));
+    const finalProfileData = badgeUpdates ? { ...newProfileState, ...badgeUpdates } : newProfileState;
 
-      // Also update the user in the mock DB so the data persists across logins
-      const mockUsers = getMockUsers();
-      const userIndex = mockUsers.findIndex(u => u.id === user.id);
-      if (userIndex !== -1) {
-        // We need to preserve the password
-        const existingUser = mockUsers[userIndex];
-        mockUsers[userIndex] = { ...existingUser, ...updatedUser };
-        setMockUsers(mockUsers);
-      }
-    }
+    await updateDoc(profileRef, finalProfileData);
   };
 
   const changePassword = async (currentPassword: string, newPassword: string) => {
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        if (!user) {
-          return reject(new Error('You must be logged in.'));
-        }
-
-        const mockUsers = getMockUsers();
-        const userIndex = mockUsers.findIndex(u => u.id === user.id);
-
-        if (userIndex === -1) {
-          return reject(new Error('Current user not found in database.'));
-        }
-
-        if (mockUsers[userIndex].password !== currentPassword) {
-          return reject(new Error('The current password you entered is incorrect.'));
-        }
-
-        // Update password in our mock DB
-        mockUsers[userIndex].password = newPassword;
-        setMockUsers(mockUsers);
-
-        resolve();
-      }, 500);
-    });
+    if (!firebaseUser || !firebaseUser.email) throw new Error("User not logged in");
+    
+    const credential = EmailAuthProvider.credential(firebaseUser.email, currentPassword);
+    await reauthenticateWithCredential(firebaseUser, credential);
+    await updatePassword(firebaseUser, newPassword);
   };
 
   const deleteAccount = async (reason: string) => {
+    if (!firebaseUser) throw new Error("User not logged in");
     // In a real app, you would send the reason to your backend.
-    console.log('Account deletion reason:', reason);
-    
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        if (!user) {
-          return reject(new Error('You must be logged in to delete your account.'));
-        }
-
-        let mockUsers = getMockUsers();
-        mockUsers = mockUsers.filter(u => u.id !== user.id);
-        setMockUsers(mockUsers);
-
-        // Logout the user
-        setUser(null);
-        localStorage.removeItem('mockUser');
-        router.push('/signup'); // Redirect to signup after deletion
-        
-        resolve();
-      }, 500);
-    });
+    console.log(`Account deletion for ${firebaseUser.uid}, reason:`, reason);
+    await deleteUser(firebaseUser);
   };
 
+  const user = firebaseUser && profile ? { ...profile, auth: firebaseUser } : null;
+  const isLoading = isAuthLoading || isLoadingProfile;
 
   return (
     <AuthContext.Provider value={{ user, login, signup, logout, isLoading, updateUser, changePassword, deleteAccount }}>
