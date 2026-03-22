@@ -41,7 +41,7 @@ const setMockUsers = (users: (User & { password: string })[]) => {
 const initializeMockDB = () => {
   const users = getMockUsers();
   const priyaExists = users.some(u => u.email === 'priya.sharma@example.com');
-  if (!priaExists) {
+  if (!priyaExists) {
     users.push({
       id: '1',
       name: 'Priya Sharma',
