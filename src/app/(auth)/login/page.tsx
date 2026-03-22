@@ -3,29 +3,46 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Logo } from '@/components/shared/logo';
 import { useAuth } from '@/lib/auth-context';
 import { useToast } from '@/hooks/use-toast';
+import { AlertTriangle } from 'lucide-react';
+
+const formSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  password: z.string().min(1, { message: "Password is required." }),
+});
 
 export default function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const { errors } = form.formState;
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    setError(null);
+    form.clearErrors();
+
     try {
-      await login(email, password);
+      await login(values.email, values.password);
       router.push('/');
     } catch (err: any) {
       let message = 'An unknown error occurred.';
@@ -41,7 +58,10 @@ export default function LoginPage() {
             break;
         }
       }
-      setError(message);
+       form.setError("root.serverError", {
+        type: "manual",
+        message,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -63,45 +83,53 @@ export default function LoginPage() {
           <CardDescription>Enter your details to access your dashboard.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="grid gap-4">
-            {error && (
-              <div className="text-sm text-destructive text-center font-medium bg-destructive/10 p-2 rounded-md">
-                {error}
-              </div>
-            )}
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="priya.sharma@example.com"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              {errors.root?.serverError && (
+                <div className="text-sm text-destructive text-center font-medium bg-destructive/10 p-3 rounded-md flex items-center gap-2 justify-center">
+                  <AlertTriangle className="h-4 w-4" />
+                  {errors.root.serverError.message}
+                </div>
+              )}
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="priya.sharma@example.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-            <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-                <Link href="#" className="ml-auto inline-block text-sm underline">
-                  Forgot your password?
-                </Link>
-              </div>
-              <Input
-                id="password"
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                     <div className="flex items-center">
+                        <FormLabel>Password</FormLabel>
+                        <Link href="#" className="ml-auto inline-block text-sm underline">
+                          Forgot your password?
+                        </Link>
+                      </div>
+                    <FormControl>
+                      <Input type="password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? 'Logging in...' : 'Login'}
-            </Button>
-            <Button variant="outline" className="w-full" type="button" onClick={handleGoogleLogin}>
-              Login with Google
-            </Button>
-          </form>
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? 'Logging in...' : 'Login'}
+              </Button>
+              <Button variant="outline" className="w-full" type="button" onClick={handleGoogleLogin}>
+                Login with Google
+              </Button>
+            </form>
+          </Form>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{' '}
             <Link href="/signup" className="underline">

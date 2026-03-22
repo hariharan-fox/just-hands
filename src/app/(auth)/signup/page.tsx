@@ -3,31 +3,49 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Logo } from '@/components/shared/logo';
 import { useAuth } from '@/lib/auth-context';
 import { useToast } from '@/hooks/use-toast';
+import { AlertTriangle } from 'lucide-react';
+
+
+const formSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters." }),
+});
+
 
 export default function SignupPage() {
   const { signup } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
-
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+  });
+
+  const { errors } = form.formState;
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    setError(null);
+    form.clearErrors();
     try {
-      await signup(name, email, password);
+      await signup(values.name, values.email, values.password);
       router.push('/');
     } catch (err: any) {
       let message = 'An unknown error occurred.';
@@ -47,7 +65,10 @@ export default function SignupPage() {
             break;
         }
       }
-      setError(message);
+      form.setError("root.serverError", {
+        type: "manual",
+        message,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -69,50 +90,61 @@ export default function SignupPage() {
           <CardDescription>Enter your details to join the community.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="grid gap-4">
-            {error && (
-              <div className="text-sm text-destructive text-center font-medium bg-destructive/10 p-2 rounded-md">
-                {error}
-              </div>
-            )}
-            <div className="grid gap-2">
-              <Label htmlFor="full-name">Full Name</Label>
-              <Input
-                id="full-name"
-                placeholder="Priya Sharma"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+               {errors.root?.serverError && (
+                <div className="text-sm text-destructive text-center font-medium bg-destructive/10 p-3 rounded-md flex items-center gap-2 justify-center">
+                  <AlertTriangle className="h-4 w-4" />
+                  {errors.root.serverError.message}
+                </div>
+              )}
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Priya Sharma" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="priya@example.com"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="priya@example.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? 'Creating account...' : 'Create Account'}
-            </Button>
-            <Button variant="outline" className="w-full" type="button" onClick={handleGoogleSignup}>
-              Sign up with Google
-            </Button>
-          </form>
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? 'Creating account...' : 'Create Account'}
+              </Button>
+              <Button variant="outline" className="w-full" type="button" onClick={handleGoogleSignup}>
+                Sign up with Google
+              </Button>
+            </form>
+          </Form>
           <div className="mt-4 text-center text-sm">
             Already have an account?{' '}
             <Link href="/login" className="underline">
