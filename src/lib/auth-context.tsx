@@ -106,7 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           notifications: [{
               id: `notif-welcome-${Date.now()}`,
               title: 'Welcome to Meet A Cause!',
-              description: 'We have set up your profile. Please review it in the settings page.',
+              description: 'Thank you for joining our community. Explore events and start making an impact!',
               createdAt: 'Just now',
               isRead: false,
           }],
@@ -180,31 +180,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const userCredential = await createUserWithEmailAndPassword(firebaseAuth, email, password);
     const { user } = userCredential;
     
+    // Update the user's profile in Firebase Auth.
+    // The useEffect hook above will handle creating the Firestore document.
     await updateProfile(user, { displayName: name, photoURL: '' });
-
-    const newUserProfile: UserProfile = {
-      id: user.uid,
-      name: name,
-      email: email,
-      role: 'volunteer',
-      avatarUrl: '',
-      skills: [],
-      interests: [],
-      completedEventIds: [],
-      registeredEventIds: [],
-      earnedBadgeIds: [],
-      loggedHours: 0,
-      notifications: [{
-        id: `notif-welcome-${Date.now()}`,
-        title: 'Welcome to Meet A Cause!',
-        description: 'Thank you for joining our community. Explore events and start making an impact!',
-        createdAt: 'Just now',
-        isRead: false,
-      }],
-    };
-
-    const profileRef = doc(firestore, 'users', user.uid);
-    await setDoc(profileRef, newUserProfile);
   };
 
   const logout = () => {
