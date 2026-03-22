@@ -19,6 +19,9 @@ export const allNgos: NGO[] = [
     location: 'Puducherry, India',
     cause: ['Environment', 'Education'],
     impact: 'Planted over 10,000 trees and educated 5,000+ students on environmental issues.',
+    email: 'contact@greenearth.org',
+    phone: '+91-9876543210',
+    address: '123 Forest Lane, Puducherry, India',
   },
   {
     id: 'ngo-2',
@@ -28,6 +31,9 @@ export const allNgos: NGO[] = [
     location: 'Chennai, India',
     cause: ['Community', 'Health'],
     impact: 'Served over 50,000 meals and provided shelter to 200+ homeless individuals last year.',
+    email: 'info@hopehelpers.in',
+    phone: '+91-9123456789',
+    address: '456 Kindness Avenue, Chennai, India',
   },
   {
     id: 'ngo-3',
@@ -37,6 +43,9 @@ export const allNgos: NGO[] = [
     location: 'Bangalore, India',
     cause: ['Education', 'Technology'],
     impact: 'Trained over 1,000 young adults in coding, with 60% securing jobs in the tech industry.',
+    email: 'hello@techforward.dev',
+    phone: '+91-9988776655',
+    address: '789 Innovation Drive, Bangalore, India',
   },
   {
     id: 'ngo-4',
@@ -46,6 +55,9 @@ export const allNgos: NGO[] = [
     location: 'Puducherry, India',
     cause: ['Animals'],
     impact: 'Rescued over 500 animals and facilitated 300+ adoptions in the past two years.',
+    email: 'adoptions@animalallies.org',
+    phone: '+91-9555123456',
+    address: '101 Paw-some Road, Puducherry, India',
   },
 ];
 

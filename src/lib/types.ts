@@ -30,6 +30,9 @@ export type NGO = {
   location: string;
   cause: string[];
   impact: string;
+  email: string;
+  phone: string;
+  address: string;
 };
 
 export type Testimonial = {

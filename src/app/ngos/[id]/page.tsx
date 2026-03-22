@@ -49,7 +49,6 @@ export default async function NgoDetailPage({ params }: { params: { id: string }
 
   const ngoLogo = PlaceHolderImages.find((p) => p.id === ngo.logoUrl);
   const ngoEvents = allEvents.filter(e => e.ngoId === ngo.id);
-  const ngoEmail = `contact@${ngo.name.toLowerCase().replace(/\s/g, '')}.org`;
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-8">
@@ -126,22 +125,22 @@ export default async function NgoDetailPage({ params }: { params: { id: string }
               </CardHeader>
               <CardContent className="space-y-4 text-sm">
                 <div className="space-y-3">
-                  <a href={`mailto:${ngoEmail}`} className="flex items-center gap-3 group">
+                  <a href={`mailto:${ngo.email}`} className="flex items-center gap-3 group">
                     <Mail className="h-4 w-4 flex-shrink-0 text-muted-foreground group-hover:text-primary" />
-                    <span className="text-muted-foreground group-hover:text-primary break-all">{ngoEmail}</span>
+                    <span className="text-muted-foreground group-hover:text-primary break-all">{ngo.email}</span>
                   </a>
-                  <a href="tel:+919876543210" className="flex items-center gap-3 group">
+                  <a href={`tel:${ngo.phone}`} className="flex items-center gap-3 group">
                     <Phone className="h-4 w-4 flex-shrink-0 text-muted-foreground group-hover:text-primary" />
-                    <span className="text-muted-foreground group-hover:text-primary">+91-987-654-3210</span>
+                    <span className="text-muted-foreground group-hover:text-primary">{ngo.phone}</span>
                   </a>
                   <div className="flex items-start gap-3">
                     <Globe className="h-4 w-4 mt-1 flex-shrink-0 text-muted-foreground" />
-                    <span className="text-muted-foreground">123 Mission Street, Puducherry</span>
+                    <span className="text-muted-foreground">{ngo.address}</span>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 pt-2">
-                  <Button asChild size="sm"><a href={`mailto:${ngoEmail}`}><Mail className="mr-2 h-4 w-4" />Email Us</a></Button>
-                  <Button asChild size="sm" variant="secondary"><a href="tel:+919876543210"><Phone className="mr-2 h-4 w-4" />Call Us</a></Button>
+                  <Button asChild size="sm"><a href={`mailto:${ngo.email}`}><Mail className="mr-2 h-4 w-4" />Email Us</a></Button>
+                  <Button asChild size="sm" variant="secondary"><a href={`tel:${ngo.phone}`}><Phone className="mr-2 h-4 w-4" />Call Us</a></Button>
                 </div>
               </CardContent>
             </Card>
