@@ -13,9 +13,22 @@ import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { allEvents } from "@/lib/placeholder-data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Textarea } from "@/components/ui/textarea";
+
 
 export default function SettingsPage() {
-  const { user, logout, changePassword } = useAuth();
+  const { user, logout, changePassword, deleteAccount } = useAuth();
   const { toast } = useToast();
   
   const referralLink = `https://meet-a-cause.app/signup?ref=${user?.id || 'volunteer123'}`;
@@ -33,6 +46,10 @@ export default function SettingsPage() {
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [passwordSuccess, setPasswordSuccess] = useState<string | null>(null);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
+
+  // State for account deletion
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteReason, setDeleteReason] = useState("");
 
 
   const handleCopy = () => {
@@ -75,6 +92,25 @@ export default function SettingsPage() {
       setPasswordError(err.message);
     } finally {
       setIsChangingPassword(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    setIsDeleting(true);
+    try {
+      await deleteAccount(deleteReason);
+      toast({
+        title: "Account Deleted",
+        description: "Your account has been permanently deleted.",
+      });
+      // The auth context will handle the redirect.
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Deletion Failed",
+        description: error.message,
+      });
+      setIsDeleting(false);
     }
   };
 
@@ -222,17 +258,48 @@ export default function SettingsPage() {
                 </Button>
              </form>
             <Separator />
-              <div className="space-y-4">
+            <div className="space-y-4">
               <h3 className="text-base font-medium">Danger Zone</h3>
-                <div className="rounded-lg border border-destructive p-4">
-                  <div className="flex items-center justify-between flex-wrap gap-4">
-                      <div>
-                          <h4 className="font-semibold">Delete Account</h4>
-                          <p className="text-sm text-muted-foreground">Permanently delete your account and all of your content.</p>
-                      </div>
-                        <Button variant="destructive" onClick={() => showComingSoonToast('Deleting your account')}>Delete Account</Button>
-                  </div>
+              <div className="rounded-lg border border-destructive p-4">
+                <div className="flex items-center justify-between flex-wrap gap-4">
+                    <div>
+                        <h4 className="font-semibold">Delete Account</h4>
+                        <p className="text-sm text-muted-foreground">Permanently delete your account and all of your content.</p>
+                    </div>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="destructive">Delete Account</Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete your account and remove your data from our servers.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <div className="py-4 space-y-2">
+                            <Label htmlFor="delete-reason" className="text-sm font-medium">Please let us know why you are leaving (optional)</Label>
+                            <Textarea 
+                                id="delete-reason" 
+                                placeholder="I'm leaving because..."
+                                value={deleteReason}
+                                onChange={(e) => setDeleteReason(e.target.value)}
+                            />
+                        </div>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction 
+                            onClick={handleDeleteAccount}
+                            disabled={isDeleting}
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                          >
+                            {isDeleting ? 'Deleting...' : 'Delete Account'}
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                 </div>
+              </div>
             </div>
           </CardContent>
         </Card>

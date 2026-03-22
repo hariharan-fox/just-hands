@@ -23,6 +23,7 @@ interface AuthContextType {
   isLoading: boolean;
   updateUser: (updatedData: Partial<Omit<User, 'password'>>) => void;
   changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
+  deleteAccount: (reason: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -184,9 +185,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  const deleteAccount = async (reason: string) => {
+    // In a real app, you would send the reason to your backend.
+    console.log('Account deletion reason:', reason);
+    
+    return new Promise<void>((resolve, reject) => {
+      setTimeout(() => {
+        if (!user) {
+          return reject(new Error('You must be logged in to delete your account.'));
+        }
+
+        let mockUsers = getMockUsers();
+        mockUsers = mockUsers.filter(u => u.id !== user.id);
+        setMockUsers(mockUsers);
+
+        // Logout the user
+        setUser(null);
+        localStorage.removeItem('mockUser');
+        router.push('/signup'); // Redirect to signup after deletion
+        
+        resolve();
+      }, 500);
+    });
+  };
+
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, isLoading, updateUser, changePassword }}>
+    <AuthContext.Provider value={{ user, login, signup, logout, isLoading, updateUser, changePassword, deleteAccount }}>
       {children}
     </AuthContext.Provider>
   );
