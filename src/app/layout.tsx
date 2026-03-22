@@ -34,15 +34,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn(headlineFont.variable, bodyFont.variable)}>
       <body className={cn('min-h-screen bg-background font-body text-foreground/90 antialiased')}>
-        <BadgeUnlockProvider>
-          <FirebaseClientProvider>
+        <FirebaseClientProvider>
+          <BadgeUnlockProvider>
             <AuthProvider>
               <ClientLayout>
                 {children}
               </ClientLayout>
             </AuthProvider>
-          </FirebaseClientProvider>
-        </BadgeUnlockProvider>
+          </BadgeUnlockProvider>
+        </FirebaseClientProvider>
         <Toaster />
       </body>
     </html>

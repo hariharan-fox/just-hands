@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/lib/auth-context";
-import { LogOut, ArrowRight, Gift, Copy, Phone, ShieldCheck, AlertTriangle } from "lucide-react";
+import { LogOut, ArrowRight, Gift, Copy, ShieldCheck, AlertTriangle } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { allEvents } from "@/lib/placeholder-data";
@@ -85,14 +85,24 @@ export default function SettingsPage() {
       setPhoneError('Please enter a phone number.');
       return;
     }
+    
+    // Ensure we have a clean slate for the verifier
+    if (window.recaptchaVerifier) {
+      window.recaptchaVerifier.clear();
+    }
+    
     // Simple validation for Indian numbers, can be improved
     const phoneNumber = `+91${phone}`;
     setPhoneError(null);
     setIsSendingOtp(true);
+
     try {
+      // Create the verifier on-demand
       const verifier = new RecaptchaVerifier(firebaseAuth, 'recaptcha-container', {
         'size': 'invisible',
       });
+      window.recaptchaVerifier = verifier;
+
       const result = await signInWithPhoneNumber(firebaseAuth, phoneNumber, verifier);
       setConfirmationResult(result);
       toast({ title: "OTP Sent!", description: `An OTP has been sent to ${phoneNumber}.` });
@@ -103,6 +113,8 @@ export default function SettingsPage() {
         message = 'The phone number is not valid.';
       } else if (error.code === 'auth/too-many-requests') {
         message = 'You have sent too many OTP requests. Please try again later.';
+      } else if (error.message.includes('reCAPTCHA')) {
+        message = 'reCAPTCHA challenge failed. Please refresh and try again.'
       }
       setPhoneError(message);
     } finally {
@@ -125,8 +137,7 @@ export default function SettingsPage() {
       const credential = PhoneAuthProvider.credential(confirmationResult.verificationId, otp);
       if (user?.auth) {
         await linkWithCredential(user.auth, credential);
-        // After linking, Firebase automatically updates the user object.
-        // We fetch the latest phone number and update our firestore profile.
+        
         const updatedUser = firebaseAuth.currentUser;
         if (updatedUser?.phoneNumber) {
             await updateUser({ phoneNumber: updatedUser.phoneNumber });
@@ -135,6 +146,7 @@ export default function SettingsPage() {
         toast({ title: "Phone Number Verified!", description: "Your phone number has been successfully linked to your account." });
         setConfirmationResult(null);
         setOtp('');
+        setPhone('');
       }
     } catch (error: any) {
       console.error("Error verifying OTP:", error);
