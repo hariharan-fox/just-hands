@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
@@ -12,7 +11,8 @@ import {
     EmailAuthProvider,
     reauthenticateWithCredential,
     updatePassword,
-    deleteUser
+    deleteUser,
+    sendPasswordResetEmail
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, updateDoc, onSnapshot } from 'firebase/firestore';
 
@@ -53,6 +53,7 @@ interface AuthContextType {
   updateUser: (updatedData: Partial<UserProfile>) => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
   deleteAccount: (reason: string) => Promise<void>;
+  sendPasswordReset: (email: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -223,11 +224,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await deleteUser(firebaseUser);
   };
 
+  const sendPasswordReset = async (email: string) => {
+    await sendPasswordResetEmail(firebaseAuth, email);
+  };
+
   const user = firebaseUser && profile ? { ...profile, auth: firebaseUser } : null;
   const isLoading = isAuthLoading || isLoadingProfile;
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, isLoading, updateUser, changePassword, deleteAccount }}>
+    <AuthContext.Provider value={{ user, login, signup, logout, isLoading, updateUser, changePassword, deleteAccount, sendPasswordReset }}>
       {children}
     </AuthContext.Provider>
   );
