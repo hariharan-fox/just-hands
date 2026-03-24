@@ -18,6 +18,11 @@
           "format": "email",
           "description": "The user's email address."
         },
+        "role": {
+          "type": "string",
+          "enum": ["volunteer"],
+          "description": "The user's role in the application."
+        },
         "avatarUrl": {
           "type": "string",
           "format": "uri",
@@ -26,9 +31,52 @@
         "phoneNumber": {
             "type": "string",
             "description": "The user's phone number."
+        },
+        "skills": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "A list of the user's skills."
+        },
+        "interests": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "A list of the user's interests."
+        },
+        "completedEventIds": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of event IDs the user has completed."
+        },
+        "registeredEventIds": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of event IDs the user is registered for."
+        },
+        "earnedBadgeIds": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of badge IDs the user has earned."
+        },
+        "loggedHours": {
+          "type": "number",
+          "description": "Total number of hours volunteered."
+        },
+        "notifications": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "title": { "type": "string" },
+              "description": { "type": "string" },
+              "createdAt": { "type": "string" },
+              "isRead": { "type": "boolean" }
+            },
+            "required": ["id", "title", "description", "createdAt", "isRead"]
+          }
         }
       },
-      "required": ["id", "name", "email"]
+      "required": ["id", "name", "email", "role", "completedEventIds", "registeredEventIds", "earnedBadgeIds", "loggedHours", "notifications"]
     }
   },
   "auth": {

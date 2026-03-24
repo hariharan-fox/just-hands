@@ -21,6 +21,8 @@ import { useAuth as useFirebaseAuth, useFirestore } from '@/firebase/provider';
 import type { Notification, Certificate } from './types';
 import { useBadgeUnlock } from './badge-unlock-context';
 import { allCertificates, allEvents } from './placeholder-data';
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError } from '@/firebase/errors';
 
 // This will be the shape of our user data in Firestore
 type UserProfile = {
@@ -82,15 +84,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (docSnap.exists()) {
         setProfile(docSnap.data() as UserProfile);
       } else {
-        // If the user is authenticated but has no profile, it's an inconsistent state.
+        // This case can happen if a user is created in Auth but the Firestore doc creation fails.
         // We log them out to force a clean login/signup attempt.
         setProfile(null);
-        console.warn(`Profile for user ${firebaseUser.uid} not found. Forcing logout.`);
-        signOut(firebaseAuth);
+        if (firebaseUser) { // Avoid warning on initial load/logout
+            console.warn(`Profile for user ${firebaseUser.uid} not found. Forcing logout.`);
+            signOut(firebaseAuth);
+        }
       }
       setIsLoadingProfile(false);
     }, (error) => {
-      console.error("Firestore snapshot error:", error);
+      errorEmitter.emit('permission-error', new FirestorePermissionError({
+        path: profileRef.path,
+        operation: 'get'
+      }));
       setIsLoadingProfile(false);
     });
 
@@ -184,7 +191,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }],
     };
     
-    await setDoc(profileRef, newProfile);
+    try {
+        await setDoc(profileRef, newProfile);
+    } catch (e: any) {
+        // If creating the profile fails, the user account is in a bad state.
+        // We delete the auth user to allow them to try signing up again.
+        errorEmitter.emit('permission-error', new FirestorePermissionError({
+            path: profileRef.path,
+            operation: 'create',
+            requestResourceData: newProfile
+        }));
+        await deleteUser(authUser);
+        // Rethrow the original error so the UI form can display a message
+        throw e;
+    }
   };
 
   const logout = () => {
@@ -202,7 +222,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const finalProfileData = badgeUpdates ? { ...updatedData, ...badgeUpdates } : updatedData;
 
-    await updateDoc(profileRef, finalProfileData);
+    await updateDoc(profileRef, finalProfileData).catch((e: any) => {
+        errorEmitter.emit('permission-error', new FirestorePermissionError({
+            path: profileRef.path,
+            operation: 'update',
+            requestResourceData: finalProfileData
+        }));
+        throw e;
+    });
   };
 
   const changePassword = async (currentPassword: string, newPassword: string) => {

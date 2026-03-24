@@ -17,11 +17,14 @@ service cloud.firestore {
                     && request.resource.data.name.size() > 1
                     && request.resource.data.email == request.auth.token.email
                     && request.resource.data.role == 'volunteer'
+                    && request.resource.data.avatarUrl is string
+                    && request.resource.data.skills is list && request.resource.data.skills.size() == 0
+                    && request.resource.data.interests is list && request.resource.data.interests.size() == 0
                     && request.resource.data.loggedHours == 0
-                    && request.resource.data.completedEventIds.size() == 0
-                    && request.resource.data.registeredEventIds.size() == 0
-                    && request.resource.data.earnedBadgeIds.size() == 0
-                    && request.resource.data.notifications.size() == 1;
+                    && request.resource.data.completedEventIds is list && request.resource.data.completedEventIds.size() == 0
+                    && request.resource.data.registeredEventIds is list && request.resource.data.registeredEventIds.size() == 0
+                    && request.resource.data.earnedBadgeIds is list && request.resource.data.earnedBadgeIds.size() == 0
+                    && request.resource.data.notifications is list && request.resource.data.notifications.size() == 1;
 
       // A logged-in user can read and update their own profile.
       allow read, update: if isOwner(userId);
